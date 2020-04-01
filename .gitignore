@@ -2,6 +2,7 @@ html/data.csv
 html/timestamp.json
 .idea
 sandbox.ipynb
+data.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
