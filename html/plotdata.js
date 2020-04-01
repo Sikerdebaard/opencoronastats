@@ -42,18 +42,26 @@ function makeCharts(data) {
             labels: xlabels,
             datasets: [
                 {
-                    "label": "Confirmed COVID patients in ICU",
-                    "data": patients_in_icu,
-                    "fill": false,
-                    "backgroundColor": ["rgba(75, 192, 192)"],
-                    "borderColor": "rgb(75, 192, 192)",
-                    "lineTension": 0.1,
-                    "pointRadius": 5,
-                    "pointHoverRadius": 10
+                    label: "Confirmed COVID patients in ICU",
+                    data: patients_in_icu,
+                    fill: false,
+                    backgroundColor: ["rgba(75, 192, 192)"],
+                    borderColor: "rgb(75, 192, 192)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
                 }
             ]
         },
         options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'number of patients'
+                    }
+                }]
+            },
             tooltips: tooltip_config,
             animation: animations_config
         }
@@ -65,28 +73,36 @@ function makeCharts(data) {
             labels: xlabels,
             datasets: [
                 {
-                    "label": "Growth of confirmed patients in ICU",
-                    "data": growth,
-                    "fill": false,
-                    "backgroundColor": ["rgba(75, 192, 192)"],
-                    "borderColor": "rgb(75, 192, 192)",
-                    "lineTension": 0.1,
-                    "pointRadius": 5,
-                    "pointHoverRadius": 10
+                    label: "Growth of confirmed patients in ICU",
+                    data: growth,
+                    fill: false,
+                    backgroundColor: ["rgba(75, 192, 192)"],
+                    borderColor: "rgb(75, 192, 192)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
                 },
                 {
-                    "label": "Simple Moving Average (5 days)",
-                    "data": growth_sma5,
-                    "fill": false,
-                    "backgroundColor": ["rgba(192, 75, 192)"],
-                    "borderColor": "rgb(192, 75, 192)",
-                    "lineTension": 0.1,
-                    "pointRadius": 5,
-                    "pointHoverRadius": 10
+                    label: "Simple Moving Average (5 days)",
+                    data: growth_sma5,
+                    fill: false,
+                    backgroundColor: ["rgba(192, 75, 192)"],
+                    borderColor: "rgb(192, 75, 192)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
                 }
             ]
         },
         options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'percentage change'
+                    }
+                }]
+            },
             animation: animations_config,
             tooltips: tooltip_config
         }
