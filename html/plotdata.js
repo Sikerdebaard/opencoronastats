@@ -156,7 +156,7 @@ function makeCharts(data) {
         }
     })
 
-    var doubling_rate = Math.round(1 / Math.log(1 + growth_trend / 100, 2))
+    var doubling_rate = Math.round(Math.log(2) / Math.log(1 + growth_trend / 100, 2))
 
     if (doubling_rate < 0) {
         document.getElementById('doubling-rate').innerText = 'half life'
