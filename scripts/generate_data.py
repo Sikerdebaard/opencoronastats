@@ -5,6 +5,7 @@ import pandas as pd
 from pathlib import Path
 import datetime, time
 import json
+import numpy as np
 
 
 def join_xlsx(df, url, valid_cols, index_col=0):
@@ -34,15 +35,19 @@ def calc_growth(df, column):
 
 
 df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/ic-count.xlsx', index_col=0)
-
-df = clean_cols(df, 'intakeCount')
-
 df = join_xlsx(df,
                'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/died-and-survivors-cumulative.xlsx',
                ['died', 'survivors'])
+df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/intake-cumulative.xlsx',
+               ['intakeCumulative'])
 
 df['died'] = df['died'].fillna(0).astype(int)
 df['survivors'] = df['survivors'].fillna(0).astype(int)
+df['intakeCumulative'] = df['intakeCumulative'].fillna(0).astype(int)
+
+df['mortality_rate'] = df.apply(
+    lambda row: row['died'] / row['intakeCumulative'] if row['intakeCumulative'] > 0 else np.NaN, axis=1)
+df['mortality_rate'] = df['mortality_rate'].replace(0, np.NaN)
 
 df = calc_growth(df, 'intakeCount')
 

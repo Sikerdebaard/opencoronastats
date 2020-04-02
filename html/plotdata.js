@@ -27,6 +27,50 @@ function makeCharts(data) {
         return Math.round(d.sma5_growth_intakeCount * 10000) / 100
     })
 
+    var mortality_rate = data.map(function(d) {
+        return d.mortality_rate != '' ? Math.round(d.mortality_rate * 100) : null
+    })
+
+    var recovered = data.map(function(d) {
+        return d.survivors != '' ? d.survivors : null
+    })
+
+    var deaths = data.map(function(d) {
+        return d.died != '' ? d.died : null
+    })
+
+    var growth_trend = Math.round(data[data.length - 1].sma5_growth_intakeCount * 10000) / 100
+    document.getElementById('growth-trend').innerHTML = growth_trend
+
+    var els = document.getElementsByClassName('red-green-swap')
+
+    if (growth_trend < 0) {
+        var newcolor = 'green'
+    } else {
+        var newcolor = 'red'
+    }
+
+    Array.prototype.forEach.call(els, function(el) {
+        if (newcolor == 'red') {
+            el.className = el.className.replace(/\btext-green\b/g, 'text-red')
+            el.className = el.className.replace(/\bbg-green\b/g, 'bg-red')
+            el.className = el.className.replace(/\bborder-green\b/g, 'border-red')
+        } else {
+            el.className = el.className.replace(/\btext-red\b/g, 'text-green')
+            el.className = el.className.replace(/\bbg-red\b/g, 'bg-green')
+            el.className = el.className.replace(/\bborder-red\b/g, 'border-green')
+        }
+    })
+
+    var doubling_rate = Math.round(1 / Math.log(1 + growth_trend / 100, 2))
+
+    if (doubling_rate < 0) {
+        document.getElementById('doubling-rate').innerText = 'half life'
+    } else {
+        document.getElementById('doubling-rate').innerText = 'doubling rate'
+    }
+    document.getElementById('doubling-rate-val').innerHTML = doubling_rate
+
     tooltip_config = {
         mode: 'x',
         bodyFontSize: 16
@@ -100,6 +144,78 @@ function makeCharts(data) {
                     scaleLabel: {
                         display: true,
                         labelString: 'percentage change'
+                    }
+                }]
+            },
+            animation: animations_config,
+            tooltips: tooltip_config
+        }
+    })
+
+    var icu_mortality_chart = new Chart(document.getElementById("icu-mortality-rate"), {
+        type: 'line',
+        data: {
+            labels: xlabels,
+            datasets: [
+                {
+                    label: "Evolution of mortality rate in ICU",
+                    data: mortality_rate,
+                    fill: false,
+                    backgroundColor: "rgba(192, 75, 75)",
+                    borderColor: "rgb(192, 75, 75)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'percentage of patients'
+                    }
+                }]
+            },
+            animation: animations_config,
+            tooltips: tooltip_config
+        }
+    })
+
+    var icu_recover_vs_death_chart = new Chart(document.getElementById("icu-recovery-vs-death"), {
+        type: 'line',
+        data: {
+            labels: xlabels,
+            datasets: [
+                {
+                    label: "Patients recovered from ICU",
+                    data: recovered,
+                    fill: false,
+                    backgroundColor: "rgba(75, 192, 75)",
+                    borderColor: "rgb(75, 192, 75)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+                {
+                    label: "Patients died in ICU",
+                    data: deaths,
+                    fill: false,
+                    backgroundColor: "rgba(192, 75, 75)",
+                    borderColor: "rgb(192, 75, 75)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'percentage of patients'
                     }
                 }]
             },
