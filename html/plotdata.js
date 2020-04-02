@@ -1,12 +1,106 @@
 function update(){
     d3.csv('data.csv').then(makeCharts)
+    d3.csv('demographics.csv').then(makeDemographics)
     d3.json('timestamp.json').then(updateTimestamp)
 }
 
+tooltip_config = {
+    mode: 'x',
+    bodyFontSize: 16
+}
+
+animations_config = {
+    duration: 0
+}
 
 function updateTimestamp(data){
     var isoDateTime = new Date(data)
     document.getElementById('last-update').innerHTML = isoDateTime.toLocaleDateString('nl-NL') + " " + isoDateTime.toLocaleTimeString('nl-NL')
+}
+
+function makeDemographics(data) {
+    var xlabels = data.map(function (d) {
+        return d.age_group
+    })
+
+    var demographics = data.map(function(d) {
+        return d.all_patients == 0 ? null : d.all_patients
+    })
+
+    var demographics_deaths = data.map(function(d) {
+        return d.died == 0 ? null : d.died
+    })
+
+    var icu_demographics_chart = new Chart(document.getElementById("icu-demographics"), {
+        type: 'bar',
+        data: {
+            labels: xlabels,
+            datasets: [
+                {
+                    label: "Demographics of patients in ICU",
+                    data: demographics,
+                    fill: false,
+                    backgroundColor: "rgba(75, 192, 192)",
+                    borderColor: "rgb(75, 192, 192)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+
+            ]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'percentage of patients',
+                        stacked: true
+                    }
+                }]
+            },
+            tooltips: tooltip_config,
+            animation: animations_config
+        }
+    })
+
+    var icu_death_demographics_chart = new Chart(document.getElementById("icu-demographics-death"), {
+        type: 'bar',
+        data: {
+            labels: xlabels,
+            datasets: [
+                {
+                    label: "Demographics of deaths in ICU",
+                    data: demographics_deaths,
+                    fill: false,
+                    backgroundColor: "rgba(192, 75, 75)",
+                    borderColor: "rgb(192, 75, 75)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+            ]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'percentage of patients',
+                        stacked: true
+                    }
+                }]
+            },
+            tooltips: tooltip_config,
+            animation: animations_config
+        }
+    })
 }
 
 function makeCharts(data) {
@@ -70,15 +164,6 @@ function makeCharts(data) {
         document.getElementById('doubling-rate').innerText = 'doubling rate'
     }
     document.getElementById('doubling-rate-val').innerHTML = doubling_rate
-
-    tooltip_config = {
-        mode: 'x',
-        bodyFontSize: 16
-    }
-
-    animations_config = {
-        duration: 0
-    }
 
     var icu_num_patients_chart = new Chart(document.getElementById("icu-num-patients"), {
         type: 'line',

@@ -55,6 +55,15 @@ output_path = Path('./html')
 
 df.to_csv(output_path / 'data.csv', index_label='date')
 
+
+# demographics
+
+df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution-died.xlsx', index_col=0)
+df.rename(columns = {'percentage':'died'}, inplace = True)
+df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution.xlsx', ['percentage'])
+df.rename(columns = {'percentage':'all_patients'}, inplace = True)
+df.to_csv(output_path / 'demographics.csv', index_label='age_group')
+
 with (output_path / 'timestamp.json').open('w') as fh:
     json.dump(datetime.datetime.now().astimezone().isoformat(), fh)
 
