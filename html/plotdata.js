@@ -215,7 +215,7 @@ function makeCharts(data) {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'percentage of patients'
+                        labelString: 'number of patients'
                     }
                 }]
             },
