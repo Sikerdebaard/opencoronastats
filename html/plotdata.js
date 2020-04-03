@@ -1,4 +1,5 @@
 function update(){
+    console.log('Updating')
     var ts = new Date().getTime()
     d3.csv('data.csv?' + ts).then(makeCharts)
     d3.csv('demographics.csv?' + ts).then(makeDemographics)
@@ -338,8 +339,9 @@ function makeCharts(data) {
 }
 
 document.addEventListener("DOMContentLoaded", function(e) {
+    document.update = update
     update()
     setInterval(function () {
         update()
-    }, 1800 * 1000) // update every 30 min
+    }, 600 * 1000) // update every 10 min
 })
