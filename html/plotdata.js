@@ -20,6 +20,16 @@ function updateTimestamp(data){
     document.getElementById('last-update').innerHTML = isoDateTime.toLocaleDateString('nl-NL') + " " + isoDateTime.toLocaleTimeString('nl-NL')
 }
 
+function null_array(length) {
+    var out = []
+
+    while (out.length < length) {
+        out.push(null)
+    }
+
+    return out
+}
+
 function makeDemographics(data) {
     var xlabels = data.map(function (d) {
         return d.age_group
@@ -47,7 +57,7 @@ function makeDemographics(data) {
                     data: demographics,
                     fill: false,
                     backgroundColor: "rgba(75, 192, 192)",
-                    borderColor: "rgb(75, 192, 192)",
+                    borderColor: "rgba(75, 192, 192)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -141,6 +151,28 @@ function makeCharts(data) {
         return d.mortality_rate != '' ? Math.round(d.mortality_rate * 100) : null
     })
 
+    var last_mortality_rate = mortality_rate[mortality_rate.length - 1]
+    var prev_mortality_rate = mortality_rate[mortality_rate.length - 2]
+    document.getElementById('mortality-in-icu').innerText = last_mortality_rate
+
+    if (last_mortality_rate == prev_mortality_rate) {
+        var color = 'gray'
+        document.getElementById('mortality-arrow').className = 'fas fa-balance-scale'
+    } else if (last_mortality_rate > prev_mortality_rate) {
+        var color = 'red'
+        document.getElementById('mortality-arrow').className = 'fas fa-caret-up'
+    } else {
+        var color = 'green'
+        document.getElementById('mortality-arrow').className = 'fas fa-caret-down'
+    }
+
+    var els = document.getElementsByClassName('mortality-colors')
+    Array.prototype.forEach.call(els, function(el) {
+        el.className = el.className.replace(/\bgreen\b/g, color)
+        el.className = el.className.replace(/\bred\b/g, color)
+        el.className = el.className.replace(/\bgray\b/g, color)
+    })
+
     var recovered = data.map(function(d) {
         return d.survivors != '' ? d.survivors : null
     })
@@ -213,10 +245,20 @@ function makeCharts(data) {
             datasets: [
                 {
                     label: "Confirmed COVID patients in ICU",
-                    data: patients_in_icu,
+                    data: patients_in_icu.slice(0, -3),
                     fill: false,
-                    backgroundColor: ["rgba(75, 192, 192)"],
+                    backgroundColor: "rgb(75, 192, 192)",
                     borderColor: "rgb(75, 192, 192)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+                {
+                    label: "Points still being updated by ICUs",
+                    data: null_array(patients_in_icu.length - 4).concat(patients_in_icu.slice(-4)),
+                    fill: false,
+                    backgroundColor: "rgb(75, 192, 192, .5)",
+                    borderColor: "rgb(75, 192, 192, .1)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -244,10 +286,20 @@ function makeCharts(data) {
             datasets: [
                 {
                     label: "Growth of confirmed patients in ICU",
-                    data: growth,
+                    data: growth.slice(0, -3),
                     fill: false,
                     backgroundColor: "rgba(75, 192, 192, .3)",
                     borderColor: "rgb(75, 192, 192, .3)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+                {
+                    label: "Points still being updated by ICUs",
+                    data: null_array(growth.length - 4).concat(growth.slice(-4)),
+                    fill: false,
+                    backgroundColor: "rgba(75, 192, 192, .1)",
+                    borderColor: "rgb(75, 192, 192, .1)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -285,10 +337,20 @@ function makeCharts(data) {
             datasets: [
                 {
                     label: "Evolution of mortality rate in ICU",
-                    data: mortality_rate,
+                    data: mortality_rate.slice(0, -3),
                     fill: false,
                     backgroundColor: "rgba(192, 75, 75)",
                     borderColor: "rgb(192, 75, 75)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+                {
+                    label: "Points still being updated by ICUs",
+                    data: null_array(mortality_rate.length - 4).concat(mortality_rate.slice(-4)),
+                    fill: false,
+                    backgroundColor: "rgba(192, 75, 75, .5)",
+                    borderColor: "rgb(192, 75, 75, .5)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -316,7 +378,7 @@ function makeCharts(data) {
             datasets: [
                 {
                     label: "Patients recovered from ICU",
-                    data: recovered,
+                    data: recovered.slice(0, -3),
                     fill: false,
                     backgroundColor: "rgba(75, 192, 75)",
                     borderColor: "rgb(75, 192, 75)",
@@ -325,11 +387,31 @@ function makeCharts(data) {
                     pointHoverRadius: 10
                 },
                 {
+                    label: "Points still being updated by ICUs",
+                    data: null_array(recovered.length - 4).concat(recovered.slice(-4)),
+                    fill: false,
+                    backgroundColor: "rgba(75, 192, 75, .5)",
+                    borderColor: "rgb(75, 192, 75, .5)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+                {
                     label: "Patients died in ICU",
-                    data: deaths,
+                    data: deaths.slice(0, -3),
                     fill: false,
                     backgroundColor: "rgba(192, 75, 75)",
                     borderColor: "rgb(192, 75, 75)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
+                {
+                    label: "Points still being updated by ICUs",
+                    data: null_array(deaths.length - 4).concat(deaths.slice(-4)),
+                    fill: false,
+                    backgroundColor: "rgba(192, 75, 75, .5)",
+                    borderColor: "rgb(192, 75, 75, .5)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -351,10 +433,10 @@ function makeCharts(data) {
     })
 }
 
-document.addEventListener("DOMContentLoaded", function(e) {
-    document.update = update
+//document.addEventListener("DOMContentLoaded", function(e) {
+document.update = update // bind to document scope so we can use it from the console
+update()
+setInterval(function () {
     update()
-    setInterval(function () {
-        update()
-    }, 600 * 1000) // update every 10 min
-})
+}, 600 * 1000) // update every 10 min
+//})

@@ -34,7 +34,7 @@
             </div>
 
             <div class="flex flex-wrap">
-                <div class="w-full md:w-1/2 xl:w-1/2 p-3">
+                <div class="w-full md:w-1/3 xl:w-1/3 p-3">
                     <!--Metric Card-->
                     <div class="red-green-swap bg-green-100 border-b-4 border-green-600 rounded-lg shadow-lg p-5">
                         <div class="flex flex-row items-center">
@@ -49,7 +49,7 @@
                     </div>
                     <!--/Metric Card-->
                 </div>
-                <div class="w-full md:w-1/2 xl:w-1/2 p-3">
+                <div class="w-full md:w-1/3 xl:w-1/3 p-3">
                     <!--Metric Card-->
                     <div class="red-green-swap bg-green-100 border-b-4 border-green-600 rounded-lg shadow-lg p-5">
                         <div class="flex flex-row items-center">
@@ -59,6 +59,21 @@
                             <div class="flex-1 text-right md:text-center">
                                 <h5 class="font-bold uppercase text-gray-600">Daily growth rate</h5>
                                 <h3 class="font-bold text-3xl"><div id="growth-trend" class="inline"></div>% <span class="red-green-swap text-green-500"><i id="growth-trend-arrow" class="fas fa-caret-up"></i></span></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+                <div class="w-full md:w-1/3 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="mortality-colors bg-green-100 border-b-4 border-green-600 rounded-lg shadow-lg p-5">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+                                <div class="mortality-colors rounded-full p-5 bg-green-600"><i class="fas fa-skull fa-2x fa-inverse"></i></div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-600">Case Fatality Rate in ICU</h5>
+                                <h3 class="font-bold text-3xl"><div id="mortality-in-icu" class="inline"></div>% <span class="mortality-colors text-green-500"><i id="mortality-arrow" class="fas fa-balance-scale"></i></span></h3>
                             </div>
                         </div>
                     </div>
@@ -149,7 +164,7 @@
                     <!--Graph Card-->
                     <div class="bg-white border-transparent rounded-lg shadow-lg">
                         <div class="bg-gray-400 uppercase text-gray-800 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
+                            <h5 class="font-bold uppercase text-gray-600">Confirmed COVID patients in ICU</h5>
                         </div>
                         <div class="p-5">
                             <canvas id="icu-num-patients" class="chartjs" width="undefined" height="250%"></canvas>
@@ -162,7 +177,7 @@
                     <!--Graph Card-->
                     <div class="bg-white border-transparent rounded-lg shadow-lg">
                         <div class="bg-gray-400 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
+                            <h5 class="font-bold uppercase text-gray-600">Growth of confirmed COVID patients in ICU</h5>
                         </div>
                         <div class="p-5">
                             <canvas id="icu-growth" class="chartjs" width="undefined" height="250%"></canvas>
@@ -178,7 +193,7 @@
                     <!--Graph Card-->
                     <div class="bg-white border-transparent rounded-lg shadow-lg">
                         <div class="bg-gray-400 uppercase text-gray-800 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
+                            <h5 class="font-bold uppercase text-gray-600">Evolution of mortality rate in ICU</h5>
                         </div>
                         <div class="p-5">
                             <canvas id="icu-mortality-rate" class="chartjs" width="undefined" height="250%"></canvas>
@@ -191,7 +206,7 @@
                     <!--Graph Card-->
                     <div class="bg-white border-transparent rounded-lg shadow-lg">
                         <div class="bg-gray-400 uppercase text-gray-800 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
+                            <h5 class="font-bold uppercase text-gray-600">Patients recovered vs. deceased</h5>
                         </div>
                         <div class="p-5">
                             <canvas id="icu-recovery-vs-death" class="chartjs" width="undefined" height="250%"></canvas>
@@ -206,7 +221,7 @@
                     <!--Graph Card-->
                     <div class="bg-white border-transparent rounded-lg shadow-lg">
                         <div class="bg-gray-400 uppercase text-gray-800 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
+                            <h5 class="font-bold uppercase text-gray-600">Demographics of patients in ICU</h5>
                         </div>
                         <div class="p-5">
                             <canvas id="icu-demographics" class="chartjs" width="undefined" height="150%"></canvas>
@@ -218,7 +233,7 @@
                     <!--Graph Card-->
                     <div class="bg-white border-transparent rounded-lg shadow-lg">
                         <div class="bg-gray-400 uppercase text-gray-800 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
+                            <h5 class="font-bold uppercase text-gray-600">Demographics of recovered and deceased patients in ICU</h5>
                         </div>
                         <div class="p-5">
                             <canvas id="icu-demographics-death" class="chartjs" width="undefined" height="150%"></canvas>
