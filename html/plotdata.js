@@ -33,6 +33,10 @@ function makeDemographics(data) {
         return d.died == 0 ? null : d.died
     })
 
+    var demographics_survived = data.map(function(d) {
+        return d.survived == 0 ? null : d.survived
+    })
+
     var icu_demographics_chart = new Chart(document.getElementById("icu-demographics"), {
         type: 'bar',
         data: {
@@ -84,12 +88,22 @@ function makeDemographics(data) {
                     pointRadius: 5,
                     pointHoverRadius: 10
                 },
+                {
+                    label: "Demographics of recovered patients from ICU",
+                    data: demographics_survived,
+                    fill: false,
+                    backgroundColor: "rgba(75, 192, 75)",
+                    borderColor: "rgb(75, 192, 75)",
+                    lineTension: 0.1,
+                    pointRadius: 5,
+                    pointHoverRadius: 10
+                },
             ]
         },
         options: {
             scales: {
                 xAxes: [{
-                    stacked: true
+                    //stacked: true
                 }],
                 yAxes: [{
                     scaleLabel: {
@@ -335,7 +349,6 @@ function makeCharts(data) {
             tooltips: tooltip_config
         }
     })
-
 }
 
 document.addEventListener("DOMContentLoaded", function(e) {

@@ -35,8 +35,7 @@ def calc_growth(df, column):
 
 
 df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/ic-count.xlsx', index_col=0)
-df = join_xlsx(df,
-               'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/died-and-survivors-cumulative.xlsx',
+df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/died-and-survivors-cumulative.xlsx',
                ['died', 'survivors'])
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/intake-cumulative.xlsx',
                ['intakeCumulative'])
@@ -58,11 +57,11 @@ df.to_csv(output_path / 'data.csv', index_label='date')
 
 # demographics
 
-df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution-died.xlsx', index_col=0)
-df.rename(columns = {'percentage':'died'}, inplace = True)
-df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution.xlsx', ['percentage'])
-df.rename(columns = {'percentage':'all_patients'}, inplace = True)
+df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution.xlsx', index_col=0)
+df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution-died-and-survivors.xlsx', ['died', 'survived'])
 df.to_csv(output_path / 'demographics.csv', index_label='age_group')
+
+print(df)
 
 with (output_path / 'timestamp.json').open('w') as fh:
     json.dump(datetime.datetime.now().astimezone().isoformat(), fh)
