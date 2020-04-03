@@ -136,7 +136,6 @@ function makeCharts(data) {
 
     var growth_trend = Math.round(data[data.length - 1].sma5_growth_intakeCount * 10000) / 100
     var growth_trend_prev = Math.round(data[data.length - 2].sma5_growth_intakeCount * 10000) / 100
-    //growth_trend_prev = 0
     document.getElementById('growth-trend').innerHTML = growth_trend
 
     var els = document.getElementsByClassName('red-green-swap')
@@ -163,8 +162,7 @@ function makeCharts(data) {
         }
     })
 
-    //var doubling_rate = Math.round(Math.log(2) / Math.log(1 + growth_trend / 100, 2))
-    var doubling_rate = -.03
+    var doubling_rate = Math.round(Math.log(2) / Math.log(1 + growth_trend / 100, 2))
 
     if (doubling_rate < 0) {
         document.getElementById('doubling-rate').innerText = 'half life'
