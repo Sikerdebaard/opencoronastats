@@ -1,7 +1,8 @@
 function update(){
-    d3.csv('data.csv').then(makeCharts)
-    d3.csv('demographics.csv').then(makeDemographics)
-    d3.json('timestamp.json').then(updateTimestamp)
+    var ts = new Date().getTime()
+    d3.csv('data.csv?' + ts).then(makeCharts)
+    d3.csv('demographics.csv?' + ts).then(makeDemographics)
+    d3.json('timestamp.json?' + ts).then(updateTimestamp)
 }
 
 tooltip_config = {
@@ -134,14 +135,20 @@ function makeCharts(data) {
     })
 
     var growth_trend = Math.round(data[data.length - 1].sma5_growth_intakeCount * 10000) / 100
+    var growth_trend_prev = Math.round(data[data.length - 2].sma5_growth_intakeCount * 10000) / 100
+    //growth_trend_prev = 0
     document.getElementById('growth-trend').innerHTML = growth_trend
 
     var els = document.getElementsByClassName('red-green-swap')
 
-    if (growth_trend < 0) {
+    if (growth_trend_prev > growth_trend) {
         var newcolor = 'green'
+        var el = document.getElementById('growth-trend-arrow')
+        el.className = el.className.replace(/\bfa-caret-up\b/g, 'fa-caret-down')
     } else {
         var newcolor = 'red'
+        var el = document.getElementById('growth-trend-arrow')
+        el.className = el.className.replace(/\bfa-caret-down\b/g, 'fa-caret-up')
     }
 
     Array.prototype.forEach.call(els, function(el) {
@@ -156,14 +163,35 @@ function makeCharts(data) {
         }
     })
 
-    var doubling_rate = Math.round(Math.log(2) / Math.log(1 + growth_trend / 100, 2))
+    //var doubling_rate = Math.round(Math.log(2) / Math.log(1 + growth_trend / 100, 2))
+    var doubling_rate = -.03
 
     if (doubling_rate < 0) {
         document.getElementById('doubling-rate').innerText = 'half life'
+
+        if (growth_trend > growth_trend_prev) {
+            var caret = 'fa-caret-down'
+        } else {
+            var caret = 'fa-caret-up'
+        }
     } else {
         document.getElementById('doubling-rate').innerText = 'doubling rate'
+
+        if (growth_trend_prev > growth_trend) {
+            var caret = 'fa-caret-down'
+        } else {
+            var caret = 'fa-caret-up'
+        }
     }
-    document.getElementById('doubling-rate-val').innerHTML = doubling_rate
+
+    var el = document.getElementById('doubling-rate-arrow')
+    if (caret == 'fa-caret-down') {
+        el.className = el.className.replace(/\bfa-caret-up\b/g, caret)
+    } else {
+        el.className = el.className.replace(/\bfa-caret-down\b/g, caret)
+    }
+
+    document.getElementById('doubling-rate-val').innerHTML = Math.abs(doubling_rate)
 
     var icu_num_patients_chart = new Chart(document.getElementById("icu-num-patients"), {
         type: 'line',
