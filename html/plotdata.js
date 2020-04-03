@@ -177,6 +177,8 @@ function makeCharts(data) {
         return d.survivors != '' ? d.survivors : null
     })
 
+    document.getElementById('patients-recovered-icu').innerText = recovered[recovered.length -1]
+
     var deaths = data.map(function(d) {
         return d.died != '' ? d.died : null
     })
