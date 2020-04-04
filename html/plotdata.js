@@ -79,7 +79,8 @@ function makeDemographics(data) {
                 }]
             },
             tooltips: tooltip_config,
-            animation: animations_config
+            animation: animations_config,
+            maintainAspectRatio: false
         }
     })
 
@@ -124,7 +125,8 @@ function makeDemographics(data) {
                 }]
             },
             tooltips: tooltip_config,
-            animation: animations_config
+            animation: animations_config,
+            maintainAspectRatio: false
         }
     })
 }
@@ -252,7 +254,7 @@ function makeCharts(data) {
                     backgroundColor: "rgb(75, 192, 192)",
                     borderColor: "rgb(75, 192, 192)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 },
                 {
@@ -262,7 +264,7 @@ function makeCharts(data) {
                     backgroundColor: "rgb(75, 192, 192, .5)",
                     borderColor: "rgb(75, 192, 192, .1)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 }
             ]
@@ -277,7 +279,8 @@ function makeCharts(data) {
                 }]
             },
             tooltips: tooltip_config,
-            animation: animations_config
+            animation: animations_config,
+            maintainAspectRatio: false
         }
     })
 
@@ -293,7 +296,7 @@ function makeCharts(data) {
                     backgroundColor: "rgba(75, 192, 192, .3)",
                     borderColor: "rgb(75, 192, 192, .3)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 },
                 {
@@ -303,7 +306,7 @@ function makeCharts(data) {
                     backgroundColor: "rgba(75, 192, 192, .1)",
                     borderColor: "rgb(75, 192, 192, .1)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 },
                 {
@@ -313,7 +316,7 @@ function makeCharts(data) {
                     backgroundColor: "rgba(192, 75, 192)",
                     borderColor: "rgb(192, 75, 192)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 }
             ]
@@ -328,7 +331,8 @@ function makeCharts(data) {
                 }]
             },
             animation: animations_config,
-            tooltips: tooltip_config
+            tooltips: tooltip_config,
+            maintainAspectRatio: false
         }
     })
 
@@ -344,7 +348,7 @@ function makeCharts(data) {
                     backgroundColor: "rgba(192, 75, 75)",
                     borderColor: "rgb(192, 75, 75)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 },
                 {
@@ -354,7 +358,7 @@ function makeCharts(data) {
                     backgroundColor: "rgba(192, 75, 75, .5)",
                     borderColor: "rgb(192, 75, 75, .5)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 },
             ]
@@ -369,7 +373,8 @@ function makeCharts(data) {
                 }]
             },
             animation: animations_config,
-            tooltips: tooltip_config
+            tooltips: tooltip_config,
+            maintainAspectRatio: false
         }
     })
 
@@ -385,7 +390,7 @@ function makeCharts(data) {
                     backgroundColor: "rgba(75, 192, 75)",
                     borderColor: "rgb(75, 192, 75)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 },
                 {
@@ -395,7 +400,7 @@ function makeCharts(data) {
                     backgroundColor: "rgba(75, 192, 75, .5)",
                     borderColor: "rgb(75, 192, 75, .5)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 },
                 {
@@ -405,7 +410,7 @@ function makeCharts(data) {
                     backgroundColor: "rgba(192, 75, 75)",
                     borderColor: "rgb(192, 75, 75)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 },
                 {
@@ -415,7 +420,7 @@ function makeCharts(data) {
                     backgroundColor: "rgba(192, 75, 75, .5)",
                     borderColor: "rgb(192, 75, 75, .5)",
                     lineTension: 0.1,
-                    pointRadius: 5,
+                    pointRadius: 3,
                     pointHoverRadius: 10
                 },
             ]
@@ -430,7 +435,8 @@ function makeCharts(data) {
                 }]
             },
             animation: animations_config,
-            tooltips: tooltip_config
+            tooltips: tooltip_config,
+            maintainAspectRatio: false
         }
     })
 }
