@@ -220,9 +220,10 @@ function makeCharts(data) {
         }
     })
 
-    var doubling_rate = Math.round(Math.log(2) / Math.log(1 + (Math.abs(growth_trend) / 100)))
-
     if (growth_trend < 0) {
+        // even though its called doubling_rate it is actually half-life, bad naming, but we are just
+        // updating some visuals so should be fine for now
+        var doubling_rate = Math.round(Math.log(1/2) / Math.log(1 + growth_trend / 100))
         document.getElementById('doubling-rate').innerText = 'half life'
 
         if (growth_trend > growth_trend_prev) {
@@ -231,6 +232,7 @@ function makeCharts(data) {
             var caret = 'fa-caret-up'
         }
     } else {
+        var doubling_rate = Math.round(Math.log(2) / Math.log(1 + growth_trend / 100))
         document.getElementById('doubling-rate').innerText = 'doubling rate'
 
         if (growth_trend_prev > growth_trend) {
