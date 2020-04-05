@@ -2,6 +2,6 @@
 
 All charts are generated using data from stichting NICE.
 
-This repo contains the scripts and sources used for generating the dashboard on [sikerdebaard.nl](http://sikerdebaard.nl).
+This repo contains the scripts and sources used for generating the dashboard on [www.covid-analytics.nl](www.covid-analytics.nl).
 
-The RIVM data seems quite unreliable since data is not released in a machine-readable format. This data thus can't be added to this dashboard.
+Please visit the [wiki](https://github.com/Sikerdebaard/opencoronastats/wiki) for more information.
