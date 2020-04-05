@@ -141,6 +141,11 @@ function makeCharts(data) {
         return d.intakeCount
     })
 
+    var patients_in_icu_newest = patients_in_icu[patients_in_icu.length - 1]
+    var patients_in_icu_prev = patients_in_icu[patients_in_icu.length - 2]
+
+    document.getElementById('beds-taken-icu').innerText = patients_in_icu_newest
+
     var growth = data.map(function (d) {
         return Math.round(d.growth_intakeCount * 10000) / 100
     })
@@ -184,6 +189,8 @@ function makeCharts(data) {
     var deaths = data.map(function(d) {
         return d.died != '' ? d.died : null
     })
+
+    document.getElementById('patients-died-icu').innerText = deaths[deaths.length - 1]
 
     var growth_trend = Math.round(data[data.length - 1].sma5_growth_intakeCount * 10000) / 100
     var growth_trend_prev = Math.round(data[data.length - 2].sma5_growth_intakeCount * 10000) / 100
