@@ -99,6 +99,32 @@ function makeDemographics(data) {
                     pointRadius: 5,
                     pointHoverRadius: 10
                 },
+            ]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    //stacked: true
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'percentage of patients',
+                        stacked: true
+                    }
+                }]
+            },
+            tooltips: tooltip_config,
+            animation: animations_config,
+            maintainAspectRatio: false
+        }
+    })
+
+    var icu_recovered_demographics_chart = new Chart(document.getElementById("icu-demographics-recovered"), {
+        type: 'bar',
+        data: {
+            labels: xlabels,
+            datasets: [
                 {
                     label: "Demographics of recovered patients from ICU",
                     data: demographics_survived,
