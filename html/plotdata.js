@@ -64,7 +64,7 @@ function makeMortalityDisplacement(data) {
         "rgba(192, 75, 192, .3)",
         "rgba(192, 75, 192, .4)",
         "rgba(192, 75, 192, .5)",
-        "rgba(192, 75, 192)"
+        "rgba(192, 75, 192, 1)"
     ]
 
     datasets = []
@@ -157,8 +157,8 @@ function makeDemographics(data) {
                     label: "Demographics of patients in ICU",
                     data: demographics,
                     fill: false,
-                    backgroundColor: "rgba(75, 192, 192)",
-                    borderColor: "rgba(75, 192, 192)",
+                    backgroundColor: "rgba(75, 192, 192, 1)",
+                    borderColor: "rgba(75, 192, 192, 1)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -194,8 +194,8 @@ function makeDemographics(data) {
                     label: "Demographics of deaths in ICU",
                     data: demographics_deaths,
                     fill: false,
-                    backgroundColor: "rgba(192, 75, 75)",
-                    borderColor: "rgba(192, 75, 75)",
+                    backgroundColor: "rgba(192, 75, 75, 1)",
+                    borderColor: "rgba(192, 75, 75, 1)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -230,8 +230,8 @@ function makeDemographics(data) {
                     label: "Demographics of recovered patients from ICU",
                     data: demographics_survived,
                     fill: false,
-                    backgroundColor: "rgba(75, 192, 75)",
-                    borderColor: "rgba(75, 192, 75)",
+                    backgroundColor: "rgba(75, 192, 75, 1)",
+                    borderColor: "rgba(75, 192, 75, 1)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -387,8 +387,8 @@ function makeCharts(data) {
                     label: "Confirmed COVID patients in ICU",
                     data: patients_in_icu.slice(0, -3),
                     fill: false,
-                    backgroundColor: "rgba(75, 192, 192)",
-                    borderColor: "rgba(75, 192, 192)",
+                    backgroundColor: "rgba(75, 192, 192, 1)",
+                    borderColor: "rgba(75, 192, 192, 1)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -449,8 +449,8 @@ function makeCharts(data) {
                     label: "Simple Moving Average (5 days)",
                     data: growth_sma5,
                     fill: false,
-                    backgroundColor: "rgba(192, 75, 192)",
-                    borderColor: "rgba(192, 75, 192)",
+                    backgroundColor: "rgba(192, 75, 192, 1)",
+                    borderColor: "rgba(192, 75, 192, 1)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -481,8 +481,8 @@ function makeCharts(data) {
                     label: "Evolution of mortality rate in ICU",
                     data: mortality_rate.slice(0, -3),
                     fill: false,
-                    backgroundColor: "rgba(192, 75, 75)",
-                    borderColor: "rgba(192, 75, 75)",
+                    backgroundColor: "rgba(192, 75, 75, 1)",
+                    borderColor: "rgba(192, 75, 75, 1)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -523,8 +523,8 @@ function makeCharts(data) {
                     label: "Patients recovered from ICU",
                     data: recovered.slice(0, -3),
                     fill: false,
-                    backgroundColor: "rgba(75, 192, 75)",
-                    borderColor: "rgba(75, 192, 75)",
+                    backgroundColor: "rgba(75, 192, 75, 1)",
+                    borderColor: "rgba(75, 192, 75, 1)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -543,8 +543,8 @@ function makeCharts(data) {
                     label: "Patients died in ICU",
                     data: deaths.slice(0, -3),
                     fill: false,
-                    backgroundColor: "rgba(192, 75, 75)",
-                    borderColor: "rgba(192, 75, 75)",
+                    backgroundColor: "rgba(192, 75, 75, 1)",
+                    borderColor: "rgba(192, 75, 75, 1)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
