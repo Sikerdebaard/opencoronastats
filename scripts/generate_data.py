@@ -61,7 +61,54 @@ df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution-died-and-survivors.xlsx', ['died', 'survived'])
 df.to_csv(output_path / 'demographics.csv', index_label='age_group')
 
-print(df)
+
+# mortality displacement
+
+import cbsodata
+
+data = cbsodata.get_data('70895ned')
+df = pd.DataFrame(data).set_index('ID')
+
+df = df.loc[(df['Geslacht'] == 'Totaal mannen en vrouwen') & (df['LeeftijdOp31December'] == 'Totaal leeftijd')].drop(columns=['Geslacht', 'LeeftijdOp31December'])
+
+#flat_output = []
+output = {}
+for idx, row in df.iterrows():
+    if 'week 0' in row['Perioden'] or 'week' not in row['Perioden']:
+        continue
+
+    sd = row['Perioden'].split('week')
+    year = int(sd[0].strip().split(' ')[0])
+    week = int(sd[1].strip().split(' ')[0])
+    deaths = int(row['Overledenen_1'])
+
+    if week == 53:
+        continue # skip for now
+
+    if year not in output:
+        output[year] = {}
+    output[year] = {**output[year], **{f'{week}': deaths}}
+    #flat_output.append({'year': year, 'week': week, 'deaths': deaths})
+
+
+df = pd.DataFrame(output)
+
+import numpy as np, scipy.stats as st
+
+confidence = .95
+
+cis = []
+for idx, row in df.iterrows():
+    vals = row.values[:-1][-10:]  # slice off latest year (2020) then take last 5 years
+    ci = st.t.interval(confidence, len(vals) - 1, loc=np.mean(vals), scale=st.sem(vals))
+    cis.append({'week': idx, f'ci_{confidence}_low': int(ci[0]), f'ci_{confidence}_high': int(ci[1])})
+
+df_out = pd.DataFrame(cis).set_index('week')
+df_out = df_out.merge(df[df.columns[-5:]], left_index=True, right_index=True)  # only take last 5 years for visualisation
+
+df_out.drop('1', inplace=True)  # drop week 1 as that one is a bit of an odd one
+
+df_out.to_csv(output_path / 'mortality_displacement.csv', index_label='week')
 
 with (output_path / 'timestamp.json').open('w') as fh:
     json.dump(datetime.datetime.now().astimezone().isoformat(), fh)

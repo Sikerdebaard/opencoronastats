@@ -17,7 +17,7 @@
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.js"></script>
-    <script src="plotdata.js?ver=14"></script>
+    <script src="plotdata.js?ver=15"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-13163098-2"></script>
@@ -277,6 +277,21 @@
                     </div>
                     <div class="flex justify-start p-2">
                         <div class="text-gray-400">Source: <a href="https://www.stichting-nice.nl/covid-19-op-de-ic.jsp">Stichting-NICE</a></div>
+                    </div>
+                    <!--/Graph Card-->
+                </div>
+                <div class="w-full md:w-1/2 xl:w-1/2 p-3">
+                    <!--Graph Card-->
+                    <div class="bg-white border-transparent rounded-lg shadow-lg">
+                        <div class="bg-gray-400 uppercase text-gray-800 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
+                            <h5 class="font-bold uppercase text-gray-600">Mortality displacement over the polulation of NL by weeknumber</h5>
+                        </div>
+                        <div class="p-5" style="height:70vh;">
+                            <canvas id="mortality-displacement-nl" class="chartjs" width="undefined" height="undefined"></canvas>
+                        </div>
+                    </div>
+                    <div class="flex justify-start p-2">
+                        <div class="text-gray-400">Source: <a href="https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70895ned/table?fromstatweb">CBS</a></div>
                     </div>
                     <!--/Graph Card-->
                 </div>

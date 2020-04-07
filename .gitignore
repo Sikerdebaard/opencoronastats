@@ -1,6 +1,7 @@
 html/data.csv
 html/demographics.csv
 html/timestamp.json
+html/mortality_displacement.csv
 .idea
 sandbox.ipynb
 data.csv

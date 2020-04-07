@@ -3,6 +3,7 @@ function update(){
     var ts = new Date().getTime()
     d3.csv('data.csv?' + ts).then(makeCharts)
     d3.csv('demographics.csv?' + ts).then(makeDemographics)
+    d3.csv('mortality_displacement.csv?' + ts).then(makeMortalityDisplacement)
     d3.json('timestamp.json?' + ts).then(updateTimestamp)
 }
 
@@ -28,6 +29,106 @@ function null_array(length) {
     }
 
     return out
+}
+
+function makeMortalityDisplacement(data) {
+    var headerNames = d3.keys(data[0])
+
+    var xlabels = data.map(function (d) {
+        return d.week
+    })
+
+    var ci_high = data.map(function (d) {
+        return d['ci_0.95_high']
+    })
+
+    var ci_low = data.map(function (d) {
+        return d['ci_0.95_low']
+    })
+
+    var year_header_cols = []
+    var mortality_displacement = {}
+
+    for (var i = 0; i < headerNames.length; i++) {
+        d = headerNames[i]
+        if (d != 'week' & d != 'ci_0.95_low' & d != 'ci_0.95_high') {
+            year_header_cols.push(d)
+            mortality_displacement[d] = data.map(function (r) {
+                return r[d] != "" ? r[d] : null
+            })
+        }
+    }
+
+    colors = [
+        "rgba(192, 75, 192, .2)",
+        "rgba(192, 75, 192, .3)",
+        "rgba(192, 75, 192, .4)",
+        "rgba(192, 75, 192, .5)",
+        "rgba(192, 75, 192)"
+    ]
+
+    datasets = []
+
+    ci_color = "rgba(75, 192, 75, .1)"
+    datasets.push(
+        {
+            label: 'Confidence interval 95% top',
+            data: ci_high,
+            fill: false,
+            backgroundColor: ci_color,
+            borderColor: "transparent",
+            lineTension: 0,
+            pointRadius: 0
+        }
+    )
+    datasets.push(
+        {
+            label: 'Confidence interval 95% bottom',
+            data: ci_low,
+            fill: 0,
+            backgroundColor: ci_color,
+            borderColor: "transparent",
+            lineTension: 0,
+            pointRadius: 0
+        }
+    )
+
+    for (var i = 0; i < year_header_cols.length; i++) {
+        datasets.push(
+            {
+                label: year_header_cols[i],
+                data: mortality_displacement[year_header_cols[i]],
+                fill: false,
+                backgroundColor: colors[i],
+                borderColor: colors[i],
+                lineTension: 0.1,
+                pointRadius: i != 4 ? 0 : 3,
+                pointHoverRadius: i != 4 ? 0 : 10
+            }
+        )
+    }
+
+    var mortality_displacement_chart = new Chart(document.getElementById("mortality-displacement-nl"), {
+        type: 'line',
+        data: {
+            labels: xlabels,
+            datasets: datasets
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'number of deceased'
+                    }
+                }]
+            },
+            animation: animations_config,
+            tooltips: tooltip_config,
+            maintainAspectRatio: false
+        }
+    })
+
 }
 
 function makeDemographics(data) {
@@ -94,7 +195,7 @@ function makeDemographics(data) {
                     data: demographics_deaths,
                     fill: false,
                     backgroundColor: "rgba(192, 75, 75)",
-                    borderColor: "rgb(192, 75, 75)",
+                    borderColor: "rgba(192, 75, 75)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -130,7 +231,7 @@ function makeDemographics(data) {
                     data: demographics_survived,
                     fill: false,
                     backgroundColor: "rgba(75, 192, 75)",
-                    borderColor: "rgb(75, 192, 75)",
+                    borderColor: "rgba(75, 192, 75)",
                     lineTension: 0.1,
                     pointRadius: 5,
                     pointHoverRadius: 10
@@ -286,8 +387,8 @@ function makeCharts(data) {
                     label: "Confirmed COVID patients in ICU",
                     data: patients_in_icu.slice(0, -3),
                     fill: false,
-                    backgroundColor: "rgb(75, 192, 192)",
-                    borderColor: "rgb(75, 192, 192)",
+                    backgroundColor: "rgba(75, 192, 192)",
+                    borderColor: "rgba(75, 192, 192)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -296,8 +397,8 @@ function makeCharts(data) {
                     label: "Points still being updated by ICUs",
                     data: null_array(patients_in_icu.length - 4).concat(patients_in_icu.slice(-4)),
                     fill: false,
-                    backgroundColor: "rgb(75, 192, 192, .5)",
-                    borderColor: "rgb(75, 192, 192, .1)",
+                    backgroundColor: "rgba(75, 192, 192, .5)",
+                    borderColor: "rgba(75, 192, 192, .1)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -329,7 +430,7 @@ function makeCharts(data) {
                     data: growth.slice(0, -3),
                     fill: false,
                     backgroundColor: "rgba(75, 192, 192, .3)",
-                    borderColor: "rgb(75, 192, 192, .3)",
+                    borderColor: "rgba(75, 192, 192, .3)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -339,7 +440,7 @@ function makeCharts(data) {
                     data: null_array(growth.length - 4).concat(growth.slice(-4)),
                     fill: false,
                     backgroundColor: "rgba(75, 192, 192, .1)",
-                    borderColor: "rgb(75, 192, 192, .1)",
+                    borderColor: "rgba(75, 192, 192, .1)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -349,7 +450,7 @@ function makeCharts(data) {
                     data: growth_sma5,
                     fill: false,
                     backgroundColor: "rgba(192, 75, 192)",
-                    borderColor: "rgb(192, 75, 192)",
+                    borderColor: "rgba(192, 75, 192)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -381,7 +482,7 @@ function makeCharts(data) {
                     data: mortality_rate.slice(0, -3),
                     fill: false,
                     backgroundColor: "rgba(192, 75, 75)",
-                    borderColor: "rgb(192, 75, 75)",
+                    borderColor: "rgba(192, 75, 75)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -391,7 +492,7 @@ function makeCharts(data) {
                     data: null_array(mortality_rate.length - 4).concat(mortality_rate.slice(-4)),
                     fill: false,
                     backgroundColor: "rgba(192, 75, 75, .5)",
-                    borderColor: "rgb(192, 75, 75, .5)",
+                    borderColor: "rgba(192, 75, 75, .5)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -423,7 +524,7 @@ function makeCharts(data) {
                     data: recovered.slice(0, -3),
                     fill: false,
                     backgroundColor: "rgba(75, 192, 75)",
-                    borderColor: "rgb(75, 192, 75)",
+                    borderColor: "rgba(75, 192, 75)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -433,7 +534,7 @@ function makeCharts(data) {
                     data: null_array(recovered.length - 4).concat(recovered.slice(-4)),
                     fill: false,
                     backgroundColor: "rgba(75, 192, 75, .5)",
-                    borderColor: "rgb(75, 192, 75, .5)",
+                    borderColor: "rgba(75, 192, 75, .5)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -443,7 +544,7 @@ function makeCharts(data) {
                     data: deaths.slice(0, -3),
                     fill: false,
                     backgroundColor: "rgba(192, 75, 75)",
-                    borderColor: "rgb(192, 75, 75)",
+                    borderColor: "rgba(192, 75, 75)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -453,7 +554,7 @@ function makeCharts(data) {
                     data: null_array(deaths.length - 4).concat(deaths.slice(-4)),
                     fill: false,
                     backgroundColor: "rgba(192, 75, 75, .5)",
-                    borderColor: "rgb(192, 75, 75, .5)",
+                    borderColor: "rgba(192, 75, 75, .5)",
                     lineTension: 0.1,
                     pointRadius: 3,
                     pointHoverRadius: 10
@@ -474,6 +575,7 @@ function makeCharts(data) {
             maintainAspectRatio: false
         }
     })
+
 }
 
 //document.addEventListener("DOMContentLoaded", function(e) {
