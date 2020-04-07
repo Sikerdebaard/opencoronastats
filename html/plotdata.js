@@ -252,7 +252,7 @@ function makeCharts(data) {
         var doubling_rate = Math.round(Math.log(1/2) / Math.log(1 + growth_trend / 100))
         document.getElementById('doubling-rate').innerText = 'half life'
 
-        if (growth_trend > growth_trend_prev) {
+        if (growth_trend <= growth_trend_prev) {
             var caret = 'fa-caret-down'
         } else {
             var caret = 'fa-caret-up'
