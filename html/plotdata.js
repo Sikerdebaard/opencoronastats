@@ -268,8 +268,24 @@ function makeCharts(data) {
         return d.intakeCount
     })
 
-    var patients_in_icu_newest = patients_in_icu[patients_in_icu.length - 1]
-    var patients_in_icu_prev = patients_in_icu[patients_in_icu.length - 2]
+    var latest_non_null = null
+    var beds_for_covid = data.map(function (d) {
+        var out = d.beds != '' ? d.beds - 500 : null
+        latest_non_null = out != null ? out : latest_non_null
+        return out
+    })
+    beds_for_covid[beds_for_covid.length - 1] = latest_non_null
+
+    var beds = data.map(function (d) {
+        var out = d.beds != '' ? d.beds: null
+        latest_non_null = out != null ? out : latest_non_null
+        return out
+    })
+    beds[beds.length - 1] = latest_non_null
+
+
+    var patients_in_icu_newest = patients_in_icu[patients_in_icu.length - 5]
+    var patients_in_icu_prev = patients_in_icu[patients_in_icu.length - 4]
 
     document.getElementById('beds-taken-icu').innerText = patients_in_icu_newest
 
@@ -379,11 +395,37 @@ function makeCharts(data) {
 
     document.getElementById('doubling-rate-val').innerHTML = Math.abs(doubling_rate)
 
+    console.log(beds_for_covid)
+
     var icu_num_patients_chart = new Chart(document.getElementById("icu-num-patients"), {
         type: 'line',
         data: {
             labels: xlabels,
             datasets: [
+                {
+                    label: "Number of beds dedicated for COVID patients in ICU",
+                    data: beds_for_covid,
+                    fill: false,
+                    backgroundColor: "rgba(192, 192, 192, .5)",
+                    borderColor: "rgba(192, 192, 192, .5)",
+                    lineTension: 0,
+                    pointRadius: 3,
+                    pointHoverRadius: 10,
+                    borderDash: [10,5],
+                    spanGaps: true
+                },
+                {
+                    label: "Total number of beds COVID and non-COVID patients in ICU",
+                    data: beds,
+                    fill: false,
+                    backgroundColor: "rgba(0, 0, 0, .5)",
+                    borderColor: "rgba(0, 0, 0, .5)",
+                    lineTension: 0,
+                    pointRadius: 3,
+                    pointHoverRadius: 10,
+                    borderDash: [10,5],
+                    spanGaps: true
+                },
                 {
                     label: "Confirmed COVID patients in ICU",
                     data: patients_in_icu.slice(0, -3),

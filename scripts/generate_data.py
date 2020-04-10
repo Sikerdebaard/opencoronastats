@@ -15,6 +15,13 @@ def join_xlsx(df, url, valid_cols, index_col=0):
 
     return df
 
+def join_csv(df, url, valid_cols, index_col=0):
+    df2 = clean_cols(pd.read_csv(url, index_col=index_col), valid_cols)
+
+    df = df.join(df2, how='outer')
+
+    return df
+
 
 def clean_cols(df, valid_cols):
     if not (isinstance(valid_cols, list) or isinstance(valid_cols, tuple)):
@@ -39,6 +46,7 @@ df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/
                ['died', 'survivors'])
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/intake-cumulative.xlsx',
                ['intakeCumulative'])
+df = join_csv(df, 'data/beds.csv', ['beds'])
 
 df['died'] = df['died'].fillna(0).astype(int)
 df['survivors'] = df['survivors'].fillna(0).astype(int)
