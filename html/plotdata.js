@@ -280,6 +280,7 @@ function makeCharts(data) {
     var growth_sma5 = data.map(function (d) {
         return Math.round(d.sma5_growth_intakeCount * 10000) / 100
     })
+    growth_sma5 = growth_sma5.slice(0, -3)
 
     var mortality_rate = data.map(function(d) {
         return d.mortality_rate != '' ? Math.round(d.mortality_rate * 100) : null
