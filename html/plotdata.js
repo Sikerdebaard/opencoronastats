@@ -403,7 +403,7 @@ function makeCharts(data) {
             labels: xlabels,
             datasets: [
                 {
-                    label: "Number of beds dedicated for COVID patients in ICU",
+                    label: "ICU bed limit for COVID patients",
                     data: beds_for_covid,
                     fill: false,
                     backgroundColor: "rgba(192, 192, 192, .5)",
@@ -415,7 +415,7 @@ function makeCharts(data) {
                     spanGaps: true
                 },
                 {
-                    label: "Total number of beds COVID and non-COVID patients in ICU",
+                    label: "ICU bed limit for COVID and non-COVID patients",
                     data: beds,
                     fill: false,
                     backgroundColor: "rgba(0, 0, 0, .5)",
