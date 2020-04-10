@@ -285,8 +285,8 @@ function makeCharts(data) {
         return d.mortality_rate != '' ? Math.round(d.mortality_rate * 100) : null
     })
 
-    var last_mortality_rate = mortality_rate[mortality_rate.length - 1]
-    var prev_mortality_rate = mortality_rate[mortality_rate.length - 2]
+    var last_mortality_rate = mortality_rate[mortality_rate.length - 4]
+    var prev_mortality_rate = mortality_rate[mortality_rate.length - 5]
     document.getElementById('mortality-in-icu').innerText = last_mortality_rate
 
     if (last_mortality_rate == prev_mortality_rate) {
@@ -319,8 +319,8 @@ function makeCharts(data) {
 
     document.getElementById('patients-died-icu').innerText = deaths[deaths.length - 1]
 
-    var growth_trend = Math.round(data[data.length - 1].sma5_growth_intakeCount * 10000) / 100
-    var growth_trend_prev = Math.round(data[data.length - 2].sma5_growth_intakeCount * 10000) / 100
+    var growth_trend = Math.round(data[data.length - 4].sma5_growth_intakeCount * 10000) / 100
+    var growth_trend_prev = Math.round(data[data.length - 5].sma5_growth_intakeCount * 10000) / 100
     document.getElementById('growth-trend').innerHTML = growth_trend
 
     var els = document.getElementsByClassName('red-green-swap')
