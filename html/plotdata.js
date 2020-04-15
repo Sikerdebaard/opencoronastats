@@ -174,7 +174,7 @@ function makeDemographics(data) {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'percentage of patients',
+                        labelString: 'Number of patients',
                         stacked: true
                     }
                 }]
@@ -210,7 +210,7 @@ function makeDemographics(data) {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'percentage of patients',
+                        labelString: 'Number of patients',
                         stacked: true
                     }
                 }]
@@ -246,7 +246,7 @@ function makeDemographics(data) {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'percentage of patients',
+                        labelString: 'Number of patients',
                         stacked: true
                     }
                 }]
