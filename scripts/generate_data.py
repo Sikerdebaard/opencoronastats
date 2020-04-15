@@ -8,8 +8,11 @@ import json
 import numpy as np
 import requests
 
-def join_xlsx(df, url, valid_cols, index_col=0):
+def join_xlsx(df, url, valid_cols, index_col=0, rename=False):
     df2 = clean_cols(pd.read_excel(url, index_col=index_col), valid_cols)
+
+    if rename:
+        df2.rename(rename, axis=1, inplace=True)
 
     df = df.join(df2, how='outer')
 
@@ -41,11 +44,12 @@ def calc_growth(df, column):
     return df
 
 
-df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/ic-count.xlsx', index_col=0)
+df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/intake-count.xlsx', index_col=0)
+df.rename({'value': 'intakeCount'}, axis=1, inplace=True)
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/died-and-survivors-cumulative.xlsx',
                ['died', 'survivors'])
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/intake-cumulative.xlsx',
-               ['intakeCumulative'])
+               ['value'], rename={'value': 'intakeCumulative'})
 df = join_csv(df, 'data/beds.csv', ['beds'])
 
 df['died'] = df['died'].fillna(0).astype(int)
