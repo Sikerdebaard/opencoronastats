@@ -46,6 +46,7 @@ def calc_growth(df, column):
 
 df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/intake-count.xlsx', index_col=0)
 df.rename({'value': 'intakeCount'}, axis=1, inplace=True)
+df['intakeCount'] = df['intakeCount'].astype(int)
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/died-and-survivors-cumulative.xlsx',
                ['died', 'survivors'])
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/intake-cumulative.xlsx',
