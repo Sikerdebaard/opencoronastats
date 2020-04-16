@@ -284,8 +284,8 @@ function makeCharts(data) {
     beds[beds.length - 1] = latest_non_null
 
 
-    var patients_in_icu_newest = Math.floor(patients_in_icu[patients_in_icu.length - 5])
-    var patients_in_icu_prev = Math.floor(patients_in_icu[patients_in_icu.length - 4])
+    var patients_in_icu_newest = Math.floor(patients_in_icu[patients_in_icu.length - 4])
+    //var patients_in_icu_prev = Math.floor(patients_in_icu[patients_in_icu.length - 4])
 
     document.getElementById('beds-taken-icu').innerText = patients_in_icu_newest
 
