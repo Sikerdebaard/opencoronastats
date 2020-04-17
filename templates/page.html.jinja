@@ -14,13 +14,11 @@
     <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link href="tailwind-min.css" rel="stylesheet">
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet"> <!--Totally optional :) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"
-            integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" crossorigin="anonymous"></script>
+    {# <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js" crossorigin="anonymous"></script> #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.js"></script>
-    <!--<script src="plotdata.js?ver=21"></script>-->
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-13163098-2"></script>
     <script>
         window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-13163098-2', { 'anonymize_ip': true });
@@ -29,12 +27,10 @@
 
 </head>
 
-<!-- TODO -->
-<!-- add average ICU time until recovery and death -->
 
-<body class="bg-gray-600 font-sans leading-normal tracking-normal mt-0">
+<body class="bg-blue-800 font-sans leading-normal tracking-normal mt-0">
 
-<div class="bg-gray-600 p-2 shadow text-xl text-white">
+<div class="bg-blue-800 p-2 shadow text-xl text-white">
     <h3 class="font-bold pl-2 text-center">🇳🇱 The Netherlands Covid Analytics (Last Update:
         <div id="last-update" class="inline"></div>
         )
@@ -45,7 +41,7 @@
 
 
 
-    <div class="bg-gray-600 z-10 h-16 fixed bottom-0 xl:relative xl:h-screen w-full xl:w-48">
+    <div class="bg-blue-800 z-10 h-16 fixed bottom-0 xl:relative xl:h-screen w-full xl:w-48">
         <div class="xl:mt-16 xl:w-48 xl:fixed xl:left-0 xl:top-0 content-center xl:content-start text-left justify-between">
             <ul class="list-reset flex flex-row xl:flex-col py-0 xl:py-3 px-1 xl:px-2 text-center xl:text-left">
                 <li class="mr-3 flex-1">

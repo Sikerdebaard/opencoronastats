@@ -14,6 +14,11 @@ filter_functions = {
     'filter_zero_values': filter_zero_vals
 }
 
+function arrayContains(needle, arrhaystack)
+{
+    return (arrhaystack.indexOf(needle) > -1);
+}
+
 function append_datasets_to_template(data, template, options) {
     var datasets = []
     for (var j = 0; j < options.length; j++) {
@@ -25,12 +30,14 @@ function append_datasets_to_template(data, template, options) {
             key = keys[n]
             if (key == 'column') {
                 if ('filter' in keys){
-                    dataset_configured['data'] = dataset['filter'](get_values_for(data, dataset['column']))
+                    dataset_configured['data'] = filter_functions[dataset['filter']](get_values_for(data, dataset['column']))
                 } else {
                     dataset_configured['data'] = get_values_for(data, dataset['column'])
                 }
-            } else if (key in ['filter']){
+            } else if (arrayContains(key, ['filter'])){
                 continue
+            } else if (arrayContains(key, ['backgroundColor', 'borderColor'])) {
+                dataset_configured[key] = chartconfig['colors'][dataset[key]]
             } else {
                 dataset_configured[key] = dataset[key]
             }
@@ -42,42 +49,57 @@ function append_datasets_to_template(data, template, options) {
     return template
 }
 
-function makeDemographics(data) {
-    gen_charts = charts['demographics']
+function drawDemographics(chart_info) {
+    //chart_info = gen_charts[chart_key]
+    data = datasets[chart_info['uses']]
 
-    for (var chart_key in gen_charts) {
-        if (!gen_charts.hasOwnProperty(chart_key)) {
-            continue
-        }
-        chart_info = gen_charts[chart_key]
-        template = append_datasets_to_template(data, {
-            type: 'bar',
-            data: {
-                labels: get_values_for(data, chart_info['x']),
-            },
-            options: default_chart_options
-        }, chart_info['datasets'])
+    template = append_datasets_to_template(data, {
+        type: 'bar',
+        data: {
+            labels: get_values_for(data, chart_info['x']),
+        },
+        options: chartconfig['default_options']
+    }, chart_info['datasets'])
 
-        new Chart(document.getElementById(chart_key), template)
-    }
+    new Chart(document.getElementById(chart_info['name']), template)
 }
 
 
 datasets = {}
 
+function download_dataset(dataset) {
+    var ts = new Date().getTime()
+    if (dataset.endsWith('.json')) {
+        return d3.json(dataset + '?' + ts)
+    } else {
+        return d3.csv(dataset + '?' + ts)
+    }
+}
+
 function update(){
     console.log('Updating')
-    var ts = new Date().getTime()
-    Promise.all([
-        //d3.csv('data.csv?' + ts).then(makeCharts)
-        d3.csv('demographics.csv?' + ts).then(makeDemographics)
-        //d3.csv('mortality_displacement.csv?' + ts).then(makeMortalityDisplacement)
-        d3.json('timestamp.json?' + ts).then(updateTimestamp)
-     ]).then(function (files) {
-        console.log(files)
+
+    proms = []
+    for (var i in chartdata['datasets']) {
+        proms.push(download_dataset(chartdata['datasets'][i]))
+    }
+
+    Promise.all(proms).then(function (files) {
+        for (var i in chartdata['datasets']) {
+            datasets[chartdata['datasets'][i].split(/\.(?=[^\.]+$)/)[0]] = files[i]
+        }
+        draw()
      })
 }
 
+function draw() {
+    for (i in chartdata['charts']) {
+        var chart = chartdata['charts'][i]
+        if (chart.type = 'demographics') {
+            drawDemographics(chart)
+        }
+    }
+}
 
 function updateTimestamp(data){
     var isoDateTime = new Date(data)
@@ -558,6 +580,7 @@ function null_array(length) {
 //    })
 //
 //}
+
 
 //document.addEventListener("DOMContentLoaded", function(e) {
 update()

@@ -13,20 +13,27 @@ chart_config:
     scales:
       yAxes:
         - scaleLabel:
-          display: true
+            display: true
     tooltips:
       mode: 'x'
       bodyFontSize: 14
     animation:
       duration: 0
     maintainAspectRatio: false
+    responsive: true
 
 pages:
   stats:
+    datasets:
+      - data.csv
+      - demographics.csv
+      - mortality_displacement.csv
+      - timestamp.json
     cards:
     charts:
       - name: icu-demographics
         title: Demographics of patients in ICU
+        uses: demographics
         type: 'demographics'
         x: 'age_group'
         datasets:
@@ -34,13 +41,14 @@ pages:
             column: 'all_patients'
             backgroundColor: 'patient'
             borderColor: 'patient'
-            filter: 'filter_zero_vals'
+            filter: 'filter_zero_values'
             scalelabel: 'Number of patients'
         sources:
           'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
         explanation: http://google.com
       - name: icu-demographics-death
         title: Demographics of deaths in ICU
+        uses: demographics
         type: 'demographics'
         x: 'age_group'
         datasets:
@@ -48,12 +56,13 @@ pages:
             column: 'died'
             backgroundColor: 'deaths'
             borderColor: 'deaths'
-            filter: 'filter_zero_vals'
+            filter: 'filter_zero_values'
             scalelabel: 'Number of patients'
         sources:
           'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
       - name: icu-demographics-recovered
         title: Demographics of recovered patients in ICU
+        uses: demographics
         type: 'demographics'
         x: 'age_group'
         datasets:
@@ -61,7 +70,7 @@ pages:
             column: 'survived'
             backgroundColor: 'recovered'
             borderColor: 'recovered'
-            filter: 'filter_zero_vals'
+            filter: 'filter_zero_values'
             scalelabel: 'Percentage of patients'
         sources:
           'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
