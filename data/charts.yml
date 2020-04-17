@@ -1,0 +1,67 @@
+chart_config:
+  colors:
+    patient: "rgba(75, 192, 192, 1)"
+    deaths: "rgba(192, 75, 75, 1)"
+    recovered: "rgba(75, 192, 75, 1)"
+
+  aesthetics:
+    lineTension: 0.1
+    pointRadius: 5
+    pointHoverRadius: 5
+
+  default_options:
+    scales:
+      yAxes:
+        - scaleLabel:
+          display: true
+    tooltips:
+      mode: 'x'
+      bodyFontSize: 14
+    animation:
+      duration: 0
+    maintainAspectRatio: false
+
+pages:
+  stats:
+    cards:
+    charts:
+      - name: icu-demographics
+        title: Demographics of patients in ICU
+        type: 'demographics'
+        x: 'age_group'
+        datasets:
+          - label: "Demographics of patients in ICU"
+            column: 'all_patients'
+            backgroundColor: 'patient'
+            borderColor: 'patient'
+            filter: 'filter_zero_vals'
+            scalelabel: 'Number of patients'
+        sources:
+          'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
+        explanation: http://google.com
+      - name: icu-demographics-death
+        title: Demographics of deaths in ICU
+        type: 'demographics'
+        x: 'age_group'
+        datasets:
+          - label: "Demographics of deaths in ICU"
+            column: 'died'
+            backgroundColor: 'deaths'
+            borderColor: 'deaths'
+            filter: 'filter_zero_vals'
+            scalelabel: 'Number of patients'
+        sources:
+          'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
+      - name: icu-demographics-recovered
+        title: Demographics of recovered patients in ICU
+        type: 'demographics'
+        x: 'age_group'
+        datasets:
+          - label: "Demographics of recovered patients from ICU"
+            column: 'survived'
+            backgroundColor: 'recovered'
+            borderColor: 'recovered'
+            filter: 'filter_zero_vals'
+            scalelabel: 'Percentage of patients'
+        sources:
+          'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp

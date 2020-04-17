@@ -11,75 +11,7 @@ function get_values_for(data, field) {
 }
 
 filter_functions = {
-    'filter_zero_vals': filter_zero_vals
-}
-
-default_aesthetics_for_dataset = {
-    lineTension: 0.1,
-    pointRadius: 5,
-    pointHoverRadius: 5
-}
-
-default_chart_options = {
-    scales: {
-        yAxes: [{
-            scaleLabel: {
-                display: true,
-            }
-        }]
-    },
-    tooltips:  {
-        mode: 'x',
-        bodyFontSize: 14
-    },
-    animation: {
-        duration: 0
-    },
-    maintainAspectRatio: false
-}
-
-colors = {
-    patient: "rgba(75, 192, 192, 1)",
-    deaths: "rgba(192, 75, 75, 1)",
-    recovered: "rgba(75, 192, 75, 1)"
-}
-
-charts = {
-    demographics: {
-        'icu-demographics': {
-            x: 'age_group',
-            datasets: [{
-                label: "Demographics of patients in ICU",
-                column: 'all_patients',
-                backgroundColor: colors['patient'],
-                borderColor: colors['patient'],
-                filter: filter_zero_vals,
-                scalelabel: 'percentage of patients'
-            }]
-        },
-        'icu-demographics-death': {
-            x: 'age_group',
-            datasets: [{
-                label: "Demographics of deaths in ICU",
-                column: 'died',
-                backgroundColor: colors['deaths'],
-                borderColor: colors['deaths'],
-                filter: filter_zero_vals,
-                scalelabel: 'percentage of patients'
-            }]
-        },
-        'icu-demographics-recovered': {
-            x: 'age_group',
-            datasets: [{
-                label: "Demographics of recovered patients from ICU",
-                column: 'survived',
-                backgroundColor: colors['recovered'],
-                borderColor: colors['recovered'],
-                filter: filter_zero_vals,
-                scalelabel: 'percentage of patients'
-            }]
-        }
-    }
+    'filter_zero_values': filter_zero_vals
 }
 
 function append_datasets_to_template(data, template, options) {
@@ -131,15 +63,19 @@ function makeDemographics(data) {
 }
 
 
-
+datasets = {}
 
 function update(){
     console.log('Updating')
     var ts = new Date().getTime()
-    //d3.csv('data.csv?' + ts).then(makeCharts)
-    d3.csv('demographics.csv?' + ts).then(makeDemographics)
-    //d3.csv('mortality_displacement.csv?' + ts).then(makeMortalityDisplacement)
-    d3.json('timestamp.json?' + ts).then(updateTimestamp)
+    Promise.all([
+        //d3.csv('data.csv?' + ts).then(makeCharts)
+        d3.csv('demographics.csv?' + ts).then(makeDemographics)
+        //d3.csv('mortality_displacement.csv?' + ts).then(makeMortalityDisplacement)
+        d3.json('timestamp.json?' + ts).then(updateTimestamp)
+     ]).then(function (files) {
+        console.log(files)
+     })
 }
 
 
@@ -624,9 +560,8 @@ function null_array(length) {
 //}
 
 //document.addEventListener("DOMContentLoaded", function(e) {
-document.update = update // bind to document scope so we can use it from the console
 update()
 setInterval(function () {
     update()
-}, 600 * 1000) // update every 10 min
+}, 600 * 3000) // update every 30 min
 //})
