@@ -1,8 +1,21 @@
 chart_config:
   colors:
     patient: "rgba(75, 192, 192, 1)"
+    patients-afive: "rgba(75, 192, 192, .5)"
     deaths: "rgba(192, 75, 75, 1)"
+    deaths-afive: "rgba(192, 75, 75, .5)"
     recovered: "rgba(75, 192, 75, 1)"
+    recovered-afive: "rgba(75, 192, 75, .5)"
+    moved: "rgba(54, 162, 235, 1)"
+    moved-afive: "rgba(54, 162, 235, .5)"
+    icu-covid-beds: "rgba(192, 192, 192, .5)"
+    icu-beds: "rgba(0, 0, 0, .5)"
+    derivate: "rgba(192, 75, 192, 1)"
+    derivate-afive: "rgba(192, 75, 192, .5)"
+    derivate-afour: "rgba(192, 75, 192, .4)"
+    derivate-athree: "rgba(192, 75, 192, .3)"
+    derivate-atwo: "rgba(192, 75, 192, .2)"
+    derivate-aone: "rgba(192, 75, 192, .1)"
 
   aesthetics:
     lineTension: 0.1
@@ -14,6 +27,9 @@ chart_config:
       yAxes:
         - scaleLabel:
             display: true
+      xAxes:
+        - scaleLabel:
+            display: true
     tooltips:
       mode: 'x'
       bodyFontSize: 14
@@ -22,8 +38,21 @@ chart_config:
     maintainAspectRatio: false
     responsive: true
 
+  default_demographics_options:
+    scales:
+      xAxes:
+        - scaleLabel:
+            labelString: "Age groups"
+
+  linechart_default_dataset_vals:
+    fill: false
+    lineTension: 0
+    pointRadius: 3
+    pointHoverRadius: 5
+
 pages:
   stats:
+    file: index.html
     datasets:
       - data.csv
       - demographics.csv
@@ -31,11 +60,180 @@ pages:
       - timestamp.json
     cards:
     charts:
+      - name: icu-beds
+        title: Beds used in ICU
+        type: line
+        uses: data
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of beds"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: "ICU bed limit for COVID patients"
+            column: covid_beds
+            filter:
+              - filter_zero_values
+              - append_last_nonzero_value_to_end
+            backgroundColor: icu-covid-beds
+            borderColor: icu-covid-beds
+            borderDash: [10,5]
+            spanGaps: true
+          - label: "ICU bed limit for COVID and non-COVID patients"
+            column: beds
+            filter:
+              - filter_zero_values
+              - append_last_nonzero_value_to_end
+            backgroundColor: icu-beds
+            borderColor: icu-beds
+            borderDash: [10, 5]
+            spanGaps: true
+          - label: "Confirmed COVID patients in ICU"
+            column: intakeCount
+            filter: remove_last_three
+            backgroundColor: patient
+            borderColor: patient
+          - label: "Points still being updated by ICUs"
+            column: intakeCount
+            filter: last_three_rest_null
+            backgroundColor: patients-afive
+            borderColor: patients-afive
+
+      - name: icu-growth
+        title: Growth of confirmed COVID patients in ICU
+        type: line
+        uses: data
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Growth rate in percentage"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: "Growth as percentage change"
+            column: growth_intakeCount
+            filter:
+              - remove_last_three
+              - percentage_fraction_to_percentage
+            backgroundColor: derivate-atwo
+            borderColor: derivate-atwo
+          - label: "Points still being updated by ICUs"
+            column: growth_intakeCount
+            filter:
+              - last_three_rest_null
+              - percentage_fraction_to_percentage
+            backgroundColor: derivate-aone
+            borderColor: derivate-aone
+          - label: "Simple Moving Average (5 days)"
+            column: sma5_growth_intakeCount
+            filter:
+              - remove_last_three
+              - filter_zero_values
+              - percentage_fraction_to_percentage
+            backgroundColor: derivate
+            borderColor: derivate
+
+      - name: icu-evolution-mortality
+        title: Evolution of mortality rate in ICU
+        uses: data
+        type: line
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: Mortality rate in percentage
+            xAxes:
+              - scaleLabel:
+                  labelString: Date
+        datasets:
+          - label: Evolution of mortality rate in ICU
+            column: mortality_rate
+            filter:
+              - remove_last_three
+              - percentage_fraction_to_percentage
+              - filter_zero_values
+            backgroundColor: deaths
+            borderColor: deaths
+          - label: Points still being updated by ICUs
+            column: mortality_rate
+            filter:
+              - percentage_fraction_to_percentage
+              - last_three_rest_null
+            backgroundColor: deaths-afive
+            borderColor: deaths-afive
+
+      - name: icu-recovered-vs-deceased
+        title: Patients recovered vs. deceased
+        uses: data
+        type: line
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: Number of patients
+            xAxes:
+              - scaleLabel:
+                  labelString: Date
+        datasets:
+          - label: Patients recovered
+            column: survivors
+            filter:
+              - remove_last_three
+              - filter_zero_values
+            backgroundColor: recovered
+            borderColor: recovered
+          - label: Points still being updated by ICUs
+            column: survivors
+            filter:
+              - last_three_rest_null
+            backgroundColor: recovered-afive
+            borderColor: recovered-afive
+          - label: Patients deceased
+            column: died
+            filter:
+             - remove_last_three
+             - filter_zero_values
+            backgroundColor: deaths
+            borderColor: deaths
+          - label: Points still being updated by ICUs
+            column: died
+            filter:
+             - last_three_rest_null
+            backgroundColor: deaths-afive
+            borderColor: deaths-afive
+          - label: Patients moved from ICU to hospital
+            column: moved
+            filter:
+              - remove_last_three
+              - filter_zero_values
+            backgroundColor: moved
+            borderColor: moved
+          - label: Points still being updated by ICUs
+            column: moved
+            filter:
+              - last_three_rest_null
+            backgroundColor: moved-afive
+            borderColor: moved-afive
+
       - name: icu-demographics
         title: Demographics of patients in ICU
         uses: demographics
         type: 'demographics'
         x: 'age_group'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of patients"
         datasets:
           - label: "Demographics of patients in ICU"
             column: 'all_patients'
@@ -46,11 +244,17 @@ pages:
         sources:
           'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
         explanation: http://google.com
+
       - name: icu-demographics-death
         title: Demographics of deaths in ICU
         uses: demographics
         type: 'demographics'
         x: 'age_group'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased"
         datasets:
           - label: "Demographics of deaths in ICU"
             column: 'died'
@@ -60,17 +264,23 @@ pages:
             scalelabel: 'Number of patients'
         sources:
           'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
+
       - name: icu-demographics-recovered
         title: Demographics of recovered patients in ICU
         uses: demographics
         type: 'demographics'
         x: 'age_group'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of recovered"
         datasets:
           - label: "Demographics of recovered patients from ICU"
             column: 'survived'
             backgroundColor: 'recovered'
             borderColor: 'recovered'
             filter: 'filter_zero_values'
-            scalelabel: 'Percentage of patients'
+            scalelabel: 'Number of patients'
         sources:
           'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp

@@ -48,17 +48,21 @@ df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/
 df.rename({'value': 'intakeCount'}, axis=1, inplace=True)
 df['intakeCount'] = df['intakeCount'].astype(int)
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/died-and-survivors-cumulative.xlsx',
-               ['died', 'survivors'])
+               ['died', 'survivors', 'moved'])
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/intake-cumulative.xlsx',
                ['value'], rename={'value': 'intakeCumulative'})
 df = join_csv(df, 'data/beds.csv', ['beds'])
+df['covid_beds'] = df['beds'] - 500
+df['covid_beds'] = df['covid_beds'].clip(0)
+df['beds'] = df['beds']
 
 df['died'] = df['died'].fillna(0).astype(int)
 df['survivors'] = df['survivors'].fillna(0).astype(int)
+df['moved'] = df['moved'].fillna(0).astype(int)
 df['intakeCumulative'] = df['intakeCumulative'].fillna(0).astype(int)
 
 df['mortality_rate'] = df.apply(
-    lambda row: row['died'] / row['intakeCumulative'] if row['intakeCumulative'] > 0 else np.NaN, axis=1)
+    lambda row: float(row['died']) / row['intakeCumulative'] if row['intakeCumulative'] > 0 else np.NaN, axis=1)
 df['mortality_rate'] = df['mortality_rate'].replace(0, np.NaN)
 
 df = calc_growth(df, 'intakeCount')

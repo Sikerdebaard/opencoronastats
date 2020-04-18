@@ -26,4 +26,7 @@ env = Environment(
 
 for page, data in pdata['pages'].items():
     template = env.get_template('page.html.jinja')
-    print(template.render(version=123, chart_config=pdata['chart_config'], page=page, data=data, charts=group_by_two(data['charts']), cards=group_by_two(data['cards'])))
+    page = template.render(version=123, chart_config=pdata['chart_config'], page=page, data=data, charts=group_by_two(data['charts']), cards=group_by_two(data['cards']))
+
+    with open(f'html/{data["file"]}', 'w') as fh:
+        fh.write(page)
