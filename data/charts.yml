@@ -129,6 +129,42 @@ pages:
             borderColor: derivate
             filter: filter_zero_values
 
+      - name: excess-mortality-vs-rivm
+        title: Mortality displacement vs. confirmed deaths
+        type: line
+        uses: mortality_displacement
+        x: week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased"
+                ticks:
+                  beginAtZero: true
+            xAxes:
+              - scaleLabel:
+                  labelString: "Weeknumber"
+        datasets:
+          - label: Mortality displacement upper
+            column: normalized_excess_mortality_high
+            backgroundColor: derivate
+            borderColor: transparent
+            filter:
+              - filter_zero_values
+          - label: Mortality displacement lower
+            column: normalized_excess_mortality_low
+            fill: 0
+            backgroundColor: derivate-atwo
+            borderColor: transparent
+            filter:
+              - filter_zero_values
+          - label: Confirmed deaths
+            column: official_deceased
+            backgroundColor: deaths
+            borderColor: deaths
+            filter:
+              - filter_zero_values
+
       - name: rivm-daily-nums
         title: Case counts
         type: line
