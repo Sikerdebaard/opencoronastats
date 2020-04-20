@@ -2,3 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+.markdown h1 {
+    @apply text-4xl mt-2;
+}
+
+.markdown h2 {
+  @apply text-xl mt-2 ml-4;
+}
+
+.markdown h3 {
+  @apply text-lg mt-2 ml-6;
+}
+
+.markdown p {
+  @apply text-lg mt-2 ml-8;
+}
+
+.markdown a {
+  @apply text-blue-600 underline;
+}
+
+.markdown .toc {
+    @apply border-solid border-4 border-gray-600 w-full w-1/2 w-1/2 p-3;
+}

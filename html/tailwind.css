@@ -13934,6 +13934,44 @@ video {
   transition-duration: 1000ms;
 }
 
+.markdown h1 {
+  font-size: 2.25rem;
+  margin-top: 0.5rem;
+}
+
+.markdown h2 {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+.markdown h3 {
+  font-size: 1.125rem;
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+}
+
+.markdown p {
+  font-size: 1.125rem;
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+}
+
+.markdown a {
+  color: #3182ce;
+  text-decoration: underline;
+}
+
+.markdown .toc {
+  border-style: solid;
+  border-width: 4px;
+  border-color: #718096;
+  width: 100%;
+  width: 50%;
+  width: 50%;
+  padding: 0.75rem;
+}
+
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;
@@ -67185,4 +67223,3 @@ video {
     transition-duration: 1000ms;
   }
 }
-

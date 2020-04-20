@@ -1,5 +1,7 @@
 import yaml
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape, Markup
+import markdown
+from markdown.extensions.toc import TocExtension
 
 
 def group_by_two(arr):
@@ -24,9 +26,26 @@ env = Environment(
     autoescape=select_autoescape(['jinja'])
 )
 
+md = markdown.Markdown(extensions=['meta', 'toc'])
+
+env.filters['markdown'] = lambda text: Markup(md.convert(text))
+env.filters['stylize'] = lambda text: Markup(md.convert(text))
+
 for page, data in pdata['pages'].items():
     template = env.get_template('page.html.jinja')
-    page = template.render(version=123, chart_config=pdata['chart_config'], page=page, data=data, charts=group_by_two(data['charts']), cards=group_by_two(data['cards']))
+    page = template.render(template='stats.html.jinja', version=123, chart_config=pdata['chart_config'], page=page, data=data, charts=group_by_two(data['charts']), cards=group_by_two(data['cards']))
 
     with open(f'html/{data["file"]}', 'w') as fh:
+        fh.write(page)
+
+markdown_pages = ['explanation.md']
+
+for markdown_page in markdown_pages:
+    with open(f'templates/{markdown_page}', 'r') as fh:
+        mdcontent = fh.read()
+
+    template = env.get_template('page.html.jinja')
+    page = template.render(template='markdown.html.jinja', version=123, content=mdcontent)
+
+    with open(f'html/{markdown_page.rsplit(".", 1)[0]}.html', 'w') as fh:
         fh.write(page)

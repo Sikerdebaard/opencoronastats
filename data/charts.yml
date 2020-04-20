@@ -1,13 +1,11 @@
 chart_config:
   colors:
-    patient: "rgba(75, 192, 192, 1)"
+    patients: "rgba(75, 192, 192, 1)"
     patients-afive: "rgba(75, 192, 192, .5)"
     deaths: "rgba(192, 75, 75, 1)"
     deaths-afive: "rgba(192, 75, 75, .5)"
     recovered: "rgba(75, 192, 75, 1)"
     recovered-afive: "rgba(75, 192, 75, .5)"
-    moved: "rgba(54, 162, 235, 1)"
-    moved-afive: "rgba(54, 162, 235, .5)"
     icu-covid-beds: "rgba(192, 192, 192, .5)"
     icu-beds: "rgba(0, 0, 0, .5)"
     derivate: "rgba(192, 75, 192, 1)"
@@ -16,6 +14,9 @@ chart_config:
     derivate-athree: "rgba(192, 75, 192, .3)"
     derivate-atwo: "rgba(192, 75, 192, .2)"
     derivate-aone: "rgba(192, 75, 192, .1)"
+    ci-top: "rgba(75, 192, 75, .1)"
+    ci-bottom: "rgba(75, 192, 75, .1)"
+    transparent: "transparent"
 
   aesthetics:
     lineTension: 0.1
@@ -51,12 +52,210 @@ chart_config:
     pointHoverRadius: 5
 
 pages:
-  stats:
+  population:
+    file: population.html
+    datasets:
+      - mortality_displacement.csv
+      - rivm.csv
+    cards:
+    charts:
+      - name: excess-mortality
+        title: Mortality displacement over the population of NL by weeknumber
+        type: line
+        uses: mortality_displacement
+        x: week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased"
+                ticks:
+                  beginAtZero: true
+            xAxes:
+              - scaleLabel:
+                  labelString: "Weeknumber"
+        datasets:
+          - label: Confidence interval 95% top
+            column: ci_0.95_high
+            backgroundColor: ci-top
+            borderColor: transparent
+            fill: false
+            lineTension: 0
+            pointRadius: 0
+          - label: Confidence interval 95% bottom
+            column: ci_0.95_low
+            fill: 0
+            backgroundColor: ci-bottom
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+          - label: '%column%'
+            columnbyindex: 0
+            backgroundColor: derivate-aone
+            borderColor: derivate-aone
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidde: true
+          - label: '%column%'
+            columnbyindex: 0
+            backgroundColor: derivate-atwo
+            borderColor: derivate-atwo
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 1
+            backgroundColor: derivate-athree
+            borderColor: derivate-athree
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: derivate-afour
+            borderColor: derivate-afour
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: derivate-afive
+            borderColor: derivate-afive
+            pointRadius: 0
+            pointHoverRadius: 0
+          - label: '%column%'
+            columnbyindex: 4
+            backgroundColor: derivate
+            borderColor: derivate
+            filter: filter_zero_values
+
+      - name: rivm-daily-nums
+        title: Case counts
+        type: line
+        uses: rivm
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of people"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Infected
+            column: infected
+            backgroundColor: icu-beds
+            borderColor: icu-beds
+            filter:
+              - remove_last
+              - filter_zero_values
+          - label: Hospitalized
+            column: hospitalized
+            backgroundColor: patients
+            borderColor: patients
+            filter:
+              - remove_last
+              - filter_zero_values
+          - label: Deceased
+            column: deceased
+            backgroundColor: deaths
+            borderColor: deaths
+            filter:
+              - remove_last
+              - filter_zero_values
+
+      - name: rivm-nums
+        title: Cumulative case counts
+        type: line
+        uses: rivm
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of people"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Infected cumulative
+            column: infected_cumulative
+            backgroundColor: icu-beds
+            borderColor: icu-beds
+            filter:
+              - remove_last
+              - filter_zero_values
+          - label: Hospitalized cumulative
+            column: hospitalized_cumulative
+            backgroundColor: patients
+            borderColor: patients
+            filter:
+              - remove_last
+              - filter_zero_values
+          - label: Deceased cumulative
+            column: deceased_cumulative
+            backgroundColor: deaths
+            borderColor: deaths
+            filter:
+              - remove_last
+              - filter_zero_values
+
+      - name: tests-done-vs-positive
+        title: Tests done vs. positive tests
+        type: line
+        uses: rivm
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of tests"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Number of tests done
+            column: tests
+            backgroundColor: patients
+            borderColor: patients
+            filter: filter_zero_values
+          - label: Number of positive tests
+            column: positive_tests
+            backgroundColor: deaths
+            borderColor: deaths
+            filter: filter_zero_values
+
+      - name: tests-cumulative
+        title: Cumulative tests done vs. cumulative positive tests
+        type: line
+        uses: rivm
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of tests"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Number of tests done
+            column: tests_cumulative
+            backgroundColor: patients
+            borderColor: patients
+            filter: filter_zero_values
+          - label: Number of positive tests
+            column: positive_tests_cumulative
+            backgroundColor: deaths
+            borderColor: deaths
+            filter: filter_zero_values
+
+  icu:
     file: index.html
     datasets:
       - data.csv
       - demographics.csv
-      - mortality_displacement.csv
       - timestamp.json
     cards:
     charts:
@@ -95,8 +294,8 @@ pages:
           - label: "Confirmed COVID patients in ICU"
             column: intakeCount
             filter: remove_last_three
-            backgroundColor: patient
-            borderColor: patient
+            backgroundColor: patients
+            borderColor: patients
           - label: "Points still being updated by ICUs"
             column: intakeCount
             filter: last_three_rest_null
@@ -215,14 +414,14 @@ pages:
             filter:
               - remove_last_three
               - filter_zero_values
-            backgroundColor: moved
-            borderColor: moved
+            backgroundColor: patients
+            borderColor: patients
           - label: Points still being updated by ICUs
             column: moved
             filter:
               - last_three_rest_null
-            backgroundColor: moved-afive
-            borderColor: moved-afive
+            backgroundColor: patients-afive
+            borderColor: patients-afive
 
       - name: icu-demographics
         title: Demographics of patients in ICU
@@ -237,8 +436,8 @@ pages:
         datasets:
           - label: "Demographics of patients in ICU"
             column: 'all_patients'
-            backgroundColor: 'patient'
-            borderColor: 'patient'
+            backgroundColor: patients
+            borderColor: patients
             filter: 'filter_zero_values'
             scalelabel: 'Number of patients'
         sources:

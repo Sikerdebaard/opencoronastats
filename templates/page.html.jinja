@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="favicon-32x32.png">
     <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <link href="tailwind-min.css" rel="stylesheet">
+    <link href="tailwind.css" rel="stylesheet">
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" crossorigin="anonymous"></script>
     {# <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js" crossorigin="anonymous"></script> #}
@@ -45,26 +45,44 @@
         <div class="xl:mt-16 xl:w-48 xl:fixed xl:left-0 xl:top-0 content-center xl:content-start text-left justify-between">
             <ul class="list-reset flex flex-row xl:flex-col py-0 xl:py-3 px-1 xl:px-2 text-center xl:text-left">
                 <li class="mr-3 flex-1">
-                    <a href="#"
-                       class="block py-1 xl:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-white-800 hover:border-pink-500">
+                    <a href="index.html"
+                       class="block py-1 xl:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-white-800 hover:border-red-500">
                         <i class="fas fa-tasks pr-0 xl:pr-3"></i><span
                             class="pb-1 xl:pb-0 text-xs xl:text-base text-white-600 xl:text-white-400 block xl:inline-block">ICU</span>
                     </a>
                 </li>
                 <li class="mr-3 flex-1">
                     <a href="#"
-                       class="block py-1 xl:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-white-600">
+                       class="block py-1 xl:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-white-600 hover:border-red-500">
                         <i class="fas fa-chart-area pr-0 xl:pr-3 text-white-600"></i><span
                             class="pb-1 xl:pb-0 text-xs xl:text-base text-white xl:text-white block xl:inline-block">Hospital</span>
                     </a>
                 </li>
                 <li class="mr-3 flex-1">
-                    <a href="#"
-                       class="block py-1 xl:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-white-800 hover:border-purple-500">
+                    <a href="population.html"
+                       class="block py-1 xl:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-white-600 hover:border-red-500">
                         <i class="fa fa-envelope pr-0 xl:pr-3"></i><span
                             class="pb-1 xl:pb-0 text-xs xl:text-base text-white-600 xl:text-white-400 block xl:inline-block">Population</span>
                     </a>
                 </li>
+
+                <li class="mr-3 flex-1">
+                    <a href="explanation.html"
+                       class="block py-1 xl:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-white-800 hover:border-red-500">
+                        <i class="fa fa-envelope pr-0 xl:pr-3"></i><span
+                            class="pb-1 xl:pb-0 text-xs xl:text-base text-white-600 xl:text-white-400 block xl:inline-block">Explanations</span>
+                    </a>
+                </li>
+
+                {#
+                <li class="mr-3 flex-1">
+                    <a href="about.html"
+                       class="block py-1 xl:py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-white-600 hover:border-red-500">
+                        <i class="fa fa-envelope pr-0 xl:pr-3"></i><span
+                            class="pb-1 xl:pb-0 text-xs xl:text-base text-white-600 xl:text-white-400 block xl:inline-block">About us</span>
+                    </a>
+                </li>
+                #}
             </ul>
         </div>
 
@@ -73,7 +91,7 @@
 
     <div class="main-content flex-1 bg-gray-100 mt-0 xl:mt-0 pb-24 xl:pb-5">
 
-       {% include page ~ '.html.jinja' with context %}
+       {% include template with context %}
 
         <div class="w-full p-2">
             <div class="text-gray-700 text-center p-2"><a class="text-gray-500" href="data.csv">download raw chart
