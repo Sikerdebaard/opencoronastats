@@ -8,7 +8,7 @@ import json
 output_path = Path('./html/')
 
 last_update = datetime.now()
-last_update_str = last_update.strftime("%d-%m-%Y %H:%I")
+last_update_str = last_update.strftime("%d-%m-%Y %H:%M")
 
 print(last_update_str)
 
