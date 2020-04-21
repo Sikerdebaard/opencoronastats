@@ -58,7 +58,6 @@ pages:
     datasets:
       - mortality_displacement.csv
       - rivm.csv
-      - cards.json
     cards:
       - id: rivm-total-tests
         icon: fa-vial
@@ -327,7 +326,6 @@ pages:
       - data.csv
       - demographics.csv
       - timestamp.json
-      - cards.json
     cards:
       - id: doubling-rate
         icon: fa-superscript

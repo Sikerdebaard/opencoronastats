@@ -249,31 +249,12 @@ function download_dataset(dataset) {
 function update(){
     //console.log('Updating')
 
-    proms = []
-    for (var i in chartdata['datasets']) {
-        proms.push(download_dataset(chartdata['datasets'][i]))
-    }
-
-    Promise.all(proms).then(function (files) {
-        for (var i in chartdata['datasets']) {
-            datasets[chartdata['datasets'][i].split(/\.(?=[^\.]+$)/)[0]] = files[i]
-        }
-        draw()
-     })
+    download_dataset('cards.json').then(updateCards)
 }
 
-function draw() {
-    for (i in chartdata['charts']) {
-        var chart = chartdata['charts'][i]
-        if (chart['type'] == 'demographics') {
-            drawDemographics(chart)
-        } else if (chart['type'] == 'line') {
-            drawLine(chart)
-        }
-    }
-
+function updateCards(data) {
     for (i in cards) {
-        carddata = datasets['cards'][cards[i]]
+        carddata = data[cards[i]]
         document.getElementById(cards[i]).querySelectorAll('*').forEach(function(el) {
             el.className = el.className.replace(/\bgreen\b/g, carddata['color'])
             el.className = el.className.replace(/\bred\b/g, carddata['color'])
@@ -298,6 +279,29 @@ function draw() {
 
         el = document.getElementById(cards[i] + '-value').innerHTML = carddata['value']
         el = document.getElementById(cards[i] + '-title').innerHTML = carddata['title']
+    }
+
+    proms = []
+    for (var i in chartdata['datasets']) {
+        proms.push(download_dataset(chartdata['datasets'][i]))
+    }
+
+    Promise.all(proms).then(function (files) {
+        for (var i in chartdata['datasets']) {
+            datasets[chartdata['datasets'][i].split(/\.(?=[^\.]+$)/)[0]] = files[i]
+        }
+        draw()
+     })
+}
+
+function draw() {
+    for (i in chartdata['charts']) {
+        var chart = chartdata['charts'][i]
+        if (chart['type'] == 'demographics') {
+            drawDemographics(chart)
+        } else if (chart['type'] == 'line') {
+            drawLine(chart)
+        }
     }
 }
 
