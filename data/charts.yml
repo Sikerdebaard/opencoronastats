@@ -364,6 +364,7 @@ pages:
         explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Confirmed-COVID-patients-in-ICU
         sources:
           Stichting NICE: https://www.stichting-nice.nl/
+          LCPS: https://www.lcps.nu
         options:
           scales:
             yAxes:
