@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex p-2">
+        <div class="flex {% if card.sources is defined %}{% else %} justify-end {% endif %} p-2">
             {% if card.sources is defined %}
                 {% if card.sources.keys() | length > 1 %}
                     <div class="justify-begin text-gray-400">Sources:
