@@ -46,8 +46,16 @@ env.filters['markdown'] = lambda text: Markup(md.convert(text))
 env.filters['stylize'] = lambda text: Markup(md.convert(text))
 
 for page, data in pdata['pages'].items():
+    if 'cards' in data:
+        if data['cards'] is None:
+            card_keys = []
+        else:
+            card_keys = [x['id'] for x in data['cards']]
+    else:
+        card_keys = []
+
     template = env.get_template('page.html.jinja')
-    page = template.render(last_update=last_update_str, template='stats.html.jinja', version=123, chart_config=pdata['chart_config'], page=page, data=data, charts=group_by_two(data['charts']), cards=group_by_two(data['cards']))
+    page = template.render(last_update=last_update_str, template='stats.html.jinja', version=123, chart_config=pdata['chart_config'], page=page, data=data, charts=group_by_two(data['charts']), cards=group_by_two(data['cards']), card_keys=card_keys)
 
     with open(f'html/{data["file"]}', 'w') as fh:
         fh.write(page)

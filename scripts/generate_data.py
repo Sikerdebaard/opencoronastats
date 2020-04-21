@@ -64,6 +64,11 @@ df['mortality_rate'] = df['mortality_rate'].replace(0, np.NaN)
 
 df = calc_growth(df, 'intakeCount')
 
+df_lcps = pd.read_csv('https://github.com/J535D165/CoronaWatchNL/raw/master/data/lcps_ic.csv', index_col=0)
+df_lcps.rename(columns={'Aantal': 'lcps_beds'}, inplace=True)
+
+df = df.join(df_lcps)
+
 output_path = Path('./html')
 
 df.to_csv(output_path / 'data.csv', index_label='date')
@@ -71,7 +76,7 @@ df.to_csv(output_path / 'data.csv', index_label='date')
 
 # demographics
 
-df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution.xlsx', index_col=0)
+df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution-status.xlsx', index_col=0)
 df = join_xlsx(df, 'https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution-died-and-survivors.xlsx', ['died', 'survived'])
 df.to_csv(output_path / 'demographics.csv', index_label='age_group')
 

@@ -2,6 +2,7 @@ chart_config:
   colors:
     patients: "rgba(75, 192, 192, 1)"
     patients-afive: "rgba(75, 192, 192, .5)"
+    moved: "rgba(255, 159, 64, 1)"
     deaths: "rgba(192, 75, 75, 1)"
     deaths-afive: "rgba(192, 75, 75, .5)"
     recovered: "rgba(75, 192, 75, 1)"
@@ -57,11 +58,35 @@ pages:
     datasets:
       - mortality_displacement.csv
       - rivm.csv
+      - cards.json
     cards:
+      - id: rivm-total-tests
+        icon: fa-vial
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-total-tests-positive
+        icon: fa-plus-circle
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-total-infected
+        icon: fa-virus
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-total-hospitalized
+        icon: fa-hospital
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-total-deceased
+        icon: fa-skull-crossbones
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+
     charts:
       - name: excess-mortality
         title: Mortality displacement over the population of NL by weeknumber
         type: line
+        sources:
+          CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70895ned/table?fromstatweb
         uses: mortality_displacement
         x: week
         options:
@@ -134,13 +159,14 @@ pages:
         type: line
         uses: mortality_displacement
         x: week
+        sources:
+          CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70895ned/table?fromstatweb
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
         options:
           scales:
             yAxes:
               - scaleLabel:
                   labelString: "Number of deceased"
-                ticks:
-                  beginAtZero: true
             xAxes:
               - scaleLabel:
                   labelString: "Weeknumber"
@@ -170,6 +196,8 @@ pages:
         type: line
         uses: rivm
         x: date
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
         options:
           scales:
             yAxes:
@@ -206,6 +234,8 @@ pages:
         type: line
         uses: rivm
         x: date
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
         options:
           scales:
             yAxes:
@@ -242,6 +272,8 @@ pages:
         type: line
         uses: rivm
         x: date
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
         options:
           scales:
             yAxes:
@@ -267,6 +299,8 @@ pages:
         type: line
         uses: rivm
         x: date
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
         options:
           scales:
             yAxes:
@@ -293,13 +327,45 @@ pages:
       - data.csv
       - demographics.csv
       - timestamp.json
+      - cards.json
     cards:
+      - id: doubling-rate
+        icon: fa-superscript
+        postfix: day(s)
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Doubling-Rate-and-Half-Life
+
+      - id: icu-growth
+        icon: fa-chart-line
+        postfix: '%'
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Daily-growth-rate
+
+      - id: patients-recovered-from-icu
+        icon: fa-home
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Patients-recovered-from-ICU
+
+      - id: patients-deceased-from-icu
+        icon: fa-skull
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Patients-deceased-in-ICU
+
+      - id: beds-used-in-icu
+        icon: fa-bed
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Beds-taken-in-ICU
+
+      - id: cfr-icu
+        icon: fa-skull-crossbones
+        postfix: '%'
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Case-Fatality-Rate-in-ICU
+
+
     charts:
       - name: icu-beds
         title: Beds used in ICU
         type: line
         uses: data
         x: date
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Confirmed-COVID-patients-in-ICU
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
         options:
           scales:
             yAxes:
@@ -337,12 +403,18 @@ pages:
             filter: last_three_rest_null
             backgroundColor: patients-afive
             borderColor: patients-afive
+          - label: "LCPS Reported patients"
+            column: lcps_beds
+            filter: filter_zero_values
+            backgroundColor: derivate-athree
+            borderColor: derivate-athree
 
-      - name: icu-growth
+      - name: icu-growth-chart
         title: Growth of confirmed COVID patients in ICU
         type: line
         uses: data
         x: date
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Growth-of-confirmed-COVID-patients-in-ICU
         options:
           scales:
             yAxes:
@@ -380,6 +452,7 @@ pages:
         uses: data
         type: line
         x: date
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Evolution-of-mortality-rate-in-ICU
         options:
           scales:
             yAxes:
@@ -410,6 +483,9 @@ pages:
         uses: data
         type: line
         x: date
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Patients-recovered-vs.-deceased
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
         options:
           scales:
             yAxes:
@@ -464,6 +540,8 @@ pages:
         uses: demographics
         type: 'demographics'
         x: 'age_group'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
         options:
           scales:
             yAxes:
@@ -471,14 +549,11 @@ pages:
                   labelString: "Number of patients"
         datasets:
           - label: "Demographics of patients in ICU"
-            column: 'all_patients'
+            column: patients_in_icu
             backgroundColor: patients
             borderColor: patients
             filter: 'filter_zero_values'
             scalelabel: 'Number of patients'
-        sources:
-          'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
-        explanation: http://google.com
 
       - name: icu-demographics-death
         title: Demographics of deaths in ICU
@@ -492,13 +567,13 @@ pages:
                   labelString: "Number of deceased"
         datasets:
           - label: "Demographics of deaths in ICU"
-            column: 'died'
+            column: deceased_patients
             backgroundColor: 'deaths'
             borderColor: 'deaths'
             filter: 'filter_zero_values'
             scalelabel: 'Number of patients'
         sources:
-          'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
+          Stichting NICE: https://www.stichting-nice.nl/
 
       - name: icu-demographics-recovered
         title: Demographics of recovered patients in ICU
@@ -512,10 +587,30 @@ pages:
                   labelString: "Number of recovered"
         datasets:
           - label: "Demographics of recovered patients from ICU"
-            column: 'survived'
+            column: recovered_patients
             backgroundColor: 'recovered'
             borderColor: 'recovered'
             filter: 'filter_zero_values'
             scalelabel: 'Number of patients'
         sources:
-          'Stichting NICE': https://www.stichting-nice.nl/covid-19-op-de-ic.jsp
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: icu-demographics-moved
+        title: Demographics of patients moved from ICU to hospital
+        uses: demographics
+        type: 'demographics'
+        x: 'age_group'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of moved patients"
+        datasets:
+          - label: "Demographics of patients moved from ICU to hospital"
+            column: patients_in_hospital
+            backgroundColor: moved
+            borderColor: moved
+            filter: filter_zero_values
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/

@@ -271,6 +271,34 @@ function draw() {
             drawLine(chart)
         }
     }
+
+    for (i in cards) {
+        carddata = datasets['cards'][cards[i]]
+        document.getElementById(cards[i]).querySelectorAll('*').forEach(function(el) {
+            el.className = el.className.replace(/\bgreen\b/g, carddata['color'])
+            el.className = el.className.replace(/\bred\b/g, carddata['color'])
+        })
+
+        var caret = ''
+        if ('trend' in carddata) {
+            var trend = carddata['trend']
+            if (trend == 0) {
+                caret = 'fa-caret-right'
+            } else if (trend == 1) {
+                caret = 'fa-caret-up'
+            } else {
+                caret = 'fa-caret-down'
+            }
+        }
+
+        var el = document.getElementById(cards[i] + '-arrow')
+        el.className = el.className.replace(/\bfa-caret-up\b/g, caret)
+        el.className = el.className.replace(/\bfa-caret-down\b/g, caret)
+        el.className = el.className.replace(/\bfa-caret-right\b/g, caret)
+
+        el = document.getElementById(cards[i] + '-value').innerHTML = carddata['value']
+        el = document.getElementById(cards[i] + '-title').innerHTML = carddata['title']
+    }
 }
 
 function updateTimestamp(data){
