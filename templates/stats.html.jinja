@@ -62,7 +62,7 @@
                 <canvas id="{{ chart.name }}" class="chartjs" width="undefined" height="undefined"></canvas>
             </div>
         </div>
-        <div class="flex justify-between p-2">
+        <div class="flex {% if chart.sources is defined %}{% else %} justify-end {% endif %} p-2">
             {% if chart.sources is defined %}
                 {% if chart.sources.keys() | length > 1 %}
                     <div class="text-gray-400">Sources:
