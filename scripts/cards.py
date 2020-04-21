@@ -78,7 +78,7 @@ cards['patients-deceased-from-icu'] = {
 
 cards['beds-used-in-icu'] = {
     'value': df_data['lcps_beds'].loc[df_data['lcps_beds'].last_valid_index()].astype(int),
-    'title': 'Patients deceased in ICU',
+    'title': 'Beds used for COVID',
     'color': 'blue'
 
 }
