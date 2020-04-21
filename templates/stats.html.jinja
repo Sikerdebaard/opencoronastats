@@ -27,12 +27,12 @@
                 </div>
             </div>
         </div>
-        <div class="flex {% if card.sources is defined %}{% else %} justify-end {% endif %} p-2">
+        <div class="flex {% if card.sources is defined %}justify-between{% else %} justify-end {% endif %} p-2">
             {% if card.sources is defined %}
                 {% if card.sources.keys() | length > 1 %}
                     <div class="justify-begin text-gray-400">Sources:
                 {% else %}
-                    <div class="text-gray-400">Source:
+                    <div class="justify-begin text-gray-400">Source:
                 {% endif %}
                 {% for name, url in card.sources.items() %}
                   <a href="{{ url }}">{{ name }}</a>
@@ -62,12 +62,12 @@
                 <canvas id="{{ chart.name }}" class="chartjs" width="undefined" height="undefined"></canvas>
             </div>
         </div>
-        <div class="flex {% if chart.sources is defined %}{% else %} justify-end {% endif %} p-2">
+        <div class="flex {% if chart.sources is defined %}justify-between{% else %} justify-end {% endif %} p-2">
             {% if chart.sources is defined %}
                 {% if chart.sources.keys() | length > 1 %}
-                    <div class="text-gray-400">Sources:
+                    <div class="justify-begin text-gray-400">Sources:
                 {% else %}
-                    <div class="text-gray-400">Source:
+                    <div class="justify-begin text-gray-400">Source:
                 {% endif %}
                 {% for name, url in chart.sources.items() %}
                   <a href="{{ url }}">{{ name }}</a>&nbsp
