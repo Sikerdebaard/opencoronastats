@@ -1,10 +1,11 @@
-html/data.csv
-html/demographics.csv
-html/timestamp.json
-html/mortality_displacement.csv
+html/*.csv
+html/*.json
+html/*.html
 .idea
 sandbox.ipynb
-data.csv
+node_modules/
+*.swp
+*.swo
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,0 +1,614 @@
+chart_config:
+  colors:
+    patients: "rgba(75, 192, 192, 1)"
+    patients-afive: "rgba(75, 192, 192, .5)"
+    moved: "rgba(255, 159, 64, 1)"
+    deaths: "rgba(192, 75, 75, 1)"
+    deaths-afive: "rgba(192, 75, 75, .5)"
+    recovered: "rgba(75, 192, 75, 1)"
+    recovered-afive: "rgba(75, 192, 75, .5)"
+    icu-covid-beds: "rgba(192, 192, 192, .5)"
+    icu-beds: "rgba(0, 0, 0, .5)"
+    derivate: "rgba(192, 75, 192, 1)"
+    derivate-afive: "rgba(192, 75, 192, .5)"
+    derivate-afour: "rgba(192, 75, 192, .4)"
+    derivate-athree: "rgba(192, 75, 192, .3)"
+    derivate-atwo: "rgba(192, 75, 192, .2)"
+    derivate-aone: "rgba(192, 75, 192, .1)"
+    ci-top: "rgba(75, 192, 75, .1)"
+    ci-bottom: "rgba(75, 192, 75, .1)"
+    transparent: "transparent"
+
+  aesthetics:
+    lineTension: 0.1
+    pointRadius: 5
+    pointHoverRadius: 5
+
+  default_options:
+    scales:
+      yAxes:
+        - scaleLabel:
+            display: true
+      xAxes:
+        - scaleLabel:
+            display: true
+    tooltips:
+      mode: 'x'
+      bodyFontSize: 14
+    animation:
+      duration: 0
+    maintainAspectRatio: false
+    responsive: true
+
+  default_demographics_options:
+    scales:
+      xAxes:
+        - scaleLabel:
+            labelString: "Age groups"
+
+  linechart_default_dataset_vals:
+    fill: false
+    lineTension: 0
+    pointRadius: 3
+    pointHoverRadius: 5
+
+pages:
+  population:
+    file: population.html
+    datasets:
+      - mortality_displacement.csv
+      - rivm.csv
+    cards:
+      - id: rivm-total-tests
+        icon: fa-vial
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-total-tests-positive
+        icon: fa-plus-circle
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-total-infected
+        icon: fa-virus
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-total-hospitalized
+        icon: fa-hospital
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-total-deceased
+        icon: fa-skull-crossbones
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+
+    charts:
+      - name: excess-mortality
+        title: Mortality displacement over the population of NL by weeknumber
+        type: line
+        sources:
+          CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70895ned/table?fromstatweb
+        uses: mortality_displacement
+        x: week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased"
+                ticks:
+                  beginAtZero: true
+            xAxes:
+              - scaleLabel:
+                  labelString: "Weeknumber"
+        datasets:
+          - label: Confidence interval 95% top
+            column: ci_0.95_high
+            backgroundColor: ci-top
+            borderColor: transparent
+            fill: false
+            lineTension: 0
+            pointRadius: 0
+          - label: Confidence interval 95% bottom
+            column: ci_0.95_low
+            fill: 0
+            backgroundColor: ci-bottom
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+          - label: '%column%'
+            columnbyindex: 0
+            backgroundColor: derivate-aone
+            borderColor: derivate-aone
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidde: true
+          - label: '%column%'
+            columnbyindex: 0
+            backgroundColor: derivate-atwo
+            borderColor: derivate-atwo
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 1
+            backgroundColor: derivate-athree
+            borderColor: derivate-athree
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: derivate-afour
+            borderColor: derivate-afour
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: derivate-afive
+            borderColor: derivate-afive
+            pointRadius: 0
+            pointHoverRadius: 0
+          - label: '%column%'
+            columnbyindex: 4
+            backgroundColor: derivate
+            borderColor: derivate
+            filter: filter_zero_values
+
+      - name: excess-mortality-vs-rivm
+        title: Mortality displacement vs. confirmed deaths
+        type: line
+        uses: mortality_displacement
+        x: week
+        sources:
+          CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70895ned/table?fromstatweb
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Weeknumber"
+        datasets:
+          - label: Mortality displacement upper
+            column: normalized_excess_mortality_high
+            backgroundColor: derivate
+            borderColor: transparent
+            filter:
+              - filter_zero_values
+          - label: Mortality displacement lower
+            column: normalized_excess_mortality_low
+            fill: 0
+            backgroundColor: derivate-atwo
+            borderColor: transparent
+            filter:
+              - filter_zero_values
+          - label: Confirmed deaths
+            column: official_deceased
+            backgroundColor: deaths
+            borderColor: deaths
+            filter:
+              - filter_zero_values
+
+      - name: rivm-daily-nums
+        title: Case counts
+        type: line
+        uses: rivm
+        x: date
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of people"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Infected
+            column: infected
+            backgroundColor: icu-beds
+            borderColor: icu-beds
+            filter:
+              - remove_last
+              - filter_zero_values
+          - label: Hospitalized
+            column: hospitalized
+            backgroundColor: patients
+            borderColor: patients
+            filter:
+              - remove_last
+              - filter_zero_values
+          - label: Deceased
+            column: deceased
+            backgroundColor: deaths
+            borderColor: deaths
+            filter:
+              - remove_last
+              - filter_zero_values
+
+      - name: rivm-nums
+        title: Cumulative case counts
+        type: line
+        uses: rivm
+        x: date
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of people"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Infected cumulative
+            column: infected_cumulative
+            backgroundColor: icu-beds
+            borderColor: icu-beds
+            filter:
+              - remove_last
+              - filter_zero_values
+          - label: Hospitalized cumulative
+            column: hospitalized_cumulative
+            backgroundColor: patients
+            borderColor: patients
+            filter:
+              - remove_last
+              - filter_zero_values
+          - label: Deceased cumulative
+            column: deceased_cumulative
+            backgroundColor: deaths
+            borderColor: deaths
+            filter:
+              - remove_last
+              - filter_zero_values
+
+      - name: tests-done-vs-positive
+        title: Tests done vs. positive tests
+        type: line
+        uses: rivm
+        x: date
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of tests"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Number of tests done
+            column: tests
+            backgroundColor: patients
+            borderColor: patients
+            filter: filter_zero_values
+          - label: Number of positive tests
+            column: positive_tests
+            backgroundColor: deaths
+            borderColor: deaths
+            filter: filter_zero_values
+
+      - name: tests-cumulative
+        title: Cumulative tests done vs. cumulative positive tests
+        type: line
+        uses: rivm
+        x: date
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of tests"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Number of tests done
+            column: tests_cumulative
+            backgroundColor: patients
+            borderColor: patients
+            filter: filter_zero_values
+          - label: Number of positive tests
+            column: positive_tests_cumulative
+            backgroundColor: deaths
+            borderColor: deaths
+            filter: filter_zero_values
+
+  icu:
+    file: index.html
+    datasets:
+      - data.csv
+      - demographics.csv
+      - timestamp.json
+    cards:
+      - id: doubling-rate
+        icon: fa-superscript
+        postfix: day(s)
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Doubling-Rate-and-Half-Life
+
+      - id: icu-growth
+        icon: fa-chart-line
+        postfix: '%'
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Daily-growth-rate
+
+      - id: patients-recovered-from-icu
+        icon: fa-home
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Patients-recovered-from-ICU
+
+      - id: patients-deceased-from-icu
+        icon: fa-skull
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Patients-deceased-in-ICU
+
+      - id: beds-used-in-icu
+        icon: fa-bed
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Beds-taken-in-ICU
+
+      - id: cfr-icu
+        icon: fa-skull-crossbones
+        postfix: '%'
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Case-Fatality-Rate-in-ICU
+
+
+    charts:
+      - name: icu-beds
+        title: Beds used in ICU
+        type: line
+        uses: data
+        x: date
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Confirmed-COVID-patients-in-ICU
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of beds"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: "ICU bed limit for COVID patients"
+            column: covid_beds
+            filter:
+              - filter_zero_values
+              - append_last_nonzero_value_to_end
+            backgroundColor: icu-covid-beds
+            borderColor: icu-covid-beds
+            borderDash: [10,5]
+            spanGaps: true
+          - label: "ICU bed limit for COVID and non-COVID patients"
+            column: beds
+            filter:
+              - filter_zero_values
+              - append_last_nonzero_value_to_end
+            backgroundColor: icu-beds
+            borderColor: icu-beds
+            borderDash: [10, 5]
+            spanGaps: true
+          - label: "Confirmed COVID patients in ICU"
+            column: intakeCount
+            filter: remove_last_three
+            backgroundColor: patients
+            borderColor: patients
+          - label: "Points still being updated by ICUs"
+            column: intakeCount
+            filter: last_three_rest_null
+            backgroundColor: patients-afive
+            borderColor: patients-afive
+          - label: "LCPS Reported patients"
+            column: lcps_beds
+            filter: filter_zero_values
+            backgroundColor: derivate-athree
+            borderColor: derivate-athree
+
+      - name: icu-growth-chart
+        title: Growth of confirmed COVID patients in ICU
+        type: line
+        uses: data
+        x: date
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Growth-of-confirmed-COVID-patients-in-ICU
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Growth rate in percentage"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: "Growth as percentage change"
+            column: growth_intakeCount
+            filter:
+              - remove_last_three
+              - percentage_fraction_to_percentage
+            backgroundColor: derivate-atwo
+            borderColor: derivate-atwo
+          - label: "Points still being updated by ICUs"
+            column: growth_intakeCount
+            filter:
+              - last_three_rest_null
+              - percentage_fraction_to_percentage
+            backgroundColor: derivate-aone
+            borderColor: derivate-aone
+          - label: "Simple Moving Average (5 days)"
+            column: sma5_growth_intakeCount
+            filter:
+              - remove_last_three
+              - filter_zero_values
+              - percentage_fraction_to_percentage
+            backgroundColor: derivate
+            borderColor: derivate
+
+      - name: icu-evolution-mortality
+        title: Evolution of mortality rate in ICU
+        uses: data
+        type: line
+        x: date
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Evolution-of-mortality-rate-in-ICU
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: Mortality rate in percentage
+            xAxes:
+              - scaleLabel:
+                  labelString: Date
+        datasets:
+          - label: Evolution of mortality rate in ICU
+            column: mortality_rate
+            filter:
+              - remove_last_three
+              - percentage_fraction_to_percentage
+              - filter_zero_values
+            backgroundColor: deaths
+            borderColor: deaths
+          - label: Points still being updated by ICUs
+            column: mortality_rate
+            filter:
+              - percentage_fraction_to_percentage
+              - last_three_rest_null
+            backgroundColor: deaths-afive
+            borderColor: deaths-afive
+
+      - name: icu-recovered-vs-deceased
+        title: Patients recovered vs. deceased
+        uses: data
+        type: line
+        x: date
+        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Patients-recovered-vs.-deceased
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: Number of patients
+            xAxes:
+              - scaleLabel:
+                  labelString: Date
+        datasets:
+          - label: Patients recovered
+            column: survivors
+            filter:
+              - remove_last_three
+              - filter_zero_values
+            backgroundColor: recovered
+            borderColor: recovered
+          - label: Points still being updated by ICUs
+            column: survivors
+            filter:
+              - last_three_rest_null
+            backgroundColor: recovered-afive
+            borderColor: recovered-afive
+          - label: Patients deceased
+            column: died
+            filter:
+             - remove_last_three
+             - filter_zero_values
+            backgroundColor: deaths
+            borderColor: deaths
+          - label: Points still being updated by ICUs
+            column: died
+            filter:
+             - last_three_rest_null
+            backgroundColor: deaths-afive
+            borderColor: deaths-afive
+          - label: Patients moved from ICU to hospital
+            column: moved
+            filter:
+              - remove_last_three
+              - filter_zero_values
+            backgroundColor: patients
+            borderColor: patients
+          - label: Points still being updated by ICUs
+            column: moved
+            filter:
+              - last_three_rest_null
+            backgroundColor: patients-afive
+            borderColor: patients-afive
+
+      - name: icu-demographics
+        title: Demographics of patients in ICU
+        uses: demographics
+        type: 'demographics'
+        x: 'age_group'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of patients"
+        datasets:
+          - label: "Demographics of patients in ICU"
+            column: patients_in_icu
+            backgroundColor: patients
+            borderColor: patients
+            filter: 'filter_zero_values'
+            scalelabel: 'Number of patients'
+
+      - name: icu-demographics-death
+        title: Demographics of deaths in ICU
+        uses: demographics
+        type: 'demographics'
+        x: 'age_group'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased"
+        datasets:
+          - label: "Demographics of deaths in ICU"
+            column: deceased_patients
+            backgroundColor: 'deaths'
+            borderColor: 'deaths'
+            filter: 'filter_zero_values'
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: icu-demographics-recovered
+        title: Demographics of recovered patients in ICU
+        uses: demographics
+        type: 'demographics'
+        x: 'age_group'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of recovered"
+        datasets:
+          - label: "Demographics of recovered patients from ICU"
+            column: recovered_patients
+            backgroundColor: 'recovered'
+            borderColor: 'recovered'
+            filter: 'filter_zero_values'
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: icu-demographics-moved
+        title: Demographics of patients moved from ICU to hospital
+        uses: demographics
+        type: 'demographics'
+        x: 'age_group'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of moved patients"
+        datasets:
+          - label: "Demographics of patients moved from ICU to hospital"
+            column: patients_in_hospital
+            backgroundColor: moved
+            borderColor: moved
+            filter: filter_zero_values
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/

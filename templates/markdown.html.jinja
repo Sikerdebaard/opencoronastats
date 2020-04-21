@@ -1,0 +1,8 @@
+{% macro get_html() %}
+{{ content | markdown | stylize }}
+{% endmacro %}
+{% set html_content = get_html() %}
+
+<div class="markdown m-2">
+    {{ html_content }}
+</div>
