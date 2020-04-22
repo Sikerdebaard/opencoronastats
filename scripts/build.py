@@ -2,18 +2,20 @@ import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape, Markup
 import markdown
 from datetime import datetime
+from pytz import timezone
 from pathlib import Path
 import json
 
 output_path = Path('./html/')
 
+tz = timezone('Europe/Amsterdam')
 last_update = datetime.now()
 last_update_str = last_update.strftime("%d-%m-%Y %H:%M")
 
 print(last_update_str)
 
 with (output_path / 'timestamp.json').open('w') as fh:
-    json.dump(last_update.astimezone().isoformat(), fh)
+    json.dump(last_update.astimezone(tz).isoformat(), fh)
 
 
 
