@@ -154,7 +154,7 @@ pages:
             filter: filter_zero_values
 
       - name: excess-mortality-vs-rivm
-        title: Mortality displacement vs. confirmed deaths
+        title: Mortality displacement vs. RIVM reported deaths
         type: line
         uses: mortality_displacement
         x: week
@@ -183,7 +183,7 @@ pages:
             borderColor: transparent
             filter:
               - filter_zero_values
-          - label: Confirmed deaths
+          - label: RIVM reported deaths
             column: official_deceased
             backgroundColor: deaths
             borderColor: deaths
