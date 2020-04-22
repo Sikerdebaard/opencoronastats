@@ -211,21 +211,18 @@ pages:
             backgroundColor: icu-beds
             borderColor: icu-beds
             filter:
-              - remove_last
               - filter_zero_values
           - label: Hospitalized
             column: hospitalized
             backgroundColor: patients
             borderColor: patients
             filter:
-              - remove_last
               - filter_zero_values
           - label: Deceased
             column: deceased
             backgroundColor: deaths
             borderColor: deaths
             filter:
-              - remove_last
               - filter_zero_values
 
       - name: rivm-nums
@@ -249,21 +246,18 @@ pages:
             backgroundColor: icu-beds
             borderColor: icu-beds
             filter:
-              - remove_last
               - filter_zero_values
           - label: Hospitalized cumulative
             column: hospitalized_cumulative
             backgroundColor: patients
             borderColor: patients
             filter:
-              - remove_last
               - filter_zero_values
           - label: Deceased cumulative
             column: deceased_cumulative
             backgroundColor: deaths
             borderColor: deaths
             filter:
-              - remove_last
               - filter_zero_values
 
       - name: tests-done-vs-positive
