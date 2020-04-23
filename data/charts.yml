@@ -103,6 +103,7 @@ pages:
             column: ci_0.95_high
             backgroundColor: ci-top
             borderColor: transparent
+            fill: 0
             lineTension: 0
             pointRadius: 0
           - label: Confidence interval 95% bottom
@@ -171,6 +172,7 @@ pages:
         datasets:
           - label: Mortality displacement upper
             column: normalized_excess_mortality_high
+            fill: 0
             backgroundColor: derivate
             borderColor: transparent
             filter:
