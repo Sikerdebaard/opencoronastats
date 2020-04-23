@@ -103,7 +103,6 @@ pages:
             column: ci_0.95_high
             backgroundColor: ci-top
             borderColor: transparent
-            fill: false
             lineTension: 0
             pointRadius: 0
           - label: Confidence interval 95% bottom
