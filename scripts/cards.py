@@ -93,8 +93,6 @@ cards['cfr-icu'] = {
 
 }
 
-
-
 # -- population
 
 df_rivm = pd.read_csv('html/rivm.csv')

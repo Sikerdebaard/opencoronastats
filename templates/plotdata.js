@@ -148,8 +148,44 @@ function do_filter(dataset, data) {
     return data
 }
 
-function append_datasets_to_template(data, template, options, default_dataset_config={}) {
+function demographics_stats(data) {
+    var sum = 0
+    for (i in data) {
+        var val = parseFloat(data[i])
+        if (!isNaN(val)) {
+           sum = sum + val
+        }
+    }
+
+    var median = sum / 2
+    sum = 0
+
+    var median_index = null
+    for (i in data) {
+        var val = parseFloat(data[i])
+        if (!isNaN(val)) {
+            sum = sum + val
+            if (sum >= median) {
+                median_index = i
+                break  // quit for-loop
+            }
+        }
+    }
+
+    return {
+        'median': median,
+        'median_index': median_index
+    }
+}
+
+function nullstats(data){
+    return null
+}
+
+function append_datasets_to_template(data, template, options, default_dataset_config={}, statsfunction=nullstats) {
     var datasets = []
+    var stats = []
+
     for (var j = 0; j < options.length; j++) {
         var dataset_configured = {}
         var dataset = options[j]
@@ -163,12 +199,14 @@ function append_datasets_to_template(data, template, options, default_dataset_co
                 } else {
                     dataset_configured['data'] = get_values_for(data, dataset[key])
                 }
+                stats.push(statsfunction(dataset_configured['data']))
             } else if(key == 'columnbyindex') {
                 if (arrayContains('filter', keys)) {
                     dataset_configured['data'] = do_filter(dataset, get_values_for(data, get_column_name_by_index(data, dataset[key])))
                 } else {
                     dataset_configured['data'] = get_values_for(data, get_column_name_by_index(data, dataset[key]))
                 }
+                stats.push(statsfunction(dataset_configured['data']))
             } else if(key == 'label') {
                 if (dataset[key].trim().startsWith('%') && dataset[key].trim().endsWith('%')) {
                     if (dataset[key].trim() == '%column%') {
@@ -194,7 +232,7 @@ function append_datasets_to_template(data, template, options, default_dataset_co
     }
 
     template['data']['datasets'] = datasets
-    return template
+    return {'template': template, 'stats': stats}
 }
 
 function generate_options(chart_info, default_config, default_config2={}) {
@@ -206,16 +244,46 @@ function generate_options(chart_info, default_config, default_config2={}) {
     return config
 }
 
+function generate_demographics_annotations(template, stats) {
+    var annotations = []
+    for (i in stats) {
+        annotations.push(
+            {
+                type: "line",
+                mode: "vertical",
+                scaleID: "x-axis-0",
+                value: template['data']['labels'][Math.round(stats[i]['median_index'])],
+                borderColor: "black",
+                label: {
+                    content: "median",
+                    enabled: true,
+                    position: "top",
+                    yAdjust: 3,
+		            cornerRadius: 6
+                }
+            }
+        )
+    }
+
+    template['options']['annotation'] = {
+        annotations: annotations
+    }
+
+    return template
+}
+
 function drawDemographics(chart_info) {
     data = datasets[chart_info['uses']]
 
-    template = append_datasets_to_template(data, {
+    var retval = append_datasets_to_template(data, {
         type: 'bar',
         data: {
             labels: get_values_for(data, chart_info['x']),
         },
         options: generate_options(chart_info, chartconfig['default_options'], chartconfig['default_demographics_options'])
-    }, chart_info['datasets'])
+    }, chart_info['datasets'], {}, demographics_stats)
+
+    var template = generate_demographics_annotations(retval['template'], retval['stats'])
 
     new Chart(document.getElementById(chart_info['name']), template)
 }
@@ -223,13 +291,15 @@ function drawDemographics(chart_info) {
 function drawLine(chart_info) {
     data = datasets[chart_info['uses']]
 
-    template = append_datasets_to_template(data, {
+    var results = append_datasets_to_template(data, {
         type: 'line',
         data: {
             labels: get_values_for(data, chart_info['x']),
         },
         options: generate_options(chart_info, chartconfig['default_options'], chartconfig['default_demographics_options'])
     }, chart_info['datasets'], chartconfig['linechart_default_dataset_vals'])
+
+    var template = results['template']
 
     new Chart(document.getElementById(chart_info['name']), template)
 }

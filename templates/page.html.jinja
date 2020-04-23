@@ -14,8 +14,10 @@
     <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link href="tailwind.css" rel="stylesheet">
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" crossorigin="anonymous"></script>
+    {#<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">#}
+    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" crossorigin="anonymous"></script>#}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.js"></script>
     {# <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js" crossorigin="anonymous"></script> #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.js"></script>
 
@@ -28,7 +30,7 @@
         var $buoop = {required:{e:16,f:65,o:58,s:10,c:71},insecure:true,mobile:false,style:"corner",api:2020.04 };
         function $buo_f(){
          var e = document.createElement("script");
-         e.src = "//browser-update.org/update.min.js";
+         e.src = "https://browser-update.org/update.min.js";
          document.body.appendChild(e);
         };
         try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
