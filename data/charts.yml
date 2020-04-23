@@ -319,6 +319,7 @@ pages:
     datasets:
       - data.csv
       - demographics.csv
+      - treatment_durations.csv
       - timestamp.json
     cards:
       - id: doubling-rate
@@ -600,6 +601,98 @@ pages:
                   labelString: "Number of moved patients"
         datasets:
           - label: "Demographics of patients moved from ICU to hospital"
+            column: patients_in_hospital
+            backgroundColor: moved
+            borderColor: moved
+            filter: filter_zero_values
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: icu-treament-times-inicu
+        title: Treament times of patients in ICU
+        uses: treatment_durations
+        type: 'demographics'
+        x: 'days_of_treatment'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of patients"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Number of days"
+        datasets:
+          - label: "Treament times of patients in ICU"
+            column: recovered_patients
+            backgroundColor: patients
+            borderColor: patients
+            filter: filter_zero_values
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: icu-treament-times-deceased
+        title: Treament times of deceased patients
+        uses: treatment_durations
+        type: 'demographics'
+        x: 'days_of_treatment'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased patients"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Number of days"
+        datasets:
+          - label: "Treament times of deceased patients"
+            column: recovered_patients
+            backgroundColor: deaths
+            borderColor: deaths
+            filter: filter_zero_values
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: icu-treament-times-recovered
+        title: Treament times of recovered patients
+        uses: treatment_durations
+        type: 'demographics'
+        x: 'days_of_treatment'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of recovered patients"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Number of days"
+        datasets:
+          - label: "Treament times of recovered patients"
+            column: recovered_patients
+            backgroundColor: recovered
+            borderColor: recovered
+            filter: filter_zero_values
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: icu-treament-times-moved
+        title: Treament times of patients moved from ICU to hospital
+        uses: treatment_durations
+        type: 'demographics'
+        x: 'days_of_treatment'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of patients moved"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Number of days"
+        datasets:
+          - label: "Treament times of patients moved from ICU to hospital"
             column: patients_in_hospital
             backgroundColor: moved
             borderColor: moved
