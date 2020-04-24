@@ -624,7 +624,7 @@ pages:
               - scaleLabel:
                   labelString: "Number of days"
         datasets:
-          - label: "Treament times of patients in ICU"
+          - label: "Treatment times of patients in ICU"
             column: recovered_patients
             backgroundColor: patients
             borderColor: patients
@@ -647,7 +647,7 @@ pages:
               - scaleLabel:
                   labelString: "Number of days"
         datasets:
-          - label: "Treament times of deceased patients"
+          - label: "Treatment times of deceased patients"
             column: recovered_patients
             backgroundColor: deaths
             borderColor: deaths
@@ -670,7 +670,7 @@ pages:
               - scaleLabel:
                   labelString: "Number of days"
         datasets:
-          - label: "Treament times of recovered patients"
+          - label: "Treatment times of recovered patients"
             column: recovered_patients
             backgroundColor: recovered
             borderColor: recovered
@@ -693,7 +693,7 @@ pages:
               - scaleLabel:
                   labelString: "Number of days"
         datasets:
-          - label: "Treament times of patients moved from ICU to hospital"
+          - label: "Treatment times of patients moved from ICU to hospital"
             column: patients_in_hospital
             backgroundColor: moved
             borderColor: moved
