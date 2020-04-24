@@ -170,14 +170,14 @@ pages:
               - scaleLabel:
                   labelString: "Weeknumber"
         datasets:
-          - label: Mortality displacement upper
+          - label: Estimated mortality displacement upper
             column: normalized_excess_mortality_high
             fill: 0
             backgroundColor: derivate
             borderColor: transparent
             filter:
               - filter_zero_values
-          - label: Mortality displacement lower
+          - label: Estimated mortality displacement lower
             column: normalized_excess_mortality_low
             fill: 0
             backgroundColor: derivate-atwo
