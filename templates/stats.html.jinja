@@ -19,7 +19,7 @@
                             class="fa {{ card.icon }} fa-2x fa-inverse"></i></div>
                 </div>
                 <div class="flex-1 text-right xl:text-center">
-                    <h5 id="{{ card.id }}-title" class="font-bold uppercase text-gray-600"></h5>
+                    <h5 class="font-bold uppercase text-gray-600"><div id="{{ card.id }}-title" class="inline"></div> <a href="#{{ card.id }}"><i class="justify-end inline fas fa-link text-gray-600 hover:text-blue-600"></i></a></h5>
                     <h3 class="font-bold text-3xl">
                         <div id="{{ card.id }}-value" class="inline"></div>
                         {{ card.postfix }}<span class="text-green-500"><i id="{{ card.id }}-arrow" class="fas fa-caret-up"></i></span>
@@ -52,11 +52,11 @@
 {% for chart_row in charts %}
 <div class="flex flex-row flex-wrap flex-grow mt-2">
     {% for chart in chart_row %}
-    <div class="w-full xl:w-1/2 xl:w-1/2 p-3">
+    <div id="chart-{{ chart.name }}" class="w-full xl:w-1/2 xl:w-1/2 p-3">
         <!--Graph Card-->
         <div class="bg-white border-transparent rounded-lg rounded-xl shadow-xl">
             <div class="bg-gray-400 uppercase text-gray-800 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg rounded-tl-xl rounded-tr-xl p-2">
-                <h5 class="font-bold uppercase text-gray-600">{{ chart.title }}</h5>
+                <h5 class="font-bold uppercase text-gray-600">{{ chart.title }}  <a href="#chart-{{ chart.name }}"><i class="justify-end inline fas fa-link text-gray-600 hover:text-blue-600"></i></a></h5>
             </div>
             <div class="p-5 min-h-70p max-h-70p">
                 <canvas id="{{ chart.name }}" class="chartjs" width="undefined" height="undefined"></canvas>
