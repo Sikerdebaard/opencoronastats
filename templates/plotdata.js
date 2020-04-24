@@ -257,8 +257,8 @@ function generate_demographics_annotations(template, stats) {
                 label: {
                     content: "median",
                     enabled: true,
-                    position: "top",
-                    yAdjust: 3,
+                    position: "bottom",
+                    yAdjust: 6,
 		            cornerRadius: 6
                 }
             }
