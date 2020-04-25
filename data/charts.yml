@@ -388,7 +388,7 @@ pages:
             borderColor: icu-beds
             borderDash: [10, 5]
             spanGaps: true
-          - label: "Confirmed COVID patients in ICU"
+          - label: "Confirmed and suspected COVID patients in ICU"
             column: intakeCount
             filter: remove_last_three
             backgroundColor: patients
