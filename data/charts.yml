@@ -365,12 +365,12 @@ pages:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Number of beds"
+                  labelString: "Number of patients"
             xAxes:
               - scaleLabel:
                   labelString: "Date"
         datasets:
-          - label: "ICU bed limit for COVID patients"
+          - label: "ICU limit for COVID patients"
             column: covid_beds
             filter:
               - filter_zero_values
@@ -379,7 +379,7 @@ pages:
             borderColor: icu-covid-beds
             borderDash: [10,5]
             spanGaps: true
-          - label: "ICU bed limit for COVID and non-COVID patients"
+          - label: "ICU limit for COVID and non-COVID patients"
             column: beds
             filter:
               - filter_zero_values
