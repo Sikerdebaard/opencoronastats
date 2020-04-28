@@ -625,7 +625,7 @@ pages:
                   labelString: "Number of days"
         datasets:
           - label: "Treatment times of patients in ICU"
-            column: recovered_patients
+            column: patients_in_icu
             backgroundColor: patients
             borderColor: patients
             filter: filter_zero_values
@@ -648,7 +648,7 @@ pages:
                   labelString: "Number of days"
         datasets:
           - label: "Treatment times of deceased patients"
-            column: recovered_patients
+            column: deceased_patients
             backgroundColor: deaths
             borderColor: deaths
             filter: filter_zero_values
