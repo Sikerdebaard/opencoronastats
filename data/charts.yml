@@ -81,6 +81,16 @@ pages:
         uses: mobility
         x: date
         options:
+          annotation:
+            annotations:
+              - type: 'line'
+                drawTime: 'beforeDatasetsDraw'
+                mode: 'horizontal'
+                scaleID: 'y-axis-0'
+                value: 0
+                borderDash: [2, 2]
+                borderColor: 'rgba(0, 0, 0)'
+                borderWidth: 3
           scales:
             yAxes:
               - scaleLabel:
@@ -163,6 +173,16 @@ pages:
         uses: mobility
         x: date
         options:
+          annotation:
+            annotations:
+              - type: 'line'
+                drawTime: 'beforeDatasetsDraw'
+                mode: 'horizontal'
+                scaleID: 'y-axis-0'
+                value: 0
+                borderDash: [2, 2]
+                borderColor: 'rgba(0, 0, 0)'
+                borderWidth: 3
           scales:
             yAxes:
               - scaleLabel:
@@ -245,6 +265,16 @@ pages:
         uses: mobility
         x: date
         options:
+          annotation:
+            annotations:
+              - type: 'line'
+                drawTime: 'beforeDatasetsDraw'
+                mode: 'horizontal'
+                scaleID: 'y-axis-0'
+                value: 0
+                borderDash: [2, 2]
+                borderColor: 'rgba(0, 0, 0)'
+                borderWidth: 3
           scales:
             yAxes:
               - scaleLabel:
@@ -327,6 +357,16 @@ pages:
         uses: mobility
         x: date
         options:
+          annotation:
+            annotations:
+              - type: 'line'
+                drawTime: 'beforeDatasetsDraw'
+                mode: 'horizontal'
+                scaleID: 'y-axis-0'
+                value: 0
+                borderDash: [2, 2]
+                borderColor: 'rgba(0, 0, 0)'
+                borderWidth: 3
           scales:
             yAxes:
               - scaleLabel:
@@ -409,6 +449,16 @@ pages:
         uses: mobility
         x: date
         options:
+          annotation:
+            annotations:
+              - type: 'line'
+                drawTime: 'beforeDatasetsDraw'
+                mode: 'horizontal'
+                scaleID: 'y-axis-0'
+                value: 0
+                borderDash: [2, 2]
+                borderColor: 'rgba(0, 0, 0)'
+                borderWidth: 3
           scales:
             yAxes:
               - scaleLabel:
@@ -491,6 +541,16 @@ pages:
         uses: mobility
         x: date
         options:
+          annotation:
+            annotations:
+              - type: 'line'
+                drawTime: 'beforeDatasetsDraw'
+                mode: 'horizontal'
+                scaleID: 'y-axis-0'
+                value: 0
+                borderDash: [2, 2]
+                borderColor: 'rgba(0, 0, 0)'
+                borderWidth: 3
           scales:
             yAxes:
               - scaleLabel:
