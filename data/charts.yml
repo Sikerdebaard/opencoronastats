@@ -18,6 +18,19 @@ chart_config:
     ci-top: "rgba(75, 192, 75, .1)"
     ci-bottom: "rgba(75, 192, 75, .1)"
     transparent: "transparent"
+    national: "rgba(255, 165, 0, 1)"
+    drenthe: "#a6cee3ff"
+    flevoland: "#1f78b4ff"
+    friesland: "#33a02cff"
+    gelderland: "#fb9a99ff"
+    groningen: "#e31a1cff"
+    limburg: "#41e0f4ff"
+    noord-brabant: "#cab2d6ff"
+    noord-holland: "#6a3d9aff"
+    overijssel: "#ffff99ff"
+    utrecht: "#b15928ff"
+    zeeland: "#23868CFF"
+    zuid-holland: "#091826FF"
 
   aesthetics:
     lineTension: 0.1
@@ -53,6 +66,506 @@ chart_config:
     pointHoverRadius: 5
 
 pages:
+  mobility:
+    file: mobility.html
+    datasets:
+      - mobility.csv
+    cards:
+
+    charts:
+      - name: retail-recreation
+        title: Mobility for retail and recreation from baseline
+        type: line
+        sources:
+          Google: https://www.google.com/covid19/mobility/
+        uses: mobility
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage change from baseline"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: National
+            column: national_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: national
+            borderColor: national
+            order: 9999
+          - label: Drenthe
+            column: drenthe_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: drenthe
+            borderColor: drenthe
+            hidden: true
+          - label: Flevoland
+            column: flevoland_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: flevoland
+            borderColor: flevoland
+            hidden: true
+          - label: Friesland
+            column: friesland_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: friesland
+            borderColor: friesland
+            hidden: true
+          - label: Gelderland
+            column: gelderland_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: gelderland
+            borderColor: gelderland
+            hidden: true
+          - label: Groningen
+            column: groningen_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: groningen
+            borderColor: groningen
+            hidden: true
+          - label: Limburg
+            column: limburg_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: limburg
+            borderColor: limburg
+            hidden: true
+          - label: Noord Brabant
+            column: north_brabant_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+            hidden: true
+          - label: Noord Holland
+            column: north_holland_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: noord-holland
+            borderColor: noord-holland
+            hidden: true
+          - label: Overijssel
+            column: overijssel_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: overijssel
+            borderColor: overijssel
+            hidden: true
+          - label: Zuid Holland
+            column: south_holland_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: zuid-holland
+            borderColor: zuid-holland
+            hidden: true
+          - label: Utrecht
+            column: utrecht_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: utrecht
+            borderColor: utrecht
+            hidden: true
+          - label: Zeeland
+            column: zeeland_retail_and_recreation_percent_change_from_baseline
+            backgroundColor: zeeland
+            borderColor: zeeland
+            hidden: true
+
+      - name: grocery-pharmacy
+        title: Mobility for grocery and pharmacy from baseline
+        type: line
+        sources:
+          Google: https://www.google.com/covid19/mobility/
+        uses: mobility
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage change from baseline"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: National
+            column: national_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: national
+            borderColor: national
+            order: 9999
+          - label: Drenthe
+            column: drenthe_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: drenthe
+            borderColor: drenthe
+            hidden: true
+          - label: Flevoland
+            column: flevoland_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: flevoland
+            borderColor: flevoland
+            hidden: true
+          - label: Friesland
+            column: friesland_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: friesland
+            borderColor: friesland
+            hidden: true
+          - label: Gelderland
+            column: gelderland_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: gelderland
+            borderColor: gelderland
+            hidden: true
+          - label: Groningen
+            column: groningen_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: groningen
+            borderColor: groningen
+            hidden: true
+          - label: Limburg
+            column: limburg_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: limburg
+            borderColor: limburg
+            hidden: true
+          - label: Noord Brabant
+            column: north_brabant_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+            hidden: true
+          - label: Noord Holland
+            column: north_holland_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: noord-holland
+            borderColor: noord-holland
+            hidden: true
+          - label: Overijssel
+            column: overijssel_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: overijssel
+            borderColor: overijssel
+            hidden: true
+          - label: Zuid Holland
+            column: south_holland_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: zuid-holland
+            borderColor: zuid-holland
+            hidden: true
+          - label: Utrecht
+            column: utrecht_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: utrecht
+            borderColor: utrecht
+            hidden: true
+          - label: Zeeland
+            column: zeeland_grocery_and_pharmacy_percent_change_from_baseline
+            backgroundColor: zeeland
+            borderColor: zeeland
+            hidden: true
+
+      - name: parks
+        title: Mobility for parks from baseline
+        type: line
+        sources:
+          Google: https://www.google.com/covid19/mobility/
+        uses: mobility
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage change from baseline"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: National
+            column: national_parks_percent_change_from_baseline
+            backgroundColor: national
+            borderColor: national
+            order: 9999
+          - label: Drenthe
+            column: drenthe_parks_percent_change_from_baseline
+            backgroundColor: drenthe
+            borderColor: drenthe
+            hidden: true
+          - label: Flevoland
+            column: flevoland_parks_percent_change_from_baseline
+            backgroundColor: flevoland
+            borderColor: flevoland
+            hidden: true
+          - label: Friesland
+            column: friesland_parks_percent_change_from_baseline
+            backgroundColor: friesland
+            borderColor: friesland
+            hidden: true
+          - label: Gelderland
+            column: gelderland_parks_percent_change_from_baseline
+            backgroundColor: gelderland
+            borderColor: gelderland
+            hidden: true
+          - label: Groningen
+            column: groningen_parks_percent_change_from_baseline
+            backgroundColor: groningen
+            borderColor: groningen
+            hidden: true
+          - label: Limburg
+            column: limburg_parks_percent_change_from_baseline
+            backgroundColor: limburg
+            borderColor: limburg
+            hidden: true
+          - label: Noord Brabant
+            column: north_brabant_parks_percent_change_from_baseline
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+            hidden: true
+          - label: Noord Holland
+            column: north_holland_parks_percent_change_from_baseline
+            backgroundColor: noord-holland
+            borderColor: noord-holland
+            hidden: true
+          - label: Overijssel
+            column: overijssel_parks_percent_change_from_baseline
+            backgroundColor: overijssel
+            borderColor: overijssel
+            hidden: true
+          - label: Zuid Holland
+            column: south_holland_parks_percent_change_from_baseline
+            backgroundColor: zuid-holland
+            borderColor: zuid-holland
+            hidden: true
+          - label: Utrecht
+            column: utrecht_parks_percent_change_from_baseline
+            backgroundColor: utrecht
+            borderColor: utrecht
+            hidden: true
+          - label: Zeeland
+            column: zeeland_parks_percent_change_from_baseline
+            backgroundColor: zeeland
+            borderColor: zeeland
+            hidden: true
+
+      - name: transit-stations
+        title: Mobility for transit stations from baseline
+        type: line
+        sources:
+          Google: https://www.google.com/covid19/mobility/
+        uses: mobility
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage change from baseline"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: National
+            column: national_transit_stations_percent_change_from_baseline
+            backgroundColor: national
+            borderColor: national
+            order: 9999
+          - label: Drenthe
+            column: drenthe_transit_stations_percent_change_from_baseline
+            backgroundColor: drenthe
+            borderColor: drenthe
+            hidden: true
+          - label: Flevoland
+            column: flevoland_transit_stations_percent_change_from_baseline
+            backgroundColor: flevoland
+            borderColor: flevoland
+            hidden: true
+          - label: Friesland
+            column: friesland_transit_stations_percent_change_from_baseline
+            backgroundColor: friesland
+            borderColor: friesland
+            hidden: true
+          - label: Gelderland
+            column: gelderland_transit_stations_percent_change_from_baseline
+            backgroundColor: gelderland
+            borderColor: gelderland
+            hidden: true
+          - label: Groningen
+            column: groningen_transit_stations_percent_change_from_baseline
+            backgroundColor: groningen
+            borderColor: groningen
+            hidden: true
+          - label: Limburg
+            column: limburg_transit_stations_percent_change_from_baseline
+            backgroundColor: limburg
+            borderColor: limburg
+            hidden: true
+          - label: Noord Brabant
+            column: north_brabant_transit_stations_percent_change_from_baseline
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+            hidden: true
+          - label: Noord Holland
+            column: north_holland_transit_stations_percent_change_from_baseline
+            backgroundColor: noord-holland
+            borderColor: noord-holland
+            hidden: true
+          - label: Overijssel
+            column: overijssel_transit_stations_percent_change_from_baseline
+            backgroundColor: overijssel
+            borderColor: overijssel
+            hidden: true
+          - label: Zuid Holland
+            column: south_holland_transit_stations_percent_change_from_baseline
+            backgroundColor: zuid-holland
+            borderColor: zuid-holland
+            hidden: true
+          - label: Utrecht
+            column: utrecht_transit_stations_percent_change_from_baseline
+            backgroundColor: utrecht
+            borderColor: utrecht
+            hidden: true
+          - label: Zeeland
+            column: zeeland_transit_stations_percent_change_from_baseline
+            backgroundColor: zeeland
+            borderColor: zeeland
+            hidden: true
+
+      - name: worplaces
+        title: Mobility for workplaces from baseline
+        type: line
+        sources:
+          Google: https://www.google.com/covid19/mobility/
+        uses: mobility
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage change from baseline"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: National
+            column: national_workplaces_percent_change_from_baseline
+            backgroundColor: national
+            borderColor: national
+            order: 9999
+          - label: Drenthe
+            column: drenthe_workplaces_percent_change_from_baseline
+            backgroundColor: drenthe
+            borderColor: drenthe
+            hidden: true
+          - label: Flevoland
+            column: flevoland_workplaces_percent_change_from_baseline
+            backgroundColor: flevoland
+            borderColor: flevoland
+            hidden: true
+          - label: Friesland
+            column: friesland_workplaces_percent_change_from_baseline
+            backgroundColor: friesland
+            borderColor: friesland
+            hidden: true
+          - label: Gelderland
+            column: gelderland_workplaces_percent_change_from_baseline
+            backgroundColor: gelderland
+            borderColor: gelderland
+            hidden: true
+          - label: Groningen
+            column: groningen_workplaces_percent_change_from_baseline
+            backgroundColor: groningen
+            borderColor: groningen
+            hidden: true
+          - label: Limburg
+            column: limburg_workplaces_percent_change_from_baseline
+            backgroundColor: limburg
+            borderColor: limburg
+            hidden: true
+          - label: Noord Brabant
+            column: north_brabant_workplaces_percent_change_from_baseline
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+            hidden: true
+          - label: Noord Holland
+            column: north_holland_workplaces_percent_change_from_baseline
+            backgroundColor: noord-holland
+            borderColor: noord-holland
+            hidden: true
+          - label: Overijssel
+            column: overijssel_workplaces_percent_change_from_baseline
+            backgroundColor: overijssel
+            borderColor: overijssel
+            hidden: true
+          - label: Zuid Holland
+            column: south_holland_workplaces_percent_change_from_baseline
+            backgroundColor: zuid-holland
+            borderColor: zuid-holland
+            hidden: true
+          - label: Utrecht
+            column: utrecht_workplaces_percent_change_from_baseline
+            backgroundColor: utrecht
+            borderColor: utrecht
+            hidden: true
+          - label: Zeeland
+            column: zeeland_workplaces_percent_change_from_baseline
+            backgroundColor: zeeland
+            borderColor: zeeland
+            hidden: true
+
+      - name: residential
+        title: Mobility for residential from baseline
+        type: line
+        sources:
+          Google: https://www.google.com/covid19/mobility/
+        uses: mobility
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage change from baseline"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: National
+            column: national_residential_percent_change_from_baseline
+            backgroundColor: national
+            borderColor: national
+            order: 9999
+          - label: Drenthe
+            column: drenthe_residential_percent_change_from_baseline
+            backgroundColor: drenthe
+            borderColor: drenthe
+            hidden: true
+          - label: Flevoland
+            column: flevoland_residential_percent_change_from_baseline
+            backgroundColor: flevoland
+            borderColor: flevoland
+            hidden: true
+          - label: Friesland
+            column: friesland_residential_percent_change_from_baseline
+            backgroundColor: friesland
+            borderColor: friesland
+            hidden: true
+          - label: Gelderland
+            column: gelderland_residential_percent_change_from_baseline
+            backgroundColor: gelderland
+            borderColor: gelderland
+            hidden: true
+          - label: Groningen
+            column: groningen_residential_percent_change_from_baseline
+            backgroundColor: groningen
+            borderColor: groningen
+            hidden: true
+          - label: Limburg
+            column: limburg_residential_percent_change_from_baseline
+            backgroundColor: limburg
+            borderColor: limburg
+            hidden: true
+          - label: Noord Brabant
+            column: north_brabant_residential_percent_change_from_baseline
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+            hidden: true
+          - label: Noord Holland
+            column: north_holland_residential_percent_change_from_baseline
+            backgroundColor: noord-holland
+            borderColor: noord-holland
+            hidden: true
+          - label: Overijssel
+            column: overijssel_residential_percent_change_from_baseline
+            backgroundColor: overijssel
+            borderColor: overijssel
+            hidden: true
+          - label: Zuid Holland
+            column: south_holland_residential_percent_change_from_baseline
+            backgroundColor: zuid-holland
+            borderColor: zuid-holland
+            hidden: true
+          - label: Utrecht
+            column: utrecht_residential_percent_change_from_baseline
+            backgroundColor: utrecht
+            borderColor: utrecht
+            hidden: true
+          - label: Zeeland
+            column: zeeland_residential_percent_change_from_baseline
+            backgroundColor: zeeland
+            borderColor: zeeland
+            hidden: true
+
+
   population:
     file: population.html
     datasets:
@@ -701,3 +1214,4 @@ pages:
             scalelabel: 'Number of patients'
         sources:
           Stichting NICE: https://www.stichting-nice.nl/
+
