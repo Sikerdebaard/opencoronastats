@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 .markdown h1 {
-    @apply text-4xl mt-2;
+    @apply text-4xl font-black mt-2;
 }
 
 .markdown h2 {
-  @apply text-xl mt-2 ml-4;
+  @apply text-2xl font-extrabold mt-2 ml-4;
 }
 
 .markdown h3 {
-  @apply text-lg mt-2 ml-6;
+  @apply text-xl font-bold mt-2 ml-6;
 }
 
 .markdown p {
@@ -24,4 +24,12 @@
 
 .markdown .toc {
     @apply border-solid border-4 border-gray-600 w-full w-1/2 w-1/2 p-3;
+}
+
+.markdown ol {
+    @apply text-lg mt-2 ml-16 list-decimal
+}
+
+.markdown ul {
+    @apply text-lg mt-2 ml-16 list-disc
 }

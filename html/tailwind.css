@@ -13936,17 +13936,20 @@ video {
 
 .markdown h1 {
   font-size: 2.25rem;
+  font-weight: 900;
   margin-top: 0.5rem;
 }
 
 .markdown h2 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 800;
   margin-top: 0.5rem;
   margin-left: 1rem;
 }
 
 .markdown h3 {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
+  font-weight: 700;
   margin-top: 0.5rem;
   margin-left: 1.5rem;
 }
@@ -13970,6 +13973,20 @@ video {
   width: 50%;
   width: 50%;
   padding: 0.75rem;
+}
+
+.markdown ol {
+  font-size: 1.125rem;
+  margin-top: 0.5rem;
+  margin-left: 4rem;
+  list-style-type: decimal
+}
+
+.markdown ul {
+  font-size: 1.125rem;
+  margin-top: 0.5rem;
+  margin-left: 4rem;
+  list-style-type: disc
 }
 
 @media (min-width: 640px) {

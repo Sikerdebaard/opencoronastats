@@ -42,7 +42,7 @@ env = Environment(
     autoescape=select_autoescape(['jinja'])
 )
 
-md = markdown.Markdown(extensions=['meta', 'toc'])
+md = markdown.Markdown(extensions=['meta', 'toc', 'sane_lists'])
 
 env.filters['markdown'] = lambda text: Markup(md.convert(text))
 env.filters['stylize'] = lambda text: Markup(md.convert(text))
@@ -62,7 +62,7 @@ for page, data in pdata['pages'].items():
     with open(f'html/{data["file"]}', 'w') as fh:
         fh.write(page)
 
-markdown_pages = ['explanation.md']
+markdown_pages = ['explanation.md', 'changelog.md', 'about.md']
 
 for markdown_page in markdown_pages:
     with open(f'templates/{markdown_page}', 'r') as fh:
