@@ -14377,6 +14377,13 @@ video {
   padding: 0.25rem;
 }
 
+.markdown .toc ul {
+  font-size: 1.125rem;
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+  list-style-type: disc
+}
+
 .markdown ol {
   font-size: 1.125rem;
   margin-top: 0.5rem;
@@ -14387,7 +14394,7 @@ video {
 .markdown ul {
   font-size: 1.125rem;
   margin-top: 0.5rem;
-  margin-left: 1.5rem;
+  margin-left: 4rem;
   list-style-type: disc
 }
 

@@ -50,10 +50,14 @@
     @apply border-solid border-4 border-gray-600 w-full p-1;
 }
 
+.markdown .toc ul {
+    @apply text-lg mt-2 ml-6 list-disc
+}
+
 .markdown ol {
     @apply text-lg mt-2 ml-16 list-decimal
 }
 
 .markdown ul {
-    @apply text-lg mt-2 ml-6 list-disc
+    @apply text-lg mt-2 ml-16 list-disc
 }
