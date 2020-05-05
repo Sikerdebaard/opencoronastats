@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+.tooltip .tooltip-text {
+  visibility: hidden;
+  text-align: center;
+  padding: 2px 6px;
+  position: absolute;
+  z-index: 100;
+}
+
+.tooltip-click .tooltip-text {
+  visibility: hidden;
+  text-align: center;
+  padding: 2px 6px;
+  position: absolute;
+  z-index: 100;
+}
+
+.tooltip-click .tooltip-text visible {
+  visibility: visible !important;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
 .markdown h1 {
     @apply text-4xl font-black mt-2;
 }

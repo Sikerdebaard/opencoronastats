@@ -1,7 +1,23 @@
+# 2020-05-05:
 
-# v1:
+**New pages**
 
-Charts are now split over two pages: ICU and Population
+* Mobility: Google Mobility Report data.
+* Explanations: A simple page that attempts to give a description for the various charts and cards.
+* Changelog: this changelog.
+
+**Population**
+
+* A chart was added that describes the top-10 municipality by fastest growth in hospitalized case count.
+
+**Mobility**
+
+* Multiple charts have been added that display the Google Mobility Report data.
+
+
+# 2020-04-21:
+
+Charts are now split over two pages: ICU and Population.
 
 **ICU**:
 

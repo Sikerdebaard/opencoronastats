@@ -68,8 +68,9 @@ for markdown_page in markdown_pages:
     with open(f'templates/{markdown_page}', 'r') as fh:
         mdcontent = fh.read()
 
+    page_name = markdown_page.rsplit(".", 1)[0]
     template = env.get_template('page.html.jinja')
-    page = template.render(last_update=last_update_str, template='markdown.html.jinja', version=123, content=mdcontent)
+    page = template.render(last_update=last_update_str, template='markdown.html.jinja', version=123, content=mdcontent, page=page_name)
 
-    with open(f'html/{markdown_page.rsplit(".", 1)[0]}.html', 'w') as fh:
+    with open(f'html/{page_name}.html', 'w') as fh:
         fh.write(page)
