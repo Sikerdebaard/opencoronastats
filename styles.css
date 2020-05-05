@@ -47,7 +47,7 @@
 }
 
 .markdown .toc {
-    @apply border-solid border-4 border-gray-600 w-full w-1/2 w-1/2 p-3;
+    @apply border-solid border-4 border-gray-600 w-full p-1;
 }
 
 .markdown ol {
@@ -55,5 +55,5 @@
 }
 
 .markdown ul {
-    @apply text-lg mt-2 ml-16 list-disc
+    @apply text-lg mt-2 ml-6 list-disc
 }
