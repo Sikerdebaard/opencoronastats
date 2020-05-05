@@ -956,29 +956,29 @@ pages:
       - id: doubling-rate
         icon: fa-superscript
         postfix: day(s)
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Doubling-Rate-and-Half-Life
+        explanation: explanation.html#doubling-time-half-life
 
       - id: icu-growth
         icon: fa-chart-line
         postfix: '%'
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Daily-growth-rate
+        explanation: explanation.html#growth-rate
 
       - id: patients-recovered-from-icu
         icon: fa-home
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Patients-recovered-from-ICU
+        explanation: explanation.html#patients-recovered-from-icu
 
       - id: patients-deceased-from-icu
         icon: fa-skull
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Patients-deceased-in-ICU
+        explanation: explanation.html#patients-deceased-in-icu
 
       - id: beds-used-in-icu
         icon: fa-bed
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Beds-taken-in-ICU
+        explanation: explanation.html#beds-used-for-covid-beds-used-in-icu
 
       - id: cfr-icu
         icon: fa-skull-crossbones
         postfix: '%'
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Case-Fatality-Rate-in-ICU
+        explanation: explanation.html#case-fatality-rate-in-icu
 
 
     charts:
@@ -987,7 +987,7 @@ pages:
         type: line
         uses: data
         x: date
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Confirmed-COVID-patients-in-ICU
+        explanation: explanation.html#beds-used-for-covid-beds-used-in-icu
         sources:
           Stichting NICE: https://www.stichting-nice.nl/
           LCPS: https://www.lcps.nu
@@ -1039,7 +1039,7 @@ pages:
         type: line
         uses: data
         x: date
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Growth-of-confirmed-COVID-patients-in-ICU
+        explanation: explanation.html#growth-of-confirmed-covid-patients-in-icu
         options:
           scales:
             yAxes:
@@ -1077,7 +1077,7 @@ pages:
         uses: data
         type: line
         x: date
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Evolution-of-mortality-rate-in-ICU
+        explanation: explanation.html#evolution-of-mortality-rate-in-icu
         options:
           scales:
             yAxes:
@@ -1108,7 +1108,7 @@ pages:
         uses: data
         type: line
         x: date
-        explanation: https://github.com/Sikerdebaard/opencoronastats/wiki/Patients-recovered-vs.-deceased
+        explanation: explanation.html#patients-recovered-vs-deceased
         sources:
           Stichting NICE: https://www.stichting-nice.nl/
         options:
