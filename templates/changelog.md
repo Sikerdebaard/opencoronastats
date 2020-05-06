@@ -8,7 +8,7 @@
 
 **Population**
 
-* A chart was added that describes the top-10 municipality by fastest growth in hospitalized case count.
+* Charts were added that describe the top-10 municipality by fastest growth in hospitalized case count.
 
 **Mobility**
 
