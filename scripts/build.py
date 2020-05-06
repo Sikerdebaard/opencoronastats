@@ -5,6 +5,7 @@ from datetime import datetime
 from pytz import timezone
 from pathlib import Path
 import json
+import time
 
 output_path = Path('./html/')
 
@@ -13,6 +14,8 @@ last_update = datetime.now().astimezone(tz)
 last_update_str = last_update.strftime("%d-%m-%Y %H:%M")
 
 print(last_update_str)
+
+cachebuster = int(time.time())
 
 with (output_path / 'timestamp.json').open('w') as fh:
     json.dump(last_update.isoformat(), fh)
@@ -57,7 +60,7 @@ for page, data in pdata['pages'].items():
         card_keys = []
 
     template = env.get_template('page.html.jinja')
-    page = template.render(last_update=last_update_str, template='stats.html.jinja', version=123, chart_config=pdata['chart_config'], page=page, data=data, charts=group_by_two(data['charts']), cards=group_by_two(data['cards']), card_keys=card_keys)
+    page = template.render(last_update=last_update_str, template='stats.html.jinja', version=123, chart_config=pdata['chart_config'], page=page, data=data, charts=group_by_two(data['charts']), cards=group_by_two(data['cards']), card_keys=card_keys, cachebuster=cachebuster)
 
     with open(f'html/{data["file"]}', 'w') as fh:
         fh.write(page)
@@ -70,7 +73,7 @@ for markdown_page in markdown_pages:
 
     page_name = markdown_page.rsplit(".", 1)[0]
     template = env.get_template('page.html.jinja')
-    page = template.render(last_update=last_update_str, template='markdown.html.jinja', version=123, content=mdcontent, page=page_name)
+    page = template.render(last_update=last_update_str, template='markdown.html.jinja', version=123, content=mdcontent, page=page_name, cachebuster=cachebuster)
 
     with open(f'html/{page_name}.html', 'w') as fh:
         fh.write(page)

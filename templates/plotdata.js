@@ -308,11 +308,11 @@ function drawLine(chart_info) {
 datasets = {}
 
 function download_dataset(dataset) {
-    var ts = new Date().getTime()
+    //var ts = new Date().getTime()
     if (dataset.endsWith('.json')) {
-        return d3.json(dataset + '?' + ts)
+        return d3.json(dataset + '?' + cachebuster)
     } else {
-        return d3.csv(dataset + '?' + ts)
+        return d3.csv(dataset + '?' + cachebuster)
     }
 }
 

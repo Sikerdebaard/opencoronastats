@@ -1,5 +1,6 @@
 {% block scripts %}
 <script type="text/javascript">
+    var cachebuster = {{ cachebuster | tojson | safe }}
     var chartdata = {{ data | tojson | safe }}
     var chartconfig = {{ chart_config | tojson | safe }}
     var cards = {{ card_keys | tojson | safe }}
