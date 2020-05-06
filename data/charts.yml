@@ -632,6 +632,7 @@ pages:
       - mortality_displacement.csv
       - rivm.csv
       - outbreak_monitor_cumulative.csv
+      - outbreak_monitor_daily.csv
     cards:
       - id: rivm-total-tests
         icon: fa-vial
@@ -655,14 +656,75 @@ pages:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
 
     charts:
-      - name: outbreak-monitor
-        title: Top-10 municipality by fastest growth in hospitalized case count
+      - name: cumulative-outbreak-monitor
+        title: Top-10 municipality by fastest cumulative growth in hospitalized case count
         type: line
         sources:
           CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70072NED/table?fromstatweb
           RIVM: https://www.rivm.nl/coronavirus-covid-19
         explanation: explanation.html#top-10-municipality-by-fastest-growth-in-hospitalized-case-count
         uses: outbreak_monitor_cumulative
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Cumulative number of hospitalized"
+                ticks:
+                  beginAtZero: true
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: '%column%'
+            columnbyindex: 1
+            backgroundColor: friesland
+            borderColor: friesland
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: gelderland
+            borderColor: gelderland
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: groningen
+            borderColor: groningen
+          - label: '%column%'
+            columnbyindex: 4
+            backgroundColor: limburg
+            borderColor: limburg
+          - label: '%column%'
+            columnbyindex: 5
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+          - label: '%column%'
+            columnbyindex: 6
+            backgroundColor: noord-holland
+            borderColor: noord-holland
+          - label: '%column%'
+            columnbyindex: 7
+            backgroundColor: overijssel
+            borderColor: overijssel
+          - label: '%column%'
+            columnbyindex: 8
+            backgroundColor: utrecht
+            borderColor: utrecht
+          - label: '%column%'
+            columnbyindex: 9
+            backgroundColor: zeeland
+            borderColor: zeeland
+          - label: '%column%'
+            columnbyindex: 10
+            backgroundColor: zuid-holland
+            borderColor: zuid-holland
+
+      - name: daily-outbreak-monitor
+        title: Top-10 municipality by fastest day to day growth in hospitalized case count
+        type: line
+        sources:
+          CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70072NED/table?fromstatweb
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+        explanation: explanation.html#top-10-municipality-by-fastest-growth-in-hospitalized-case-count
+        uses: outbreak_monitor_daily
         x: date
         options:
           scales:

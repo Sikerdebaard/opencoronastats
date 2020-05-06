@@ -89,18 +89,22 @@ def gmcode(code):
 def detect_outbreak(df_to_be_diffed, topx=None):
     df_diff = df_to_be_diffed.copy()
     df_sma = df_to_be_diffed.copy()
+    df_sma_day_to_day = df_to_be_diffed.copy()
 
     for column in df_to_be_diffed.columns:
         df_diff[column] = df_to_be_diffed[column].diff()
+        df_sma_day_to_day[column] = df_to_be_diffed[column].diff().pct_change().rolling(window=3).mean()
         df_sma[column] = df_to_be_diffed[column].pct_change().rolling(window=3).mean()
 
     df_sma = df_sma.sort_values(df_sma.last_valid_index(), axis=1, ascending=False)
+    df_sma_day_to_day = df_sma_day_to_day.sort_values(df_sma_day_to_day.last_valid_index(), axis=1, ascending=False)
 
     df_outbreak_monitor = df_to_be_diffed[df_sma.columns]
+    df_outbreak_monitor_daily = df_to_be_diffed[df_sma_day_to_day.columns]
 
     if topx is not None:
-        return df_outbreak_monitor[df_outbreak_monitor.columns[:topx]], df_diff[df_outbreak_monitor.columns[:topx]]
-    return df_outbreak_monitor, df_diff
+        return df_outbreak_monitor[df_outbreak_monitor.columns[:topx]], df_diff[df_outbreak_monitor.columns[:topx]], df_outbreak_monitor_daily[df_outbreak_monitor_daily.columns[:topx]]
+    return df_outbreak_monitor, df_diff, df_outbreak_monitor_daily
 
 
 
@@ -129,8 +133,9 @@ for idx, row in df.iterrows():
 df_normalized_hospitalized = pd.DataFrame.from_dict(data, orient='index')
 df_absolute_hospitalized = pd.DataFrame.from_dict(data_absolute, orient='index')
 
-df_outbreak, df_daily = detect_outbreak(df_normalized_hospitalized, 10)
+df_outbreak, df_daily, df_outbreak_day_to_day = detect_outbreak(df_normalized_hospitalized, 10)
 #df_outbreak.to_csv('outbreak_monitor_rebased_100_000.csv', index_label='date')
 df_absolute_hospitalized[df_outbreak.columns[:10]].dropna().to_csv('html/outbreak_monitor_cumulative.csv', index_label='date')
+df_absolute_hospitalized[df_outbreak_day_to_day.columns[:10]].dropna().to_csv('html/outbreak_monitor_daily.csv', index_label='date')
 
 #df_outbreak

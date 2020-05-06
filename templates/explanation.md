@@ -37,9 +37,17 @@ A chart that shows patients recovered vs. deceased. It also shows patients moved
 
 This chart attempts to show a top-10 of municipalities with the fastest rise in hospitalized COVID patients. This data can potentially indicate new localized outbreaks. It shows a cumulative line per municipality that reflects how many hospitalized patients were treated. The data for this chart is taken from [CBS](https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70072NED/table?fromstatweb) directly and [RIVM](https://www.rivm.nl/coronavirus-covid-19) trough [CoronaWatchNL](https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-geo/data-municipal/RIVM_NL_municipal.csv).
 
-The method used is as follows:
+For the cumulative growth the following method is used:
 
- 1. First we take the RIVM reported hospitalized on a municipality level and rebase to 1 in 100 000.
+ 1. First we take the RIVM reported cumulative hospitalized on a municipality level and rebase to 1 in 100 000.
  2. Then we calculate the intra-day percentage change over the values of step 1 to get a growth-factor.
  3. We then take the average of the last three days of growth-factor as calculated by step 2.
  4. Finally we take the RIVM reported hospitalized on a municipality level and sort the municipalities by the calculated growth-factor from step 3 and take the top 10.
+
+For the day to day growth the following method is used:
+
+1. First we take the RIVM reported cumulative hospitalized on a municipality level and rebase to 1 in 100 000.
+2. The cumulative number from step 1 is then converted to day to day numbers.
+3. Then we calculate the intra-day percentage change over the values of step 2 to get a growth-factor.
+4. We then take the average of the last three days of growth-factor as calculated by step 3.
+5. Finally we take the RIVM reported hospitalized on a municipality level and sort the municipalities by the calculated growth-factor from step 4 and take the top 10.
