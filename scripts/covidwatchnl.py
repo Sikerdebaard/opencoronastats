@@ -3,6 +3,14 @@ import pandas as pd
 
 output_path = Path('./html/')
 
+
+def calc_growth(df, column):
+    df[f'growth_{column}'] = df[column].pct_change()
+    df[f'sma5_growth_{column}'] = df[f'growth_{column}'].rolling(window=5).mean()
+
+    return df
+
+
 df = pd.read_csv('https://github.com/J535D165/CoronaWatchNL/raw/master/data/rivm_NL_covid19_national_by_date/rivm_NL_covid19_national_by_date_latest.csv')
 
 transformed_data = {}
@@ -20,6 +28,10 @@ df_transformed.rename(
 # df_transformed.to_csv(output_path / 'tests.csv', index_label='date')
 
 df_rivmnums = df_transformed.copy()
+
+# df_rivmnums = calc_growth(df_rivmnums, 'infected')
+# df_rivmnums = calc_growth(df_rivmnums, 'hospitalized')
+# df_rivmnums = calc_growth(df_rivmnums, 'deceased')
 
 # -------------------------------------------------------------------------
 # -------------------------------------------------------------------------
