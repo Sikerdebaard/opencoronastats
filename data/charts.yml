@@ -1475,7 +1475,7 @@ pages:
       - id: hospitalized-doubling-rate
         icon: fa-superscript
         postfix: day(s)
-        explanation: explanation.html#doubling-time-half-life
+        #explanation: explanation.html#doubling-time-half-life
 
       - id: hospitalized-growth
         icon: fa-chart-line
@@ -1484,16 +1484,16 @@ pages:
 
       - id: patients-recovered-from-hospital
         icon: fa-home
-        explanation: explanation.html#patients-recovered-from-icu
+        #explanation: explanation.html#patients-recovered-from-icu
 
       - id: hospitalized-deceased
         icon: fa-skull
-        explanation: explanation.html#patients-deceased-in-icu
+        #explanation: explanation.html#patients-deceased-in-icu
 
       - id: cfr-hospitalized
         icon: fa-skull-crossbones
         postfix: '%'
-        explanation: explanation.html#case-fatality-rate-in-icu
+        #explanation: explanation.html#case-fatality-rate-in-icu
 
 
     charts:
@@ -1519,7 +1519,7 @@ pages:
             filter: remove_last_three
             backgroundColor: patients
             borderColor: patients
-          - label: "Points still being updated by ICUs"
+          - label: "Points still being updated by hospitals"
             column: intakeCount
             filter: last_three_rest_null
             backgroundColor: patients-afive
@@ -1547,7 +1547,7 @@ pages:
               - percentage_fraction_to_percentage
             backgroundColor: derivate-atwo
             borderColor: derivate-atwo
-          - label: "Points still being updated by ICUs"
+          - label: "Points still being updated by hospitals"
             column: growth_intakeCount
             filter:
               - last_three_rest_null
@@ -1586,7 +1586,7 @@ pages:
               - filter_zero_values
             backgroundColor: deaths
             borderColor: deaths
-          - label: Points still being updated by ICUs
+          - label: Points still being updated by hospitals
             column: mortality_rate
             filter:
               - percentage_fraction_to_percentage
@@ -1618,7 +1618,7 @@ pages:
               - filter_zero_values
             backgroundColor: recovered
             borderColor: recovered
-          - label: Points still being updated by ICUs
+          - label: Points still being updated by hospitals
             column: cumulative_recovered
             filter:
               - last_three_rest_null
@@ -1631,7 +1631,7 @@ pages:
              - filter_zero_values
             backgroundColor: deaths
             borderColor: deaths
-          - label: Points still being updated by ICUs
+          - label: Points still being updated by hospitals
             column: cumulative_deceased
             filter:
              - last_three_rest_null
