@@ -1464,3 +1464,348 @@ pages:
         sources:
           Stichting NICE: https://www.stichting-nice.nl/
 
+  hospital:
+    file: hospital.html
+    datasets:
+      - hospitalized.csv
+      #- demographics.csv
+      #- treatment_durations.csv
+      - timestamp.json
+    cards:
+      - id: hospitalized-doubling-rate
+        icon: fa-superscript
+        postfix: day(s)
+        explanation: explanation.html#doubling-time-half-life
+
+      - id: hospitalized-growth
+        icon: fa-chart-line
+        postfix: '%'
+        explanation: explanation.html#growth-rate
+
+      - id: patients-recovered-from-hospital
+        icon: fa-home
+        explanation: explanation.html#patients-recovered-from-icu
+
+      - id: hospitalized-deceased
+        icon: fa-skull
+        explanation: explanation.html#patients-deceased-in-icu
+
+      - id: cfr-hospitalized
+        icon: fa-skull-crossbones
+        postfix: '%'
+        explanation: explanation.html#case-fatality-rate-in-icu
+
+
+    charts:
+      - name: hospital-beds
+        title: Beds used in hospital
+        type: line
+        uses: hospitalized
+        x: date
+        #explanation: explanation.html#beds-used-for-covid-beds-used-in-icu
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of patients"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: "COVID patients in Hospital"
+            column: intakeCount
+            filter: remove_last_three
+            backgroundColor: patients
+            borderColor: patients
+          - label: "Points still being updated by ICUs"
+            column: intakeCount
+            filter: last_three_rest_null
+            backgroundColor: patients-afive
+            borderColor: patients-afive
+
+      - name: hospitalized-growth-chart
+        title: Growth of confirmed COVID patients in hospital
+        type: line
+        uses: hospitalized
+        x: date
+        #explanation: explanation.html#growth-of-confirmed-covid-patients-in-icu
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Growth rate in percentage"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: "Growth as percentage change"
+            column: growth_intakeCount
+            filter:
+              - remove_last_three
+              - percentage_fraction_to_percentage
+            backgroundColor: derivate-atwo
+            borderColor: derivate-atwo
+          - label: "Points still being updated by ICUs"
+            column: growth_intakeCount
+            filter:
+              - last_three_rest_null
+              - percentage_fraction_to_percentage
+            backgroundColor: derivate-aone
+            borderColor: derivate-aone
+          - label: "Simple Moving Average (5 days)"
+            column: sma5_growth_intakeCount
+            filter:
+              - remove_last_three
+              - filter_zero_values
+              - percentage_fraction_to_percentage
+            backgroundColor: derivate
+            borderColor: derivate
+
+      - name: hospitalized-evolution-mortality
+        title: Evolution of mortality rate for hospitalized COVID patients
+        uses: hospitalized
+        type: line
+        x: date
+        #explanation: explanation.html#evolution-of-mortality-rate-in-icu
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: Mortality rate in percentage
+            xAxes:
+              - scaleLabel:
+                  labelString: Date
+        datasets:
+          - label: Evolution of mortality rate in hospitalized
+            column: mortality_rate
+            filter:
+              - remove_last_three
+              - percentage_fraction_to_percentage
+              - filter_zero_values
+            backgroundColor: deaths
+            borderColor: deaths
+          - label: Points still being updated by ICUs
+            column: mortality_rate
+            filter:
+              - percentage_fraction_to_percentage
+              - last_three_rest_null
+            backgroundColor: deaths-afive
+            borderColor: deaths-afive
+
+      - name: hospitalized-recovered-vs-deceased
+        title: Patients recovered vs. deceased
+        uses: hospitalized
+        type: line
+        x: date
+        #explanation: explanation.html#patients-recovered-vs-deceased
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: Number of patients
+            xAxes:
+              - scaleLabel:
+                  labelString: Date
+        datasets:
+          - label: Patients recovered
+            column: cumulative_recovered
+            filter:
+              - remove_last_three
+              - filter_zero_values
+            backgroundColor: recovered
+            borderColor: recovered
+          - label: Points still being updated by ICUs
+            column: cumulative_recovered
+            filter:
+              - last_three_rest_null
+            backgroundColor: recovered-afive
+            borderColor: recovered-afive
+          - label: Patients deceased
+            column: cumulative_deceased
+            filter:
+             - remove_last_three
+             - filter_zero_values
+            backgroundColor: deaths
+            borderColor: deaths
+          - label: Points still being updated by ICUs
+            column: cumulative_deceased
+            filter:
+             - last_three_rest_null
+            backgroundColor: deaths-afive
+            borderColor: deaths-afive
+
+#      - name: icu-demographics
+#        title: Demographics of hospitalized patients
+#        uses: demographics
+#        type: 'demographics'
+#        x: 'age_group'
+#        sources:
+#          Stichting NICE: https://www.stichting-nice.nl/
+#        options:
+#          scales:
+#            yAxes:
+#              - scaleLabel:
+#                  labelString: "Number of patients"
+#        datasets:
+#          - label: "Demographics of patients in ICU"
+#            column: patients_in_icu
+#            backgroundColor: patients
+#            borderColor: patients
+#            filter: 'filter_zero_values'
+#            scalelabel: 'Number of patients'
+#
+#      - name: icu-demographics-death
+#        title: Demographics of deaths in ICU
+#        uses: demographics
+#        type: 'demographics'
+#        x: 'age_group'
+#        options:
+#          scales:
+#            yAxes:
+#              - scaleLabel:
+#                  labelString: "Number of deceased"
+#        datasets:
+#          - label: "Demographics of deaths in ICU"
+#            column: deceased_patients
+#            backgroundColor: 'deaths'
+#            borderColor: 'deaths'
+#            filter: 'filter_zero_values'
+#            scalelabel: 'Number of patients'
+#        sources:
+#          Stichting NICE: https://www.stichting-nice.nl/
+#
+#      - name: icu-demographics-recovered
+#        title: Demographics of recovered patients in ICU
+#        uses: demographics
+#        type: 'demographics'
+#        x: 'age_group'
+#        options:
+#          scales:
+#            yAxes:
+#              - scaleLabel:
+#                  labelString: "Number of recovered"
+#        datasets:
+#          - label: "Demographics of recovered patients from ICU"
+#            column: recovered_patients
+#            backgroundColor: 'recovered'
+#            borderColor: 'recovered'
+#            filter: 'filter_zero_values'
+#            scalelabel: 'Number of patients'
+#        sources:
+#          Stichting NICE: https://www.stichting-nice.nl/
+#
+#      - name: icu-demographics-moved
+#        title: Demographics of patients moved from ICU to hospital
+#        uses: demographics
+#        type: 'demographics'
+#        x: 'age_group'
+#        options:
+#          scales:
+#            yAxes:
+#              - scaleLabel:
+#                  labelString: "Number of moved patients"
+#        datasets:
+#          - label: "Demographics of patients moved from ICU to hospital"
+#            column: patients_in_hospital
+#            backgroundColor: moved
+#            borderColor: moved
+#            filter: filter_zero_values
+#            scalelabel: 'Number of patients'
+#        sources:
+#          Stichting NICE: https://www.stichting-nice.nl/
+#
+#      - name: icu-treament-times-inicu
+#        title: Treament times of patients in ICU
+#        uses: treatment_durations
+#        type: 'demographics'
+#        x: 'days_of_treatment'
+#        options:
+#          scales:
+#            yAxes:
+#              - scaleLabel:
+#                  labelString: "Number of patients"
+#            xAxes:
+#              - scaleLabel:
+#                  labelString: "Number of days"
+#        datasets:
+#          - label: "Treatment times of patients in ICU"
+#            column: patients_in_icu
+#            backgroundColor: patients
+#            borderColor: patients
+#            filter: filter_zero_values
+#            scalelabel: 'Number of patients'
+#        sources:
+#          Stichting NICE: https://www.stichting-nice.nl/
+#
+#      - name: icu-treament-times-deceased
+#        title: Treament times of deceased patients
+#        uses: treatment_durations
+#        type: 'demographics'
+#        x: 'days_of_treatment'
+#        options:
+#          scales:
+#            yAxes:
+#              - scaleLabel:
+#                  labelString: "Number of deceased patients"
+#            xAxes:
+#              - scaleLabel:
+#                  labelString: "Number of days"
+#        datasets:
+#          - label: "Treatment times of deceased patients"
+#            column: deceased_patients
+#            backgroundColor: deaths
+#            borderColor: deaths
+#            filter: filter_zero_values
+#            scalelabel: 'Number of patients'
+#        sources:
+#          Stichting NICE: https://www.stichting-nice.nl/
+#
+#      - name: icu-treament-times-recovered
+#        title: Treament times of recovered patients
+#        uses: treatment_durations
+#        type: 'demographics'
+#        x: 'days_of_treatment'
+#        options:
+#          scales:
+#            yAxes:
+#              - scaleLabel:
+#                  labelString: "Number of recovered patients"
+#            xAxes:
+#              - scaleLabel:
+#                  labelString: "Number of days"
+#        datasets:
+#          - label: "Treatment times of recovered patients"
+#            column: recovered_patients
+#            backgroundColor: recovered
+#            borderColor: recovered
+#            filter: filter_zero_values
+#            scalelabel: 'Number of patients'
+#        sources:
+#          Stichting NICE: https://www.stichting-nice.nl/
+#
+#      - name: icu-treament-times-moved
+#        title: Treament times of patients moved from ICU to hospital
+#        uses: treatment_durations
+#        type: 'demographics'
+#        x: 'days_of_treatment'
+#        options:
+#          scales:
+#            yAxes:
+#              - scaleLabel:
+#                  labelString: "Number of patients moved"
+#            xAxes:
+#              - scaleLabel:
+#                  labelString: "Number of days"
+#        datasets:
+#          - label: "Treatment times of patients moved from ICU to hospital"
+#            column: patients_in_hospital
+#            backgroundColor: moved
+#            borderColor: moved
+#            filter: filter_zero_values
+#            scalelabel: 'Number of patients'
+#        sources:
+#          Stichting NICE: https://www.stichting-nice.nl/

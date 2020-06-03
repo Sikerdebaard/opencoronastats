@@ -93,21 +93,103 @@ cards['cfr-icu'] = {
 
 }
 
+
+#-------------
+# hospitalized
+#-------------
+
+df_data = pd.read_csv('html/hospitalized.csv')
+
+# -- growth
+
+growth = df_data['sma5_growth_intakeCount'].tail(5).values[0:2]
+
+if growth[0] == growth[1]:
+    trend = 0
+elif growth[0] > growth[1]:
+    trend = -1
+else:
+    trend = 1
+
+cards['hospitalized-growth'] = {
+    'trend': trend,
+    'value': round(growth[1] * 100),
+    'title': 'Growth rate',
+    'color': 'green' if trend <= 0 else 'red'
+}
+
+# -- doubling rate / half life
+
+growth = cards['hospitalized-growth']['value']
+growth_trend = cards['hospitalized-growth']['trend']
+if growth < 0:  # half-life
+    value = int(log(1 / 2) / log(1 + growth / 100))
+    title = 'half life'
+
+    if growth_trend == -1:
+        trend = -1
+        color = 'green'
+    else:
+        trend = 1
+        color = 'red'
+else:
+    value = int(log(2) / log(1 + growth / 100))
+    title = 'doubling rate'
+
+    if growth_trend == 1:
+        trend = 1
+        color = 'green'
+    else:
+        trend = -1
+        color = 'red'
+
+cards['hospitalized-doubling-rate'] = {
+    'trend': trend,
+    'value': value,
+    'title': title,
+    'color': color
+}
+
+# -- patients recovered / deceased / beds
+
+cards['patients-recovered-from-hospital'] = {
+    'value': df_data['cumulative_recovered'].tail(4).values[0],
+    'title': 'Hospitalized patients recovered',
+    'color': 'blue'
+}
+
+cards['hospitalized-deceased'] = {
+    'value': df_data['cumulative_deceased'].tail(4).values[0],
+    'title': 'Hospitalized patients deceased',
+    'color': 'blue'
+}
+
+cfr = df_data['mortality_rate'].tail(5).values[0:2]
+trend = 1 if cfr[0] < cfr[1] else -1
+cards['cfr-hospitalized'] = {
+    'value': round(cfr[1] * 100, 2),
+    'title': 'Case Fatality Rate for hospitalized patients',
+    'color': 'red' if trend == 1 else 'green',
+    'trend': trend
+
+}
+
+
 # -- population
 
 df_rivm = pd.read_csv('html/rivm.csv')
 
-cards['rivm-total-tests'] = {
-    'value': df_rivm['tests_cumulative'].loc[df_rivm['tests_cumulative'].last_valid_index()].astype(int),
-    'title': 'Total tests performed',
-    'color': 'blue'
-}
-
-cards['rivm-total-tests-positive'] = {
-    'value': df_rivm['positive_tests_cumulative'].loc[df_rivm['positive_tests_cumulative'].last_valid_index()].astype(int),
-    'title': 'Total positive tests',
-    'color': 'blue'
-}
+# cards['rivm-total-tests'] = {
+#     'value': df_rivm['tests_cumulative'].loc[df_rivm['tests_cumulative'].last_valid_index()].astype(int),
+#     'title': 'Total tests performed',
+#     'color': 'blue'
+# }
+#
+# cards['rivm-total-tests-positive'] = {
+#     'value': df_rivm['positive_tests_cumulative'].loc[df_rivm['positive_tests_cumulative'].last_valid_index()].astype(int),
+#     'title': 'Total positive tests',
+#     'color': 'blue'
+# }
 
 cards['rivm-total-infected'] = {
     'value': df_rivm['infected_cumulative'].loc[df_rivm['infected_cumulative'].last_valid_index()].astype(int),
