@@ -55,6 +55,8 @@ df_rivmnums = df_transformed.copy()
 #  
 #  df_out = df_rivmnums.join(df_transformed)
 
+# this replaces above commented code
+df_out = df_rivmnums
 
 # -------------------------------------------------------------------------
 # -------------------------------------------------------------------------
