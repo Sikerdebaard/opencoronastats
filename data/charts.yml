@@ -776,9 +776,9 @@ pages:
                   labelString: "Weeknumber"
         datasets:
           - label: Positive tests
-            column: positive_tests
-            backgroundColor: derivative 
-            borderColor: derivative
+            column: percentage_positive
+            backgroundColor: derivate 
+            borderColor: derivate
             filter:
               - filter_zero_values
 
