@@ -80,3 +80,18 @@ df_out = df_out.join(df_transformed)
 df_out.to_csv(output_path / 'rivm.csv', index_label='date')
 
 
+
+# COVID TESTS PERFORMED
+df_csv = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-test/RIVM_NL_test_latest.csv')
+
+keep_columns = ['Week', 'Aantal']
+
+df_data = df_csv[df_csv['Type'] == 'Totaal'][keep_columns]
+df_data = df_data.rename(columns={'Aantal': 'total_tests'})
+df_data = df_data.merge(df_csv[df_csv['Type'] == 'Positief'][keep_columns])
+df_data = df_data.rename(columns={'Aantal': 'positive_tests', 'Week': 'weeknum'})
+df_data = df_data.set_index(df_data['weeknum'])
+df_data = df_data.drop(columns='weeknum')
+df_data['percentage_positive'] = df_data.apply(lambda row: (row['positive_tests'] / row['total_tests'] * 100), axis=1)
+
+df_data.to_csv(output_path / 'tests_performed.csv')

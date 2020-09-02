@@ -635,6 +635,7 @@ pages:
       - rivm.csv
       - outbreak_monitor_cumulative.csv
       - outbreak_monitor_daily.csv
+      - tests_performed.csv
     cards:
 #      - id: rivm-total-tests
 #        icon: fa-vial
@@ -658,6 +659,7 @@ pages:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
 
     charts:
+
       - name: rivm-daily-nums
         title: Case counts
         type: line
@@ -725,6 +727,58 @@ pages:
             column: deceased_cumulative
             backgroundColor: deaths
             borderColor: deaths
+            filter:
+              - filter_zero_values
+      
+      - name: tests-performed
+        title: Tests performed
+        type: line
+        uses: tests_performed
+        x: weeknum
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                labelString: "Number of people"
+            xAxes:
+              - scaleLabel:
+                labelString: "Weeknumber"
+        datasets:
+          - label: Tests performed
+            column: total_tests
+            backgroundColor: icu-beds 
+            borderColor: icu-beds
+            filter:
+              - filter_zero_values
+          - label: Positive tests
+            column: positive_tests
+            backgroundColor: patients
+            borderColor: patients
+            filter:
+              - filter_zero_values
+      
+      - name: tests-percentage-positive
+        title: Percentage of tests positive 
+        type: line
+        uses: tests_performed
+        x: weeknum
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                labelString: "Percentage of tests positive"
+            xAxes:
+              - scaleLabel:
+                labelString: "Weeknumber"
+        datasets:
+          - label: Positive tests
+            column: positive_tests
+            backgroundColor: derivative 
+            borderColor: derivative
             filter:
               - filter_zero_values
 
