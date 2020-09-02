@@ -741,10 +741,10 @@ pages:
           scales:
             yAxes:
               - scaleLabel:
-                labelString: "Number of people"
+                  labelString: "Number of people"
             xAxes:
               - scaleLabel:
-                labelString: "Weeknumber"
+                  labelString: "Weeknumber"
         datasets:
           - label: Tests performed
             column: total_tests
@@ -770,10 +770,10 @@ pages:
           scales:
             yAxes:
               - scaleLabel:
-                labelString: "Percentage of tests positive"
+                  labelString: "Percentage of tests positive"
             xAxes:
               - scaleLabel:
-                labelString: "Weeknumber"
+                  labelString: "Weeknumber"
         datasets:
           - label: Positive tests
             column: positive_tests
