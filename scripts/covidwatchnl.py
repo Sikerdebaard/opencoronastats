@@ -92,6 +92,6 @@ df_data = df_data.merge(df_csv[df_csv['Type'] == 'Positief'][keep_columns])
 df_data = df_data.rename(columns={'Aantal': 'positive_tests', 'Week': 'weeknum'})
 df_data = df_data.set_index(df_data['weeknum'])
 df_data = df_data.drop(columns='weeknum')
-df_data['percentage_positive'] = df_data.apply(lambda row: (row['positive_tests'] / row['total_tests'] * 100), axis=1)
+df_data['percentage_positive'] = df_data.apply(lambda row: round(row['positive_tests'] / row['total_tests'] * 100, 2), axis=1)
 
 df_data.to_csv(output_path / 'tests_performed.csv')
