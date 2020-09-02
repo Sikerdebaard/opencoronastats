@@ -775,7 +775,7 @@ pages:
               - scaleLabel:
                   labelString: "Weeknumber"
         datasets:
-          - label: Positive tests
+          - label: Percentage of tests positive
             column: percentage_positive
             backgroundColor: derivate 
             borderColor: derivate
