@@ -844,7 +844,7 @@ pages:
             pointHoverRadius: 0
           - label: '%column%'
             columnbyindex: 4
-            backgroundColor: derivate
+            backgroundColor: icu-beds 
               #borderColor: derivate
             borderColor: icu-beds
             filter: filter_zero_values
@@ -1192,7 +1192,7 @@ pages:
             pointHoverRadius: 0
           - label: '%column%'
             columnbyindex: 4
-            backgroundColor: derivate
+            backgroundColor: icu-beds 
             borderColor: icu-beds
             filter: filter_zero_values
 
