@@ -885,70 +885,6 @@ pages:
             borderColor: deaths
             filter:
               - filter_zero_values
-      - name: birth-rates
-        title: Number of births
-        type: line
-        sources:
-          CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/83474NED/table?fromstatweb
-        uses: births
-        x: month
-        options:
-          scales:
-            yAxes:
-              - scaleLabel:
-                  labelString: "Number of deceased"
-                ticks:
-                  beginAtZero: true
-            xAxes:
-              - scaleLabel:
-                  labelString: "Weeknumber"
-        datasets:
-          - label: Confidence interval 95% top
-            column: ci_0.95_high
-            backgroundColor: ci-top
-            borderColor: transparent
-            fill: 0
-            lineTension: 0
-            pointRadius: 0
-          - label: Confidence interval 95% bottom
-            column: ci_0.95_low
-            fill: 0
-            backgroundColor: ci-bottom
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-          - label: '%column%'
-            columnbyindex: 0
-            backgroundColor: derivate-aone
-            borderColor: derivate-aone
-            pointRadius: 0
-            pointHoverRadius: 0
-            hidde: true
-          - label: '%column%'
-            columnbyindex: 1
-            backgroundColor: derivate-athree
-            borderColor: derivate-athree
-            pointRadius: 0
-            pointHoverRadius: 0
-            hidden: true
-          - label: '%column%'
-            columnbyindex: 2
-            backgroundColor: derivate-afour
-            borderColor: derivate-afour
-            pointRadius: 0
-            pointHoverRadius: 0
-            hidden: true
-          - label: '%column%'
-            columnbyindex: 3
-            backgroundColor: derivate-afive
-            borderColor: derivate-afive
-            pointRadius: 0
-            pointHoverRadius: 0
-          - label: '%column%'
-            columnbyindex: 4
-            backgroundColor: derivate
-            borderColor: derivate
-            filter: filter_zero_values
 
 #      - name: rivm-growth-rates-deaths
 #        title: Growth rates deceased
@@ -1195,6 +1131,69 @@ pages:
             columnbyindex: 10
             backgroundColor: zuid-holland
             borderColor: zuid-holland
+      
+      - name: birth-rates
+        title: Number of births
+        type: line
+        sources:
+          CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/83474NED/table?fromstatweb
+        uses: births
+        x: month
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of births"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Month"
+        datasets:
+          - label: Max
+            column: max
+            backgroundColor: ci-top
+            borderColor: transparent
+            fill: 0
+            lineTension: 0
+            pointRadius: 0
+          - label: Min
+            column: min
+            fill: 0
+            backgroundColor: ci-bottom
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+          - label: '%column%'
+            columnbyindex: 0
+            backgroundColor: derivate-aone
+            borderColor: derivate-aone
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidde: true
+          - label: '%column%'
+            columnbyindex: 1
+            backgroundColor: derivate-athree
+            borderColor: derivate-athree
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: derivate-afour
+            borderColor: derivate-afour
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: derivate-afive
+            borderColor: derivate-afive
+            pointRadius: 0
+            pointHoverRadius: 0
+          - label: '%column%'
+            columnbyindex: 4
+            backgroundColor: derivate
+            borderColor: derivate
+            filter: filter_zero_values
 
   icu:
     file: index.html

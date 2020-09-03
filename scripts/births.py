@@ -37,8 +37,9 @@ try:
     cis = []
     for idx, row in df.iterrows():
         vals = row.values[:-1][-10:]  # slice off latest year (2020) then take last 5 years
-        ci = st.t.interval(confidence, len(vals) - 1, loc=np.mean(vals), scale=st.sem(vals))
-        cis.append({'week': idx, f'ci_{confidence}_low': int(ci[0]), f'ci_{confidence}_high': int(ci[1])})
+        #ci = st.t.interval(confidence, len(vals) - 1, loc=np.mean(vals), scale=st.sem(vals))
+        #cis.append({'week': idx, f'ci_{confidence}_low': int(ci[0]), f'ci_{confidence}_high': int(ci[1])})
+        cis.append({'week': idx, f'min': np.min(vals), f'max': np.max(vals)})
 
     df_out = pd.DataFrame(cis).set_index('week')
     df_out = df_out.merge(df[df.columns[-5:]], left_index=True, right_index=True)  # only take last 5 years for visualisation
