@@ -845,7 +845,8 @@ pages:
           - label: '%column%'
             columnbyindex: 4
             backgroundColor: derivate
-            borderColor: derivate
+              #borderColor: derivate
+            borderColor: icu-beds
             filter: filter_zero_values
 
       - name: excess-mortality-vs-rivm
@@ -1192,7 +1193,7 @@ pages:
           - label: '%column%'
             columnbyindex: 4
             backgroundColor: derivate
-            borderColor: beds
+            borderColor: icu-beds
             filter: filter_zero_values
 
   icu:
