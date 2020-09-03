@@ -1,3 +1,11 @@
+# 2020-09-03:
+
+**Population**
+
+* Charts were added that describe the number of COVID tests performed and positivity-rates on these tests.
+* Charts were added that describe the number of births.
+
+
 # 2020-05-05:
 
 **New pages**
