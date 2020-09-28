@@ -66,7 +66,7 @@ df = calc_growth(df, 'intakeCount')
 
 df_lcps = pd.read_csv('https://github.com/J535D165/CoronaWatchNL/raw/master/data/lcps_ic.csv', index_col=0)
 df_lcps.rename(columns={'Aantal': 'lcps_beds'}, inplace=True)
-df_lcps.drop_duplicates(inplace=True)
+#df_lcps.drop_duplicates(inplace=True)
 
 df = df.join(df_lcps)
 
