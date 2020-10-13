@@ -64,8 +64,8 @@ chart_config:
   linechart_default_dataset_vals:
     fill: false
     lineTension: 0
-    pointRadius: 3
-    pointHoverRadius: 5
+    pointRadius: 2
+    pointHoverRadius: 1
 
 pages:
   mobility:
