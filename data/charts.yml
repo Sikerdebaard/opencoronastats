@@ -903,7 +903,7 @@ pages:
 
       
       - name: tests-performed
-        title: Tests performed
+        title: Tests performed by Dutch labs
         type: line
         uses: tests_performed
         x: weeknum
