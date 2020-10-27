@@ -660,6 +660,14 @@ pages:
         icon: fa-skull-crossbones
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-r
+        icon: fa-people-arrows
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-contagious
+        icon: fa-head-side-cough
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
 
     charts:
 

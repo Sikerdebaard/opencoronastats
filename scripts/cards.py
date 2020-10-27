@@ -209,6 +209,29 @@ cards['rivm-total-deceased'] = {
     'color': 'blue'
 }
 
+
+
+
+# population infectious, reproduction-index etc.
+
+
+df_data = pd.read_csv('html/infection.csv')
+
+r = df_data['r'].loc[df_data['r'].last_valid_index()].astype(float)
+contagious = df_data['contagious'].loc[df_data['contagious'].last_valid_index()].astype(int)
+
+cards['rivm-r'] = {
+    'value': r,
+    'title': 'Estimated reproduction index',
+    'color': 'blue'
+}
+
+cards['rivm-contagious'] = {
+    'value': contagious,
+    'title': 'Estimated contagious people',
+    'color': 'blue'
+}
+
 output_path = Path('./html/')
 
 from pprint import pprint
