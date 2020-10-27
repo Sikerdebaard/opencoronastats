@@ -1,10 +1,13 @@
 # 2020-10-27:
+
 ** Population**
+
 * Charts were added that describe the estimated number of contagious people as reported by the RIVM.
 * Charts were added that describe the estimated reproduction index as reported by the RIVM.
 * Charts were added that describe the number of RNA particles found per ML of sewage water as reported by the RIVM.
 * A card was added that describes the latest estimated reproduction index as reported by the RIVM.
 * A card was added that describes the latest estimated number of contagious people as reported by the RIVM.
+
 
 # 2020-09-03:
 
