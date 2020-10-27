@@ -10,7 +10,7 @@ python scripts/outbreakmonitor.py &
 python scripts/excessmortality.py &
 python scripts/mobility.py &
 python scripts/births.py &
-python scripts/build.py &
 wait
 
 python scripts/cards.py 
+python scripts/build.py 
