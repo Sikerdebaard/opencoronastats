@@ -1643,6 +1643,11 @@ pages:
             filter: last_three_rest_null
             backgroundColor: patients-afive
             borderColor: patients-afive
+          - label: "LCPS Reported patients"
+            column: lcps_beds
+            filter: filter_zero_values
+            backgroundColor: derivate-athree
+            borderColor: derivate-athree
 
       - name: hospitalized-growth-chart
         title: Growth of confirmed COVID patients in hospital
