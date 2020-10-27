@@ -95,3 +95,32 @@ df_data = df_data.drop(columns='weeknum')
 df_data['percentage_positive'] = df_data.apply(lambda row: round(row['positive_tests'] / row['total_tests'] * 100, 2), axis=1)
 
 df_data.to_csv(output_path / 'tests_performed.csv')
+
+
+
+## INFECTIONS
+# R0, #infected etc.
+
+df_data = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-dashboard/data-reproduction/RIVM_NL_reproduction_index.csv', index_col=0)
+
+df = df_data[df_data['Type'] == 'Minimum'].drop(columns=['Type']).rename(columns={'Waarde': 'r_min'})
+
+df['r_max'] = df_data[df_data['Type'] == 'Maximum']['Waarde']
+df['r'] = df_data[df_data['Type'] == 'Reproductie index']['Waarde']
+
+df_data = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-dashboard/data-contagious/RIVM_NL_contagious_estimate.csv', index_col=0)
+
+
+df['contagious_min'] = df_data[df_data['Type'] == 'Minimum']['Waarde']
+df['contagious_max'] = df_data[df_data['Type'] == 'Maximum']['Waarde']
+df['contagious'] = df_data[df_data['Type'] == 'Geschat aantal besmettelijke mensen']['Waarde']
+
+df.to_csv(output_path / 'infection.csv')
+
+df_data = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-dashboard/data-sewage/RIVM_NL_sewage_counts.csv', index_col=0)
+
+df_data.index = pd.to_datetime(df_data.index).week
+df_data.index.rename('week', inplace=True)
+df_data = df_data.drop(columns=['Type']).rename(columns={'Aantal': 'virusparticles_per_ml'})
+
+df_data.to_csv(output_path / 'sewage.csv')
