@@ -128,6 +128,8 @@ df_data.to_csv(output_path / 'sewage.csv')
 
 df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/hospitalized/new-intake.xlsx', index_col=0)
 
+df.index = pd.to_datetime(df.index)
+
 df = df.groupby([pd.Grouper(freq='W-MON')])['confirmed'].sum()
 df.index = df.index.week
 df.index.rename('week', inplace=True)
