@@ -1,11 +1,10 @@
 import yaml
-from jinja2 import Environment, FileSystemLoader, select_autoescape, Markup
-import markdown
 from datetime import datetime
 from pytz import timezone
 from pathlib import Path
 import json
 import time
+import os
 
 output_path = Path('./screenshots')
 
