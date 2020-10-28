@@ -1,3 +1,10 @@
+# 2020-10-28
+
+** Population**
+
+* A chart was added showing hospital intakes proven COVID-19 patients vs. COVID-19 RNA particles per ML of sewage water
+
+
 # 2020-10-27:
 
 ** Population**
