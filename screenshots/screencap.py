@@ -1,4 +1,5 @@
 import os
+import time
 
 from optparse import OptionParser
 
@@ -25,6 +26,8 @@ def make_screenshot(url, output):
         chrome_options=chrome_options
     )
     driver.get(url)
+
+    time.sleep(10)
 
     driver.save_screenshot("/tmp/tmp.png")
 
