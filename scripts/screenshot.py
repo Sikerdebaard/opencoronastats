@@ -37,6 +37,6 @@ def runcmd(cmd):
     os.system(cmd)
     
 
-with Pool(processes=4) as pool:
+with Pool(processes=2) as pool:
     result = pool.map(runcmd, cmds)
 
