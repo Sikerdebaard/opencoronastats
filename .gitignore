@@ -7,6 +7,9 @@ node_modules/
 *.swp
 *.swo
 
+screenshots/*.png
+screenshots/screenshots.sh
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
