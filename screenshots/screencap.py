@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.options import Options
 
 CHROME_PATH = '/usr/bin/google-chrome'
 CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
+#WINDOW_SIZE = "1920,1200"
 WINDOW_SIZE = "2560,1440"
 
 chrome_options = Options()
@@ -32,20 +33,18 @@ def make_screenshot(url, output):
         retval = driver.execute_script("return document.readyState")
         time.sleep(1)
 
-    time.sleep(60)
-    #driver.save_screenshot("/tmp/tmp.png")
+    driver.save_screenshot("/tmp/tmp.png")
 
+    el_id = url.split('#')[1]
+    retval = driver.execute_script(f"return document.getElementById('{el_id}').getBoundingClientRect();")
+
+    box = [retval['left'], retval['top'], retval['right'], retval['bottom']]
     el = driver.find_element_by_id(url.split('#')[1]);
     
-    from selenium.webdriver.common.action_chains import ActionChains
-    ActionChains(driver).move_to_element(el).perform()
-    
-    time.sleep(10)
-
-    print(el.location)
-    print(el.size)
-
-    el.screenshot(output)
+    from PIL import Image
+    im = Image.open("/tmp/tmp.png")
+    im2 = im.crop(box)
+    im2.save(output)
 
     driver.close()
 
