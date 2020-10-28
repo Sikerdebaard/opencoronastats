@@ -136,7 +136,7 @@ df = pd.DataFrame(df)
 
 df.rename(columns={'confirmed': 'hospitalized_per_day'}, inplace=True)
 
-df_sewage = pd.read_csv('sewage.csv', index_col=0)
+df_sewage = pd.read_csv(output_path / 'sewage.csv', index_col=0)
 
 df['virusparticles_per_ml'] = df_sewage['virusparticles_per_ml']
 
