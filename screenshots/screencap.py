@@ -32,7 +32,7 @@ def make_screenshot(url, output):
         retval = driver.execute_script("return document.readyState")
         time.sleep(1)
 
-    time.sleep(5)
+    time.sleep(60)
     #driver.save_screenshot("/tmp/tmp.png")
 
     el = driver.find_element_by_id(url.split('#')[1]);
@@ -40,7 +40,7 @@ def make_screenshot(url, output):
     from selenium.webdriver.common.action_chains import ActionChains
     ActionChains(driver).move_to_element(el).perform()
     
-    time.sleep(2)
+    time.sleep(10)
 
     print(el.location)
     print(el.size)
