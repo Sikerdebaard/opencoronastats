@@ -38,5 +38,5 @@ def runcmd(cmd):
     
 
 with Pool(processes=8) as pool:
-    result = pool.map(runcmd, dockercmd)
+    result = pool.map(runcmd, cmds)
 
