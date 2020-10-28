@@ -27,7 +27,12 @@ def make_screenshot(url, output):
     )
     driver.get(url)
 
+    retval = ""
+    while retval.lower().strip() != 'complete':
+        retval = driver.execute_script("return document.readyState")
+        time.sleep(1)
 
+    time.sleep(5)
     #driver.save_screenshot("/tmp/tmp.png")
 
     el = driver.find_element_by_id(url.split('#')[1]);
