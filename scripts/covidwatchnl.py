@@ -124,3 +124,22 @@ df_data.index.rename('week', inplace=True)
 df_data = df_data.drop(columns=['Type']).rename(columns={'Aantal': 'virusparticles_per_ml'})
 
 df_data.to_csv(output_path / 'sewage.csv')
+
+
+df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/hospitalized/new-intake.xlsx', index_col=0)
+
+df = df.groupby([pd.Grouper(freq='W-MON')])['confirmed'].sum()
+df.index = df.index.week
+df.index.rename('week', inplace=True)
+
+df = pd.DataFrame(df)
+
+df.rename(columns={'confirmed': 'hospitalized_per_day'}, inplace=True)
+
+df_sewage = pd.read_csv('sewage.csv', index_col=0)
+
+df['virusparticles_per_ml'] = df_sewage['virusparticles_per_ml']
+
+df.drop(df.tail(1).index,inplace=True)
+
+df.to_csv(output_path / 'hospitalized_vs_sewage.csv')

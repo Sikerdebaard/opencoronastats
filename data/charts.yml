@@ -639,6 +639,7 @@ pages:
       - births.csv
       - sewage.csv
       - infection.csv
+      - hospitalized_vs_sewage.csv
     cards:
 #      - id: rivm-total-tests
 #        icon: fa-vial
@@ -838,69 +839,37 @@ pages:
             filter:
               - filter_zero_values
       
-      - name: birth-rates
-        title: Number of births
+      - name: sewage-vs-intakes
+        title: Sewage particles vs. hospital confirmed COVID-19 intakes
         type: line
+        uses: hospitalized_vs_sewage
+        x: week
         sources:
-          CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/83474NED/table?fromstatweb
-        uses: births
-        x: month
+          RIVM: https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/a2960b68-9d3f-4dc3-9485-600570cd52b9
+          Stichting NICE: https://www.stichting-nice.nl/
         options:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Number of births"
+                  labelString: "RNA particles per ML sewage / COVID-19 hospital intakes"
             xAxes:
               - scaleLabel:
-                  labelString: "Month"
+                  labelString: "Week"
         datasets:
-          - label: Max
-            column: max
-            backgroundColor: ci-top
-            borderColor: transparent
-            fill: 0
-            lineTension: 0
-            pointRadius: 0
-          - label: Min
-            column: min
-            fill: 0
-            backgroundColor: ci-bottom
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-          - label: '%column%'
-            columnbyindex: 0
-            backgroundColor: derivate-aone
-            borderColor: derivate-aone
-            pointRadius: 0
-            pointHoverRadius: 0
-            hidde: true
-          - label: '%column%'
-            columnbyindex: 1
-            backgroundColor: derivate-athree
-            borderColor: derivate-athree
-            pointRadius: 0
-            pointHoverRadius: 0
-            hidden: true
-          - label: '%column%'
-            columnbyindex: 2
-            backgroundColor: derivate-afour
-            borderColor: derivate-afour
-            pointRadius: 0
-            pointHoverRadius: 0
-            hidden: true
-          - label: '%column%'
-            columnbyindex: 3
-            backgroundColor: derivate-afive
-            borderColor: derivate-afive
-            pointRadius: 0
-            pointHoverRadius: 0
-          - label: '%column%'
-            columnbyindex: 4
-            backgroundColor: icu-beds 
-            borderColor: icu-beds
-            filter: filter_zero_values
-
+          - label: RNA particles per ML sewage 
+            column: virusparticles_per_ml 
+            backgroundColor: derivate 
+            borderColor: derivate
+            filter:
+              - filter_zero_values
+          - label: Confirmed COVID-19 hospital intakes
+            column: hospitalized_per_day 
+            backgroundColor: patients 
+            borderColor: patients
+            filter:
+              - filter_zero_values
+      
+      
       
       - name: tests-performed
         title: Tests performed by Dutch labs
@@ -1304,6 +1273,69 @@ pages:
             backgroundColor: zuid-holland
             borderColor: zuid-holland
       
+      - name: birth-rates
+        title: Number of births
+        type: line
+        sources:
+          CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/83474NED/table?fromstatweb
+        uses: births
+        x: month
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of births"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Month"
+        datasets:
+          - label: Max
+            column: max
+            backgroundColor: ci-top
+            borderColor: transparent
+            fill: 0
+            lineTension: 0
+            pointRadius: 0
+          - label: Min
+            column: min
+            fill: 0
+            backgroundColor: ci-bottom
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+          - label: '%column%'
+            columnbyindex: 0
+            backgroundColor: derivate-aone
+            borderColor: derivate-aone
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidde: true
+          - label: '%column%'
+            columnbyindex: 1
+            backgroundColor: derivate-athree
+            borderColor: derivate-athree
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: derivate-afour
+            borderColor: derivate-afour
+            pointRadius: 0
+            pointHoverRadius: 0
+            hidden: true
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: derivate-afive
+            borderColor: derivate-afive
+            pointRadius: 0
+            pointHoverRadius: 0
+          - label: '%column%'
+            columnbyindex: 4
+            backgroundColor: icu-beds 
+            borderColor: icu-beds
+            filter: filter_zero_values
+
 
   icu:
     file: index.html
