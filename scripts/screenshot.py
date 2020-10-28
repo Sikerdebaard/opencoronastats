@@ -26,4 +26,4 @@ for page, data in pdata['pages'].items():
         output = f"{last_update_str}-{chart['name']}.png"
         workdir = Path('./screenshots')
         dockercmd = f"docker run -it -w /usr/workspace -v {workdir.absolute()}:/usr/workspace joyzoursky/python-chromedriver:3.8-selenium bash -c \"python screencap.py '{chart_url}' {output}\""
-	os.system(dockercmd)
+        os.system(dockercmd)
