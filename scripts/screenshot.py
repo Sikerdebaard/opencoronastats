@@ -22,7 +22,8 @@ for page, data in pdata['pages'].items():
     url = "https://covid-analytics.nl/" + data['file']
     for chart in data['charts']:
         chart_url = url + '#' + chart['name']
-        output = f"{last_update_str}-{chart['name']}.png"
+        output = f"{last_update_str}-{data['file'][0: data['file'].rindex('.')]}-{chart['name']}.png"
         workdir = Path('./screenshots')
         dockercmd = f"docker run -it -w /usr/workspace -v {workdir.absolute()}:/usr/workspace joyzoursky/python-chromedriver:3.8-selenium bash -c \"python screencap.py '{chart_url}' {output}\""
+        print(dockercmd)
         os.system(dockercmd)
