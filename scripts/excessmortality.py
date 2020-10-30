@@ -50,9 +50,12 @@ try:
     rivm_df = pd.read_csv('./html/rivm.csv', index_col='date')
 
     rivm_df = pd.DataFrame(rivm_df['deceased'].copy())
-    rivm_df['week'] = pd.to_datetime(rivm_df.index.to_series()).dt.week
+    #rivm_df['week'] = pd.to_datetime(rivm_df.index.to_series()).dt.week
+    rivm_df.index = pd.to_datetime(rivm_df.index)
 
-    deceased_by_weeknum = pd.DataFrame(rivm_df.groupby('week')['deceased'].sum())
+    #deceased_by_weeknum = pd.DataFrame(rivm_df.groupby('week')['deceased'].sum())
+    deceased_by_weeknum = pd.DataFrame(rivm_df.resample('W-Mon', label='left').sum())
+    deceased_by_weeknum.index = deceased_by_weeknum.index.week
     deceased_by_weeknum.rename(columns={'deceased': 'official_deceased'}, inplace=True)
     deceased_by_weeknum.drop(deceased_by_weeknum.tail(1).index, inplace=True)
     deceased_by_weeknum.replace(0, np.nan, inplace=True)
