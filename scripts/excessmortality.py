@@ -47,33 +47,36 @@ try:
     df_out = pd.DataFrame(cis).set_index('week')
     df_out = df_out.merge(df[df.columns[-5:]], left_index=True, right_index=True)  # only take last 5 years for visualisation
 
-    rivm_df = pd.read_csv('./html/rivm.csv', index_col='date')
+    rivm_df = pd.read_csv('./html/deceased.csv', index_col=0)
 
-    rivm_df = pd.DataFrame(rivm_df['deceased'].copy())
+    #rivm_df = pd.DataFrame(rivm_df['deceased'].copy())
     #rivm_df['week'] = pd.to_datetime(rivm_df.index.to_series()).dt.week
-    rivm_df.index = pd.to_datetime(rivm_df.index)
+    #rivm_df.index = pd.to_datetime(rivm_df.index)
 
     #deceased_by_weeknum = pd.DataFrame(rivm_df.groupby('week')['deceased'].sum())
-    deceased_by_weeknum = pd.DataFrame(rivm_df.resample('W-Mon', label='left').sum())
-    deceased_by_weeknum.index = deceased_by_weeknum.index.week
-    deceased_by_weeknum.rename(columns={'deceased': 'official_deceased'}, inplace=True)
-    deceased_by_weeknum.drop(deceased_by_weeknum.tail(1).index, inplace=True)
-    deceased_by_weeknum.replace(0, np.nan, inplace=True)
+    #deceased_by_weeknum = pd.DataFrame(rivm_df.resample('W-Mon', label='left').sum())
+    #deceased_by_weeknum.index = deceased_by_weeknum.index.week
+    #deceased_by_weeknum.rename(columns={'deceased': 'official_deceased'}, inplace=True)
+    #deceased_by_weeknum.drop(deceased_by_weeknum.tail(1).index, inplace=True)
+    #deceased_by_weeknum.replace(0, np.nan, inplace=True)
 
-    deceased_by_weeknum.index = deceased_by_weeknum.index.map(str)
+    #deceased_by_weeknum.index = deceased_by_weeknum.index.map(str)
 
-    df_out = df_out.join(deceased_by_weeknum)
+    #df_out = df_out.join(deceased_by_weeknum)
+    df_out.index = df_out.index.astype(int)
+    df_out = df_out.join(rivm_df)
+
 
     df_out['normalized_excess_mortality_low'] = df_out[2020] - df_out['ci_0.95_high']
     df_out['normalized_excess_mortality_high'] = df_out[2020] - df_out['ci_0.95_low']
 
-    cols = df_out.columns.to_list()
-    cols.insert(0, cols.pop(-1))
-    cols.insert(0, cols.pop(-1))
-    cols.insert(0, cols.pop(-1))
-    df_out = df_out.reindex(columns=cols)
+    #cols = df_out.columns.to_list()
+    #cols.insert(0, cols.pop(-1))
+    #cols.insert(0, cols.pop(-1))
+    #cols.insert(0, cols.pop(-1))
+    #df_out = df_out.reindex(columns=cols)
 
-    df_out.drop('1', inplace=True)  # drop week 1 as that one is a bit of an odd one
+    df_out.drop(1, inplace=True)  # drop week 1 as that one is a bit of an odd one
 
     df_out.to_csv(output_path / 'mortality_displacement.csv', index_label='week')
 except requests.exceptions.HTTPError as ex:

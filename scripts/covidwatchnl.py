@@ -96,8 +96,8 @@ df_rivmnums = df_daily
 #
 #df_out.to_csv(output_path / 'rivm.csv', index_label='date')
 
-df_daily_cum = df.resample('D').sum().diff()
-df_daily_cum = df_daily.iloc[1:]
+df_daily_cum = df.resample('D').sum()
+df_daily_cum = df_daily_cum.iloc[1:]
 df_daily_cum.rename(columns={'Total_reported': 'infected_cumulative', 'Hospital_admission':  'hospitalized_cumulative', 'Deceased': 'deceased_cumulative'}, inplace=True)
 df_rivmnums = df_rivmnums.join(df_daily_cum)
 

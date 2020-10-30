@@ -640,6 +640,10 @@ pages:
       - sewage.csv
       - infection.csv
       - hospitalized_vs_sewage.csv
+      - infected.csv
+      - infected_cumulative.csv
+      - deceased.csv
+      - deceased_cumulative.csv
     cards:
 #      - id: rivm-total-tests
 #        icon: fa-vial
@@ -671,9 +675,190 @@ pages:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
 
     charts:
+      - name: rivm-infected
+        title: Weekly infected case counts
+        type: line
+        uses: infected
+        x: weeknum
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+          CoronaWatchNL: https://github.com/J535D165/CoronaWatchNL
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of people"
+                ticks:
+                  beginAtZero: true
+                  min: 0
+            xAxes:
+              - scaleLabel:
+                  labelString: "Week"
+        datasets:
+          - label: '%column%'
+            columnbyindex: 1
+            backgroundColor: friesland
+            borderColor: friesland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: gelderland
+            borderColor: gelderland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: groningen
+            borderColor: groningen
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 4
+            backgroundColor: limburg
+            borderColor: limburg
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 5
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+            filter:
+              - filter_zero_values
+
+      - name: rivm-infected-cumulative
+        title: Weekly cumulative infected case count
+        type: line
+        uses: infected_cumulative
+        x: weeknum
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+          CoronaWatchNL: https://github.com/J535D165/CoronaWatchNL
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of people"
+                ticks:
+                  beginAtZero: true
+                  min: 0
+            xAxes:
+              - scaleLabel:
+                  labelString: "Week"
+        datasets:
+          - label: '%column%'
+            columnbyindex: 1
+            backgroundColor: friesland
+            borderColor: friesland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: gelderland
+            borderColor: gelderland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: groningen
+            borderColor: groningen
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 4
+            backgroundColor: limburg
+            borderColor: limburg
+            filter:
+              - filter_zero_values
+
+
+      - name: rivm-deceased
+        title: Weekly deceased case count
+        type: line
+        uses: deceased
+        x: weeknum
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+          CoronaWatchNL: https://github.com/J535D165/CoronaWatchNL
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of people"
+                ticks:
+                  beginAtZero: true
+                  min: 0
+            xAxes:
+              - scaleLabel:
+                  labelString: "Week"
+        datasets:
+          - label: '%column%'
+            columnbyindex: 1
+            backgroundColor: friesland
+            borderColor: friesland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: gelderland
+            borderColor: gelderland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: groningen
+            borderColor: groningen
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 4
+            backgroundColor: limburg
+            borderColor: limburg
+            filter:
+              - filter_zero_values
+
+      - name: rivm-deceased-cumulative
+        title: Weekly cumulative deceased case count
+        type: line
+        uses: deceased_cumulative
+        x: weeknum
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+          CoronaWatchNL: https://github.com/J535D165/CoronaWatchNL
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of people"
+                ticks:
+                  beginAtZero: true
+                  min: 0
+            xAxes:
+              - scaleLabel:
+                  labelString: "Week"
+        datasets:
+          - label: '%column%'
+            columnbyindex: 1
+            backgroundColor: friesland
+            borderColor: friesland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: gelderland
+            borderColor: gelderland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: groningen
+            borderColor: groningen
+            filter:
+              - filter_zero_values
+
 
       - name: rivm-daily-nums
-        title: Case counts
+        title: Daily case counts
         type: line
         uses: rivm
         x: date
@@ -684,6 +869,9 @@ pages:
             yAxes:
               - scaleLabel:
                   labelString: "Number of people"
+                ticks:
+                  beginAtZero: true
+                  min: 0
             xAxes:
               - scaleLabel:
                   labelString: "Date"
@@ -708,7 +896,7 @@ pages:
               - filter_zero_values
 
       - name: rivm-nums
-        title: Cumulative case counts
+        title: Daily cumulative case counts
         type: line
         uses: rivm
         x: date
@@ -719,6 +907,9 @@ pages:
             yAxes:
               - scaleLabel:
                   labelString: "Number of people"
+                ticks:
+                  beginAtZero: true
+                  min: 0
             xAxes:
               - scaleLabel:
                   labelString: "Date"
@@ -1020,12 +1211,30 @@ pages:
             borderColor: transparent
             filter:
               - filter_zero_values
-          - label: RIVM reported deaths
-            column: official_deceased
+          - label: RIVM reported deaths (case reports)
+            columnbyindex: 8
             backgroundColor: deaths
             borderColor: deaths
             filter:
               - filter_zero_values
+#          - label: '%column%'
+#            columnbyindex: 8
+#            backgroundColor: gelderland
+#            borderColor: gelderland
+#            filter:
+#              - filter_zero_values
+#          - label: '%column%'
+#            columnbyindex: 9
+#            backgroundColor: groningen
+#            borderColor: groningen
+#            filter:
+#              - filter_zero_values
+#          - label: '%column%'
+#            columnbyindex: 10
+#            backgroundColor: limburg
+#            borderColor: limburg
+#            filter:
+#              - filter_zero_values
 
 #      - name: rivm-growth-rates-deaths
 #        title: Growth rates deceased
