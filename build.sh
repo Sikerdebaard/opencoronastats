@@ -11,6 +11,7 @@ python scripts/births.py &
 python scripts/case-counts.py &
 wait
 
+python scripts/agedistributions.py
 python scripts/outbreakmonitor.py &
 python scripts/excessmortality.py &
 python scripts/cards.py &

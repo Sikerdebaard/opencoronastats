@@ -644,6 +644,8 @@ pages:
       - infected_cumulative.csv
       - deceased.csv
       - deceased_cumulative.csv
+      - casus-by-age.csv
+      - deceased-by-age.csv
     cards:
 #      - id: rivm-total-tests
 #        icon: fa-vial
@@ -932,6 +934,138 @@ pages:
             borderColor: deaths
             filter:
               - filter_zero_values
+      
+      - name: age-distribution-infected
+        title: Age distribution infected as a percentage of total over time
+        type: line
+        uses: casus-by-age
+        x: Date_statistics
+        sources:
+          RIVM: "https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/2c4357c8-76e4-4662-9574-1deb8a73f724"
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage"
+                stacked: true
+                ticks:
+                  min: 0
+                  max: 100
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Unknown
+            column: Unknown
+            fill: origin
+            backgroundColor: national
+            borderColor: national
+          - label: 0-9
+            column: 0-9
+            fill: 0
+            backgroundColor: drenthe 
+            borderColor: drenthe 
+          - label: 10-19
+            column: 10-19
+            fill: 0
+            backgroundColor: flevoland 
+            borderColor: flevoland 
+          - label: 20-29
+            column: 20-29
+            fill: 0
+            backgroundColor: friesland
+            borderColor: friesland 
+          - label: 30-39
+            column: 30-39
+            fill: 0
+            backgroundColor: gelderland 
+            borderColor: gelderland 
+          - label: 40-49
+            column: 40-49
+            fill: 0
+            backgroundColor: groningen
+            borderColor: groningen
+          - label: 50-59
+            column: 50-59
+            fill: 0
+            backgroundColor: limburg
+            borderColor: limburg
+          - label: 60-69
+            column: 60-69
+            fill: 0
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+          - label: 70-79
+            column: 70-79
+            fill: 0
+            backgroundColor: noord-holland 
+            borderColor: noord-holland
+          - label: 80-89
+            column: 80-89
+            fill: 0
+            backgroundColor: overijssel
+            borderColor: overijssel
+          - label: 90+
+            column: 90+
+            fill: 0
+            backgroundColor: utrecht
+            borderColor: utrecht
+#          - label: <50 
+#            column: <50
+#            fill: 0
+#            backgroundColor: zeeland
+#            borderColor: zeeland
+      
+      - name: age-distribution-deceased
+        title: Age distribution deceased as a percentage of total deceased over time
+        type: line
+        uses: deceased-by-age
+        x: Week_of_death
+        sources:
+          RIVM: "https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/2c4357c8-76e4-4662-9574-1deb8a73f724"
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage"
+                stacked: true
+                ticks:
+                  min: 0
+                  max: 100
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: <50 
+            column: <50
+            fill: origin
+            backgroundColor: national
+            borderColor: national
+          - label: 50-59
+            column: 50-59
+            fill: 0
+            backgroundColor: limburg
+            borderColor: limburg
+          - label: 60-69
+            column: 60-69
+            fill: 0
+            backgroundColor: noord-brabant
+            borderColor: noord-brabant
+          - label: 70-79
+            column: 70-79
+            fill: 0
+            backgroundColor: noord-holland 
+            borderColor: noord-holland
+          - label: 80-89
+            column: 80-89
+            fill: 0
+            backgroundColor: overijssel
+            borderColor: overijssel
+          - label: 90+
+            column: 90+
+            fill: 0
+            backgroundColor: utrecht
+            borderColor: utrecht
 
       - name: reproduction-index
         title: Reproduction index
