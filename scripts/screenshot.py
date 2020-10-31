@@ -26,7 +26,7 @@ for page, data in pdata['pages'].items():
         chart_url = url + '#chart-' + chart['name']
         output = f"{last_update_str}-{data['file'][0: data['file'].rindex('.')]}-{chart['name']}.png"
         workdir = Path('./screenshots')
-        dockercmd = f"docker run --rm -it -w /usr/workspace -v {workdir.absolute()}:/usr/workspace joyzoursky/python-chromedriver:3.8-selenium bash -c \"pip install Pillow && python screencap.py '{chart_url}' {output}\""
+        dockercmd = f"docker run --rm -w /usr/workspace -v {workdir.absolute()}:/usr/workspace joyzoursky/python-chromedriver:3.8-selenium bash -c \"pip install Pillow && python screencap.py '{chart_url}' {output}\""
         print(dockercmd)
         cmds.append(dockercmd)
 
