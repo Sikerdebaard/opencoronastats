@@ -961,56 +961,67 @@ pages:
             fill: origin
             backgroundColor: national
             borderColor: national
+            steppedLine: true
           - label: 0-9
             column: 0-9
             fill: 0
             backgroundColor: drenthe 
             borderColor: drenthe 
+            steppedLine: true
           - label: 10-19
             column: 10-19
             fill: 0
             backgroundColor: flevoland 
             borderColor: flevoland 
+            steppedLine: true
           - label: 20-29
             column: 20-29
             fill: 0
             backgroundColor: friesland
             borderColor: friesland 
+            steppedLine: true
           - label: 30-39
             column: 30-39
             fill: 0
             backgroundColor: gelderland 
             borderColor: gelderland 
+            steppedLine: true
           - label: 40-49
             column: 40-49
             fill: 0
             backgroundColor: groningen
             borderColor: groningen
+            steppedLine: true
           - label: 50-59
             column: 50-59
             fill: 0
             backgroundColor: limburg
             borderColor: limburg
+            steppedLine: true
           - label: 60-69
             column: 60-69
             fill: 0
             backgroundColor: noord-brabant
             borderColor: noord-brabant
+            steppedLine: true
           - label: 70-79
             column: 70-79
             fill: 0
             backgroundColor: noord-holland 
             borderColor: noord-holland
+            steppedLine: true
           - label: 80-89
             column: 80-89
             fill: 0
             backgroundColor: overijssel
             borderColor: overijssel
+            steppedLine: true
           - label: 90+
             column: 90+
             fill: 0
             backgroundColor: utrecht
             borderColor: utrecht
+            steppedLine: true
 #          - label: <50 
 #            column: <50
 #            fill: 0
@@ -1042,31 +1053,37 @@ pages:
             fill: origin
             backgroundColor: national
             borderColor: national
+            steppedLine: true
           - label: 50-59
             column: 50-59
             fill: 0
             backgroundColor: limburg
             borderColor: limburg
+            steppedLine: true
           - label: 60-69
             column: 60-69
             fill: 0
             backgroundColor: noord-brabant
             borderColor: noord-brabant
+            steppedLine: true
           - label: 70-79
             column: 70-79
             fill: 0
             backgroundColor: noord-holland 
             borderColor: noord-holland
+            steppedLine: true
           - label: 80-89
             column: 80-89
             fill: 0
             backgroundColor: overijssel
             borderColor: overijssel
+            steppedLine: true
           - label: 90+hospitalized-by-age
             column: 90+
             fill: 0
             backgroundColor: utrecht
             borderColor: utrecht
+            steppedLine: true
 
       - name: age-distribution-hospitalized
         title: Age distribution hospitalized as a percentage of total by first week of symptom onset
@@ -1093,51 +1110,61 @@ pages:
             fill: origin
             backgroundColor: drenthe 
             borderColor: drenthe 
+            steppedLine: true
           - label: 10-19
             column: 10-19
             fill: 0
             backgroundColor: flevoland 
             borderColor: flevoland 
+            steppedLine: true
           - label: 20-29
             column: 20-29
             fill: 0
             backgroundColor: friesland
             borderColor: friesland 
+            steppedLine: true
           - label: 30-39
             column: 30-39
             fill: 0
             backgroundColor: gelderland 
             borderColor: gelderland 
+            steppedLine: true
           - label: 40-49
             column: 40-49
             fill: 0
             backgroundColor: groningen
             borderColor: groningen
+            steppedLine: true
           - label: 50-59
             column: 50-59
             fill: 0
             backgroundColor: limburg
             borderColor: limburg
+            steppedLine: true
           - label: 60-69
             column: 60-69
             fill: 0
             backgroundColor: noord-brabant
             borderColor: noord-brabant
+            steppedLine: true
           - label: 70-79
             column: 70-79
             fill: 0
             backgroundColor: noord-holland 
             borderColor: noord-holland
+            steppedLine: true
           - label: 80-89
             column: 80-89
             fill: 0
             backgroundColor: overijssel
             borderColor: overijssel
+            steppedLine: true
           - label: 90+
             column: 90+
             fill: 0
             backgroundColor: utrecht
             borderColor: utrecht
+            steppedLine: true
 #          - label: <50 
 #            column: <50
 #            fill: 0
