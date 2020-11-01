@@ -1718,7 +1718,7 @@ pages:
 
     charts:
       - name: icu-beds
-        title: Beds used in ICU
+        title: Bed occupation for ICU
         type: line
         uses: data
         x: date
@@ -2101,7 +2101,7 @@ pages:
 
     charts:
       - name: hospital-beds
-        title: Beds used in hospital
+        title: Bed occupation for hospital
         type: line
         uses: hospitalized
         x: date
