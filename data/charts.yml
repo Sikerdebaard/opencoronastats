@@ -1718,7 +1718,7 @@ pages:
 
     charts:
       - name: icu-beds
-        title: Bed occupation for ICU
+        title: Bed occupation confirmed COVID-19 ICU
         type: line
         uses: data
         x: date
@@ -1770,7 +1770,7 @@ pages:
             borderColor: derivate-athree
 
       - name: icu-growth-chart
-        title: Growth of bed occupation confirmed COVID patients in ICU
+        title: Growth bed occupation confirmed COVID-19 patients in ICU
         type: line
         uses: data
         x: date
@@ -2101,7 +2101,7 @@ pages:
 
     charts:
       - name: hospital-beds
-        title: Bed occupation for hospital
+        title: Bed occupation confirmed COVID-19 hospital
         type: line
         uses: hospitalized
         x: date
@@ -2134,7 +2134,7 @@ pages:
             borderColor: derivate-athree
 
       - name: hospitalized-growth-chart
-        title: Growth of bed occupation confirmed COVID patients in hospital
+        title: Growth bed occupation confirmed COVID-19 patients in hospital
         type: line
         uses: hospitalized
         x: date
