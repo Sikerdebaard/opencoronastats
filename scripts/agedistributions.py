@@ -44,3 +44,27 @@ df_deceased[df_deceased.select_dtypes(include=['number']).columns] *= 100
 df_deceased = df_deceased.round(1)
 
 df_deceased.to_csv('html/deceased-by-age.csv')
+
+
+## Hospitalized
+
+df_hosp = df_casus[df_casus['Hospital_admission'] == 'Yes'][['Date_file', 'Date_statistics', 'Week_of_death', 'Agegroup']].copy()
+
+
+df_hosp['Date_statistics'] = pd.to_datetime(df_hosp['Date_statistics'])
+
+df_hosp = df_hosp.groupby(['Agegroup'])[['Date_statistics']].resample('W-MON', label='left', on='Date_statistics').count().rename(columns={'Date_statistics': 'count'})
+
+
+
+df_hosp = df_hosp.reset_index()
+df_hosp = df_hosp.pivot(index='Date_statistics', columns='Agegroup', values='count').drop(columns=['<50', 'Unknown'])
+
+df_hosp = df_hosp.div(df_hosp.sum(axis=1), axis=0)
+
+df_hosp = df_hosp[4:]
+
+df_hosp[df_hosp.select_dtypes(include=['number']).columns] *= 100
+df_hosp = df_hosp.round(1)
+
+df_hosp.to_csv('html/hospitalized-by-age.csv')
