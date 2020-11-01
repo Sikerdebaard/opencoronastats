@@ -1770,7 +1770,7 @@ pages:
             borderColor: derivate-athree
 
       - name: icu-growth-chart
-        title: Growth of confirmed COVID patients in ICU
+        title: Growth of bed occupation confirmed COVID patients in ICU
         type: line
         uses: data
         x: date
@@ -2134,7 +2134,7 @@ pages:
             borderColor: derivate-athree
 
       - name: hospitalized-growth-chart
-        title: Growth of confirmed COVID patients in hospital
+        title: Growth of bed occupation confirmed COVID patients in hospital
         type: line
         uses: hospitalized
         x: date
