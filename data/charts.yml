@@ -1255,7 +1255,7 @@ pages:
             filter:
               - filter_zero_values
       
-      - name: RNA flow per 100.000
+      - name: sewer-rna-flow 
         title: COVID-19 RNA particles for total daily sewage normalized to 1 in 100.000
         type: line
         uses: sewage
