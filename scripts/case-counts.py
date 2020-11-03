@@ -304,3 +304,31 @@ df_deceased_cum = df_merged_cum.loc[:,df_merged_cum.columns.str.contains('_decea
 df_deceased_cum.columns = [' '.join(c.split('_')[:-1]) for c in df_deceased_cum.columns]
 df_deceased_cum.to_csv('./html/deceased_cumulative.csv')
 
+
+
+## estimated infected and reproduction index
+
+df_repro = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_reproductiegetal.json')
+df_repro['Date'] = pd.to_datetime(df_repro['Date'])
+
+df_repro = df_repro.rename(columns={'Date': 'datum', 'Rt_low': 'r_min', 'Rt_up': 'r_max', 'Rt_avg': 'r'})[['datum', 'r_min', 'r', 'r_max']]
+
+df_repro.set_index(['datum'], inplace=True)
+
+df_cont = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_prevalentie.json')
+
+
+
+df_cont['Date'] = pd.to_datetime(df_cont['Date'])
+
+df_cont = df_cont.rename(columns={'Date': 'date', 'prev_low': 'contagious_min', 'prev_avg': 'contagious', 'prev_up': 'contagious_max'})[['date', 'contagious_min', 'contagious', 'contagious_max']]
+df_cont.set_index(['date'], inplace=True)
+
+df_merged = pd.DataFrame(index=df_cont.index.union(df_repro.index))
+
+df_merged = df_merged.join(df_cont)
+df_merged = df_merged.join(df_repro)
+
+df_merged.index.rename('Datum', inplace=True)
+
+df_merged.to_csv('html/infection.csv')

@@ -8,8 +8,8 @@ from selenium.webdriver.chrome.options import Options
 
 CHROME_PATH = '/usr/bin/google-chrome'
 CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
-#WINDOW_SIZE = "1920,1200"
-WINDOW_SIZE = "2560,1440"
+WINDOW_SIZE = "1920,1080"
+#WINDOW_SIZE = "2560,1440"
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")

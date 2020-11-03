@@ -40,16 +40,27 @@ chart_config:
     pointHoverRadius: 5
 
   default_options:
+    legend:
+      labels:
+        fontSize: 16
     scales:
       yAxes:
         - scaleLabel:
             display: true
+          ticks:
+            fontSize: 14
       xAxes:
         - scaleLabel:
             display: true
+          ticks:
+            fontSize: 14
     tooltips:
-      mode: 'x'
-      bodyFontSize: 14
+      mode: 'index'
+      intersect: false 
+      bodyFontSize: 14 
+    hover:
+      mode: 'index'
+      intersect: false
     animation:
       duration: 0
     maintainAspectRatio: false
@@ -639,7 +650,6 @@ pages:
       - births.csv
       - sewage.csv
       - infection.csv
-      - hospitalized_vs_sewage.csv
       - infected.csv
       - infected_cumulative.csv
       - deceased.csv
@@ -1245,8 +1255,8 @@ pages:
             filter:
               - filter_zero_values
       
-      - name: rna-per-ml-sewage
-        title: RNA particles per ML sewage
+      - name: RNA flow per 100.000
+        title: COVID-19 RNA particles for total daily sewage normalized to 1 in 100.000
         type: line
         uses: sewage
         x: week
@@ -1256,74 +1266,49 @@ pages:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "RNA particles per ML sewage"
-            xAxes:
-              - scaleLabel:
-                  labelString: "Date"
-        datasets:
-          - label: RNA particles per ML sewage 
-            column: virusparticles_per_ml
-            backgroundColor: derivate 
-            borderColor: derivate
-            filter:
-              - filter_zero_values
-      
-      - name: sewage-vs-intakes
-        title: Sewage particles vs. hospital confirmed COVID-19 intakes
-        type: line
-        uses: hospitalized_vs_sewage
-        x: week
-        sources:
-          RIVM: https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/a2960b68-9d3f-4dc3-9485-600570cd52b9
-          Stichting NICE: https://www.stichting-nice.nl/
-        options:
-          scales:
-            yAxes:
-              - scaleLabel:
-                  labelString: "RNA particles per ML sewage / COVID-19 hospital intakes"
+                  labelString: "COVID-19 RNA particles"
             xAxes:
               - scaleLabel:
                   labelString: "Week"
         datasets:
-          - label: RNA particles per ML sewage 
-            column: virusparticles_per_ml 
+          - label: COVID-19 RNA particles 
+            column: RNA_flow_per_100.000
             backgroundColor: derivate 
             borderColor: derivate
             filter:
               - filter_zero_values
-          - label: Confirmed COVID-19 hospital intakes
-            column: hospitalized_per_day 
-            backgroundColor: patients 
-            borderColor: patients
-            filter:
-              - filter_zero_values
-      
-      
       
       - name: tests-performed
-        title: Tests performed by Dutch labs
+        title: Tests performed
         type: line
         uses: tests_performed
-        x: weeknum
+        x: week
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
+          GGD: https://ggdghor.nl/actueel-bericht/weekupdate-cijfers-coronatests-bij-de-ggden-2/
         options:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Number of people"
+                  labelString: "Number of tests"
             xAxes:
               - scaleLabel:
                   labelString: "Weeknumber"
         datasets:
-          - label: Tests performed
-            column: total_tests
-            backgroundColor: icu-beds 
-            borderColor: icu-beds
+          - label: Number of people tested by labs 
+            column: labs-tests
+            backgroundColor: groningen 
+            borderColor: groningen
             filter:
               - filter_zero_values
-          - label: Positive tests
-            column: positive_tests
+          - label: Number of tests performed as reported by GGD 
+            column: ggd-tests
+            backgroundColor: zuid-holland 
+            borderColor: zuid-holland
+            filter:
+              - filter_zero_values
+          - label: Infected reported by RIVM
+            column: infected
             backgroundColor: patients
             borderColor: patients
             filter:
@@ -1333,9 +1318,10 @@ pages:
         title: Percentage of tests positive 
         type: line
         uses: tests_performed
-        x: weeknum
+        x: week
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
+          GGD: https://ggdghor.nl/actueel-bericht/weekupdate-cijfers-coronatests-bij-de-ggden-2/
         options:
           scales:
             yAxes:
@@ -1345,12 +1331,13 @@ pages:
               - scaleLabel:
                   labelString: "Weeknumber"
         datasets:
-          - label: Percentage of tests positive
-            column: percentage_positive
+          - label: Percentage positive based on GGD 
+            column: pos_ggd
             backgroundColor: derivate 
             borderColor: derivate
             filter:
               - filter_zero_values
+              - percentage_fraction_to_percentage
 
       - name: excess-mortality
         title: Mortality displacement over the population of NL by weeknumber
