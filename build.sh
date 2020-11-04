@@ -9,6 +9,7 @@ python scripts/covidwatchnl.py &
 python scripts/mobility.py &
 python scripts/births.py &
 python scripts/case-counts.py &
+python scripts/euromomo.py &
 wait
 
 python scripts/agedistributions.py

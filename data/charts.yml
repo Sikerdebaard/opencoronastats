@@ -33,6 +33,110 @@ chart_config:
     utrecht: "#b15928"
     zeeland: "#23868C"
     zuid-holland: "#091826"
+    setcol_0: "#000000"
+    setcol_1: "#FFFF00"
+    setcol_2: "#1CE6FF"
+    setcol_3: "#FF34FF"
+    setcol_4: "#FF4A46"
+    setcol_5: "#008941"
+    setcol_6: "#006FA6"
+    setcol_7: "#A30059"
+    setcol_8: "#FFDBE5"
+    setcol_9: "#7A4900"
+    setcol_10: "#0000A6"
+    setcol_11: "#63FFAC"
+    setcol_12: "#B79762"
+    setcol_13: "#004D43"
+    setcol_14: "#8FB0FF"
+    setcol_15: "#997D87"
+    setcol_16: "#5A0007"
+    setcol_17: "#809693"
+    setcol_18: "#FEFFE6"
+    setcol_19: "#1B4400"
+    setcol_20: "#4FC601"
+    setcol_21: "#3B5DFF"
+    setcol_22: "#4A3B53"
+    setcol_23: "#FF2F80"
+    setcol_24: "#61615A"
+    setcol_25: "#BA0900"
+    setcol_26: "#6B7900"
+    setcol_27: "#00C2A0"
+    setcol_28: "#FFAA92"
+    setcol_29: "#FF90C9"
+    setcol_30: "#B903AA"
+    setcol_31: "#D16100"
+    setcol_32: "#DDEFFF"
+    setcol_33: "#000035"
+    setcol_34: "#7B4F4B"
+    setcol_35: "#A1C299"
+    setcol_36: "#300018"
+    setcol_37: "#0AA6D8"
+    setcol_38: "#013349"
+    setcol_39: "#00846F"
+    setcol_40: "#372101"
+    setcol_41: "#FFB500"
+    setcol_42: "#C2FFED"
+    setcol_43: "#A079BF"
+    setcol_44: "#CC0744"
+    setcol_45: "#C0B9B2"
+    setcol_46: "#C2FF99"
+    setcol_47: "#001E09"
+    setcol_48: "#00489C"
+    setcol_49: "#6F0062"
+    setcol_50: "#0CBD66"
+    setcol_51: "#EEC3FF"
+    setcol_52: "#456D75"
+    setcol_53: "#B77B68"
+    setcol_54: "#7A87A1"
+    setcol_55: "#788D66"
+    setcol_56: "#885578"
+    setcol_57: "#FAD09F"
+    setcol_58: "#FF8A9A"
+    setcol_59: "#D157A0"
+    setcol_60: "#BEC459"
+    setcol_61: "#456648"
+    setcol_62: "#0086ED"
+    setcol_63: "#886F4C"
+    setcol_64: "#34362D"
+    setcol_65: "#B4A8BD"
+    setcol_66: "#00A6AA"
+    setcol_67: "#452C2C"
+    setcol_68: "#636375"
+    setcol_69: "#A3C8C9"
+    setcol_70: "#FF913F"
+    setcol_71: "#938A81"
+    setcol_72: "#575329"
+    setcol_73: "#00FECF"
+    setcol_74: "#B05B6F"
+    setcol_75: "#8CD0FF"
+    setcol_76: "#3B9700"
+    setcol_77: "#04F757"
+    setcol_78: "#C8A1A1"
+    setcol_79: "#1E6E00"
+    setcol_80: "#7900D7"
+    setcol_81: "#A77500"
+    setcol_82: "#6367A9"
+    setcol_83: "#A05837"
+    setcol_84: "#6B002C"
+    setcol_85: "#772600"
+    setcol_86: "#D790FF"
+    setcol_87: "#9B9700"
+    setcol_88: "#549E79"
+    setcol_89: "#FFF69F"
+    setcol_90: "#201625"
+    setcol_91: "#72418F"
+    setcol_92: "#BC23FF"
+    setcol_93: "#99ADC0"
+    setcol_94: "#3A2465"
+    setcol_95: "#922329"
+    setcol_96: "#5B4534"
+    setcol_97: "#FDE8DC"
+    setcol_98: "#404E55"
+    setcol_99: "#0089A3"
+    setcol_100: "#CB7E98"
+    setcol_101: "#A4E804"
+    setcol_102: "#324E72"
+    setcol_103: "#6A3A4C"
 
   aesthetics:
     lineTension: 0.1
@@ -747,6 +851,7 @@ pages:
     file: population.html
     datasets:
       - mortality_displacement.csv
+      - euromomo-excess-mortality-zscores.csv
       - rivm.csv
       - outbreak_monitor_cumulative.csv
       - outbreak_monitor_daily.csv
@@ -1510,6 +1615,151 @@ pages:
               #borderColor: derivate
             borderColor: icu-beds
             filter: filter_zero_values
+
+      - name: excess-mortality-europe
+        title: Z-Score mortality displacement EuroMOMO
+        type: line
+        sources:
+          EuroMOMO: https://www.euromomo.eu/graphs-and-maps/
+        uses: euromomo-excess-mortality-zscores
+        x: year-week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased"
+                ticks:
+                  beginAtZero: true
+            xAxes:
+              - scaleLabel:
+                  labelString: "Weeknumber"
+        datasets:
+          - label: Austria 
+            column: austria_total
+            backgroundColor: setcol_46 
+            borderColor: setcol_46
+            hidden: true
+          - label: Belgium 
+            column: belgium_total
+            backgroundColor: utrecht 
+            borderColor: utrecht
+            hidden: true
+          - label: Cyprus 
+            column: cyprus_total
+            backgroundColor: setcol_87 
+            borderColor: setcol_87
+            hidden: true
+          - label: Denmark 
+            column: denmark_total
+            backgroundColor: setcol_11 
+            borderColor: setcol_11
+            hidden: true
+          - label: Estonia 
+            column: estonia_total
+            backgroundColor: setcol_94 
+            borderColor: setcol_94
+            hidden: true
+          - label: Finland 
+            column: finland_total
+            backgroundColor: setcol_56 
+            borderColor: setcol_56
+            hidden: true
+          - label: France 
+            column: france_total
+            backgroundColor: setcol_47 
+            borderColor: setcol_47
+            hidden: true
+          - label: Germany-berlin 
+            column: germany-berlin_total
+            backgroundColor: setcol_91 
+            borderColor: setcol_91
+            hidden: true
+          - label: Germany-hesse 
+            column: germany-hesse_total
+            backgroundColor: setcol_33 
+            borderColor: setcol_33
+            hidden: true
+          - label: Greece 
+            column: greece_total
+            backgroundColor: setcol_12 
+            borderColor: setcol_12
+            hidden: true
+          - label: Hungary 
+            column: hungary_total
+            backgroundColor: setcol_60 
+            borderColor: setcol_60
+            hidden: true
+          - label: Ireland 
+            column: ireland_total
+            backgroundColor: setcol_55 
+            borderColor: setcol_55
+            hidden: true
+          - label: Italy 
+            column: italy_total
+            backgroundColor: setcol_81 
+            borderColor: setcol_81
+          - label: Luxembourg 
+            column: luxembourg_total
+            backgroundColor: setcol_19 
+            borderColor: setcol_19
+            hidden: true
+          - label: Malta 
+            column: malta_total
+            backgroundColor: setcol_57 
+            borderColor: setcol_57
+            hidden: true
+          - label: Netherlands 
+            column: netherlands_total
+            backgroundColor: national 
+            borderColor: national
+          - label: Norway 
+            column: norway_total
+            backgroundColor: setcol_37 
+            borderColor: setcol_37
+            hidden: true
+          - label: Portugal 
+            column: portugal_total
+            backgroundColor: setcol_86 
+            borderColor: setcol_86
+            hidden: true
+          - label: Slovenia 
+            column: slovenia_total
+            backgroundColor: setcol_0 
+            borderColor: setcol_0
+            hidden: true
+          - label: Spain 
+            column: spain_total
+            backgroundColor: setcol_67 
+            borderColor: setcol_67
+            hidden: true
+          - label: Sweden 
+            column: sweden_total
+            backgroundColor: setcol_21 
+            borderColor: setcol_21
+          - label: Switzerland 
+            column: switzerland_total
+            backgroundColor: setcol_62 
+            borderColor: setcol_62
+            hidden: true
+          - label: Uk-england 
+            column: uk-england_total
+            backgroundColor: setcol_73 
+            borderColor: setcol_73
+          - label: Uk-northern-ireland 
+            column: uk-northern-ireland_total
+            backgroundColor: setcol_32 
+            borderColor: setcol_32
+            hidden: true
+          - label: Uk-scotland 
+            column: uk-scotland_total
+            backgroundColor: setcol_102 
+            borderColor: setcol_102
+            hidden: true
+          - label: Uk-wales 
+            column: uk-wales_total
+            backgroundColor: setcol_2 
+            borderColor: setcol_2
+            hidden: true
 
       - name: excess-mortality-vs-rivm
         title: Mortality displacement vs. RIVM reported deaths
