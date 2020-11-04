@@ -1271,7 +1271,7 @@ pages:
                   callback: expscale
             xAxes:
               - scaleLabel:
-                  labelString: "Week"
+                  labelString: "year-week"
         datasets:
           - label: COVID-19 RNA particles 
             column: RNA_flow_per_100000
