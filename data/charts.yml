@@ -1632,7 +1632,7 @@ pages:
                   beginAtZero: true
             xAxes:
               - scaleLabel:
-                  labelString: "Weeknumber"
+                  labelString: "year-week"
         datasets:
           - label: Austria 
             column: austria_total
