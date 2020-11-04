@@ -215,7 +215,7 @@ df_sewage = df_sewage[df_sewage['Representative_measurement'] == True]
 
 df_sewage['Date_measurement'] = pd.to_datetime(df_sewage['Date_measurement']).dt.week
 
-df_sewage = pd.DataFrame(df_sewage.groupby('Date_measurement')['RNA_flow_per_100.000'].mean().dropna())
+df_sewage = pd.DataFrame(df_sewage.groupby('Date_measurement')['RNA_flow_per_100000'].mean().dropna())
 #df_sewage['RNA_flow_per_100.000'] = df_sewage['RNA_flow_per_100.000']
 
 df_sewage.index.rename('week', inplace=True)
