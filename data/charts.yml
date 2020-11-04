@@ -82,16 +82,17 @@ pages:
   mobility:
     file: mobility.html
     datasets:
-      - mobility.csv
+      - google-mobility.csv
+      - apple-mobility.csv
     cards:
 
     charts:
       - name: retail-recreation
-        title: Mobility for retail and recreation from baseline
+        title: Google mobility trends for retail and recreation from baseline
         type: line
         sources:
           Google: https://www.google.com/covid19/mobility/
-        uses: mobility
+        uses: google-mobility
         x: date
         options:
           annotation:
@@ -179,11 +180,11 @@ pages:
             hidden: true
 
       - name: grocery-pharmacy
-        title: Mobility for grocery and pharmacy from baseline
+        title: Google mobility trends for grocery and pharmacy from baseline
         type: line
         sources:
           Google: https://www.google.com/covid19/mobility/
-        uses: mobility
+        uses: google-mobility
         x: date
         options:
           annotation:
@@ -271,11 +272,11 @@ pages:
             hidden: true
 
       - name: parks
-        title: Mobility for parks from baseline
+        title: Google mobility trends for parks from baseline
         type: line
         sources:
           Google: https://www.google.com/covid19/mobility/
-        uses: mobility
+        uses: google-mobility
         x: date
         options:
           annotation:
@@ -363,11 +364,11 @@ pages:
             hidden: true
 
       - name: transit-stations
-        title: Mobility for transit stations from baseline
+        title: Google mobility trends for transit stations from baseline
         type: line
         sources:
           Google: https://www.google.com/covid19/mobility/
-        uses: mobility
+        uses: google-mobility
         x: date
         options:
           annotation:
@@ -455,11 +456,11 @@ pages:
             hidden: true
 
       - name: worplaces
-        title: Mobility for workplaces from baseline
+        title: Google mobility trends for workplaces from baseline
         type: line
         sources:
           Google: https://www.google.com/covid19/mobility/
-        uses: mobility
+        uses: google-mobility
         x: date
         options:
           annotation:
@@ -547,11 +548,11 @@ pages:
             hidden: true
 
       - name: residential
-        title: Mobility for residential from baseline
+        title: Google mobility trends for residential from baseline
         type: line
         sources:
           Google: https://www.google.com/covid19/mobility/
-        uses: mobility
+        uses: google-mobility
         x: date
         options:
           annotation:
@@ -637,6 +638,109 @@ pages:
             backgroundColor: zeeland
             borderColor: zeeland
             hidden: true
+
+      - name: apple-trends-driving
+        title: Apple mobility trends for driving from baseline
+        type: line
+        sources:
+          Apple: https://covid19.apple.com/mobility
+        uses: apple-mobility
+        x: date
+        options:
+          annotation:
+            annotations:
+              - type: 'line'
+                drawTime: 'beforeDatasetsDraw'
+                mode: 'horizontal'
+                scaleID: 'y-axis-0'
+                value: 0
+                borderDash: [2, 2]
+                borderColor: 'rgba(0, 0, 0)'
+                borderWidth: 3
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage change from baseline"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: National 
+            column: driving
+            backgroundColor: national
+            borderColor: national
+            order: 9999
+            filter:
+              - filter_zero_values
+
+      - name: apple-trends-walking
+        title: Apple mobility trends for walking from baseline
+        type: line
+        sources:
+          Apple: https://covid19.apple.com/mobility
+        uses: apple-mobility
+        x: date
+        options:
+          annotation:
+            annotations:
+              - type: 'line'
+                drawTime: 'beforeDatasetsDraw'
+                mode: 'horizontal'
+                scaleID: 'y-axis-0'
+                value: 0
+                borderDash: [2, 2]
+                borderColor: 'rgba(0, 0, 0)'
+                borderWidth: 3
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage change from baseline"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: National 
+            column: walking 
+            backgroundColor: national
+            borderColor: national
+            order: 9999
+            filter:
+              - filter_zero_values
+
+      - name: apple-trends-transit
+        title: Apple mobility trends for transit from baseline
+        type: line
+        sources:
+          Apple: https://covid19.apple.com/mobility
+        uses: apple-mobility
+        x: date
+        options:
+          annotation:
+            annotations:
+              - type: 'line'
+                drawTime: 'beforeDatasetsDraw'
+                mode: 'horizontal'
+                scaleID: 'y-axis-0'
+                value: 0
+                borderDash: [2, 2]
+                borderColor: 'rgba(0, 0, 0)'
+                borderWidth: 3
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage change from baseline"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: National 
+            column: transit 
+            backgroundColor: national
+            borderColor: national
+            order: 9999
+            filter:
+              - filter_zero_values
+
 
 
   population:
