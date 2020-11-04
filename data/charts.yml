@@ -1267,6 +1267,8 @@ pages:
             yAxes:
               - scaleLabel:
                   labelString: "COVID-19 RNA particles"
+                ticks:
+                  callback: expscale
             xAxes:
               - scaleLabel:
                   labelString: "Week"

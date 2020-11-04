@@ -72,6 +72,10 @@ deepmerge.all = function deepmergeAll(array, optionsArgument) {
 
 // END DEEPMERGE
 
+function expscale(value, index, values) {
+     return value.toExponential() 
+}
+
 function filter_zero_vals(arr) {
     return arr.map(function(d) {
         return d == 0 ? null : d
@@ -301,9 +305,17 @@ function drawLine(chart_info) {
 
     var template = results['template']
 
+    template = doticks(template)
     new Chart(document.getElementById(chart_info['name']), template)
 }
 
+function doticks(template) {
+    cb = template['options']['scales']['yAxes'][0]['ticks']['callback']
+    if (cb !== undefined) {
+        template['options']['scales']['yAxes'][0]['ticks']['callback'] = window[template['options']['scales']['yAxes'][0]['ticks']['callback']]
+    }
+    return template
+}
 
 datasets = {}
 
