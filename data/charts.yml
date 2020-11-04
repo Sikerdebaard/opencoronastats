@@ -1627,7 +1627,7 @@ pages:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Number of deceased"
+                  labelString: "Z-Score"
                 ticks:
                   beginAtZero: true
             xAxes:
