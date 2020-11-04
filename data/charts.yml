@@ -1272,7 +1272,7 @@ pages:
                   labelString: "Week"
         datasets:
           - label: COVID-19 RNA particles 
-            column: RNA_flow_per_100.000
+            column: RNA_flow_per_100000
             backgroundColor: derivate 
             borderColor: derivate
             filter:
