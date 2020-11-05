@@ -1296,7 +1296,7 @@ pages:
             backgroundColor: overijssel
             borderColor: overijssel
             steppedLine: true
-          - label: 90+hospitalized-by-age
+          - label: 90+
             column: 90+
             fill: 0
             backgroundColor: utrecht
