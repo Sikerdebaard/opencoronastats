@@ -9,7 +9,7 @@ df_tf = df_casus.copy()
 
 df_tf['Date_statistics'] = pd.to_datetime(df_tf['Date_statistics'])
 
-df_age = df_tf.groupby(['Agegroup'])[['Date_statistics']].resample('W-MON', label='left', on='Date_statistics').count().rename(columns={'Date_statistics': 'count'})
+df_age = df_tf.groupby(['Agegroup'])[['Date_statistics']].resample('W-MON', label='left', on='Date_statistics', closed='left').count().rename(columns={'Date_statistics': 'count'})
 
 
 df_age = df_age.reset_index()
@@ -35,7 +35,7 @@ df_tf = df_casus[(df_casus['Deceased'] == 'Yes') & ~(df_casus['Week_of_death'].i
 df_tf['Week_of_death'] = df_tf['Week_of_death'] - 1 + 0.6
 df_tf['Week_of_death'] = pd.to_datetime(df_tf['Week_of_death'].astype(str), format='%Y%U.%w')
 
-df_deceased = df_tf.groupby(['Agegroup'])[['Week_of_death']].resample('W-MON', label='left', on='Week_of_death').count().rename(columns={'Week_of_death': 'count'})
+df_deceased = df_tf.groupby(['Agegroup'])[['Week_of_death']].resample('W-MON', label='left', on='Week_of_death', closed='left').count().rename(columns={'Week_of_death': 'count'})
 
 
 df_deceased = df_deceased.reset_index()
@@ -59,7 +59,7 @@ df_hosp = df_casus[df_casus['Hospital_admission'] == 'Yes'][['Date_file', 'Date_
 
 df_hosp['Date_statistics'] = pd.to_datetime(df_hosp['Date_statistics'])
 
-df_hosp = df_hosp.groupby(['Agegroup'])[['Date_statistics']].resample('W-MON', label='left', on='Date_statistics').count().rename(columns={'Date_statistics': 'count'})
+df_hosp = df_hosp.groupby(['Agegroup'])[['Date_statistics']].resample('W-MON', label='left', on='Date_statistics', closed='left').count().rename(columns={'Date_statistics': 'count'})
 
 
 

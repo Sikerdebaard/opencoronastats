@@ -186,7 +186,7 @@ df_daily = df.resample('D').sum()
 
 df_daily.rename(columns={'Total_reported': 'infected', 'Hospital_admission':  'hospitalized', 'Deceased': 'deceased'}, inplace=True)
 df_daily.index.rename('date', inplace=True)
-df_weekly = df_daily.resample('W-MON', label='left').sum()  # label=left prevents off-by-one error in weeknum
+df_weekly = df_daily.resample('W-MON', label='left', closed='left').sum()  # label=left prevents off-by-one error in weeknum
 df_weekly.index = df_weekly.index.week
 df_weekly.index.rename('week', inplace=True)
 #df_weekly.to_csv('weekly_from_municipality.csv')
@@ -216,7 +216,7 @@ df_sewage = df_sewage[df_sewage['Representative_measurement'] == True]
 df_sewage['Date_measurement'] = pd.to_datetime(df_sewage['Date_measurement'])
 df_sewage = df_sewage.set_index('Date_measurement')
 
-df_sewage = pd.DataFrame(df_sewage['RNA_flow_per_100000'].resample('W-MON', label='left').mean()).dropna()
+df_sewage = pd.DataFrame(df_sewage['RNA_flow_per_100000'].resample('W-MON', label='left', closed='left').mean()).dropna()
 
 df_sewage.index = df_sewage.index.format(formatter=lambda a: f'{a.year}-{a.week}')
 df_sewage.index.rename('week', inplace=True)
