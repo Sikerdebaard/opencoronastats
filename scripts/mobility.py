@@ -4,7 +4,8 @@ import pandas as pd
 
 mobility_df = pd.read_csv('https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv')
 
-netherlands_df = mobility_df[mobility_df['country_region_code'] == 'NL']
+#netherlands_df = mobility_df[mobility_df['country_region_code'] == 'NL']
+netherlands_df = mobility_df[(mobility_df['country_region_code'] == 'NL') & (mobility_df['sub_region_2'].isnull())]
 
 data = {}
 
