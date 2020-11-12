@@ -13,7 +13,7 @@ python scripts/euromomo.py &
 wait
 
 python scripts/healthcare-workers.py &
-python scripts/agedistributions.py
+python scripts/agedistributions.py &
 python scripts/outbreakmonitor.py &
 python scripts/excessmortality.py &
 scripts/monkeypatch-lcps.py &
