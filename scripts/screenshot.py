@@ -20,16 +20,25 @@ with open('data/charts.yml', 'r') as fh:
 
 cmds = []
 
+pages = {}
 for page, data in pdata['pages'].items():
     url = "https://covid-analytics.nl/" + data['file']
+    charts = {}
     for chart in data['charts']:
         chart_url = url + '#chart-' + chart['name']
         output = f"{last_update_str}-{data['file'][0: data['file'].rindex('.')]}-{chart['name']}.png"
-        workdir = Path('./screenshots')
-        dockercmd = f"docker run --rm -w /usr/workspace -v {workdir.absolute()}:/usr/workspace joyzoursky/python-chromedriver:3.8-selenium bash -c \"pip install Pillow && python screencap.py '{chart_url}' {output}\""
-        print(dockercmd)
-        cmds.append(dockercmd)
+        charts[chart_url] = output
+    pages[data['file'] + '.json'] = charts
 
+
+for page, data in pages.items():
+    workdir = Path('./screenshots')
+    pagefile = workdir / page
+    with open(workdir / page, 'w') as fh:
+        json.dump(data, fh)
+    dockercmd = f"docker run --rm -w /usr/workspace -v {workdir.absolute()}:/usr/workspace joyzoursky/python-chromedriver:3.8-selenium bash -c \"pip install Pillow && python screencap.py '{page}'\""
+    print(dockercmd)
+    cmds.append(dockercmd)
 
 from multiprocessing import Pool
 

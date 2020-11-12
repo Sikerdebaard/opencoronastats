@@ -8,6 +8,7 @@ node_modules/
 *.swo
 
 screenshots/*.png
+screenshots/*.json
 screenshots/screenshots.sh
 
 # Byte-compiled / optimized / DLL files

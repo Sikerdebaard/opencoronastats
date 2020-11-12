@@ -20,12 +20,7 @@ chrome_options.add_argument("--verbose")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.binary_location = CHROME_PATH
 
-def make_screenshot(url, output):
-
-    driver = webdriver.Chrome(
-        executable_path=CHROMEDRIVER_PATH,
-        chrome_options=chrome_options
-    )
+def make_screenshot(driver, url, output):
     driver.get(url)
 
     retval = ""
@@ -46,10 +41,9 @@ def make_screenshot(url, output):
     im2 = im.crop(box)
     im2.save(output)
 
-    driver.close()
 
 if __name__ == '__main__':
-    usage = "usage: %prog [options] <url> <output>"
+    usage = "usage: %prog [options] <urlmap> <output>"
     parser = OptionParser(usage=usage)
 
     (options, args) = parser.parse_args()
@@ -57,6 +51,18 @@ if __name__ == '__main__':
     if len(args) < 2:
         parser.error("please specify a URL and an output")
 
-    make_screenshot(args[0], args[1])
+    import json
+    with open(args[0], 'r') as fh:
+        pagemap = json.load(fh)
+    
+    driver = webdriver.Chrome(
+        executable_path=CHROMEDRIVER_PATH,
+        chrome_options=chrome_options
+    )
+
+    for url, output in pagemap.items():
+        make_screenshot(driver, url, output)
+    
+    driver.close()
 
 
