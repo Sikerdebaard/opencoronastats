@@ -43,12 +43,12 @@ def make_screenshot(driver, url, output):
 
 
 if __name__ == '__main__':
-    usage = "usage: %prog [options] <urlmap> <output>"
+    usage = "usage: %prog [options] <urlmap>"
     parser = OptionParser(usage=usage)
 
     (options, args) = parser.parse_args()
 
-    if len(args) < 2:
+    if len(args) < 1:
         parser.error("please specify a URL and an output")
 
     import json
