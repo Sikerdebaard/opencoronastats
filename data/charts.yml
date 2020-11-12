@@ -1449,30 +1449,30 @@ pages:
             filter:
               - filter_zero_values
       
-      - name: tests-percentage-positive
-        title: Percentage of tests positive 
-        type: line
-        uses: tests_performed
-        x: week
-        sources:
-          RIVM: https://www.rivm.nl/coronavirus-covid-19
-          GGD: https://ggdghor.nl/actueel-bericht/weekupdate-cijfers-coronatests-bij-de-ggden-2/
-        options:
-          scales:
-            yAxes:
-              - scaleLabel:
-                  labelString: "Percentage of tests positive"
-            xAxes:
-              - scaleLabel:
-                  labelString: "Weeknumber"
-        datasets:
-          - label: Percentage positive based on GGD 
-            column: pos_ggd
-            backgroundColor: derivate 
-            borderColor: derivate
-            filter:
-              - filter_zero_values
-              - percentage_fraction_to_percentage
+#      - name: tests-percentage-positive
+#        title: Percentage of tests positive 
+#        type: line
+#        uses: tests_performed
+#        x: week
+#        sources:
+#          RIVM: https://www.rivm.nl/coronavirus-covid-19
+#          GGD: https://ggdghor.nl/actueel-bericht/weekupdate-cijfers-coronatests-bij-de-ggden-2/
+#        options:
+#          scales:
+#            yAxes:
+#              - scaleLabel:
+#                  labelString: "Percentage of tests positive"
+#            xAxes:
+#              - scaleLabel:
+#                  labelString: "Weeknumber"
+#        datasets:
+#          - label: Percentage positive based on GGD 
+#            column: pos_ggd
+#            backgroundColor: derivate 
+#            borderColor: derivate
+#            filter:
+#              - filter_zero_values
+#              - percentage_fraction_to_percentage
 
       - name: excess-mortality
         title: Mortality displacement over the population of NL by weeknumber
