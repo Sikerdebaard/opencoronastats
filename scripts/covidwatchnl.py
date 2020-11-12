@@ -208,6 +208,7 @@ df_pos.join(df_labs).join(df_tests).join(df_weekly['infected']).to_csv('html/tes
 
 #df_data.to_csv(output_path / 'sewage.csv')
 
+import datetime
 
 df_sewage = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_rioolwaterdata.json')
 
@@ -217,6 +218,10 @@ df_sewage['Date_measurement'] = pd.to_datetime(df_sewage['Date_measurement'])
 df_sewage = df_sewage.set_index('Date_measurement')
 
 df_sewage = pd.DataFrame(df_sewage['RNA_flow_per_100000'].resample('W-MON', label='left', closed='left').mean()).dropna()
+
+if df_sewage.index[-1].week == pd.to_datetime(datetime.date.today()).week:
+    print('Sewage: removing current week as it is incomplete')
+    df_sewage = df_sewage[:-1]
 
 df_sewage.index = df_sewage.index.format(formatter=lambda a: f'{a.year}-{a.week}')
 df_sewage.index.rename('week', inplace=True)
