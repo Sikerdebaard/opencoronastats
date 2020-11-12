@@ -19,7 +19,7 @@ df_age = df_age.div(df_age.sum(axis=1), axis=0) # normalize to percentage
 df_age[df_age.select_dtypes(include=['number']).columns] *= 100
 
 df_age = df_age[4:]  # cut off first few cases, too little cases to visualize
-df_age = df_age.round(1)
+df_age = df_age.round(2)
 
 df_age['week'] = [f'{w.year}-{w.week}' for w in df_age.index]
 df_age.set_index('week', inplace=True)
@@ -44,7 +44,7 @@ df_deceased = df_deceased.pivot(index='Week_of_death', columns='Agegroup', value
 df_deceased = df_deceased.div(df_deceased.sum(axis=1), axis=0)
 
 df_deceased[df_deceased.select_dtypes(include=['number']).columns] *= 100
-df_deceased = df_deceased.round(1)
+df_deceased = df_deceased.round(2)
 
 df_deceased['week'] = [f'{w.year}-{w.week}' for w in df_deceased.index]
 df_deceased.set_index('week', inplace=True)
@@ -71,7 +71,7 @@ df_hosp = df_hosp.div(df_hosp.sum(axis=1), axis=0)
 df_hosp = df_hosp[4:]
 
 df_hosp[df_hosp.select_dtypes(include=['number']).columns] *= 100
-df_hosp = df_hosp.round(1)
+df_hosp = df_hosp.round(2)
 
 df_hosp['week'] = [f'{w.year}-{w.week}' for w in df_hosp.index]
 df_hosp.set_index('week', inplace=True)

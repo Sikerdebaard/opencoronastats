@@ -6,6 +6,7 @@ sandbox.ipynb
 node_modules/
 *.swp
 *.swo
+cache/*
 
 screenshots/*.png
 screenshots/*.json

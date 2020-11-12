@@ -865,6 +865,7 @@ pages:
       - deceased_cumulative.csv
       - casus-by-age.csv
       - deceased-by-age.csv
+      - healthcare-workers.csv
     cards:
 #      - id: rivm-total-tests
 #        icon: fa-vial
@@ -1986,6 +1987,122 @@ pages:
             backgroundColor: zuid-holland
             borderColor: zuid-holland
       
+
+      - name: case-counts-healthcare-workers
+        title: Case counts healthcare workers
+        type: line
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19/actueel
+        uses: healthcare-workers
+        x: year-week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of cases"
+            xAxes:
+              - scaleLabel:
+                  labelString: "year-week"
+        datasets:
+          - label: Infected
+            column: infected
+            backgroundColor: icu-beds
+            borderColor: icu-beds
+
+      - name: cumulative-case-counts-healthcare-workers
+        title: Cumulative case counts healthcare workers
+        type: line
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19/actueel
+        uses: healthcare-workers
+        x: year-week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of cases"
+            xAxes:
+              - scaleLabel:
+                  labelString: "year-week"
+        datasets:
+          - label: Infected
+            column: infected_cum
+            backgroundColor: icu-beds
+            borderColor: icu-beds
+
+      - name: hospitalized-deceased-healthcare-workers
+        title: Hospitalized and deceased counts healthcare workers
+        type: line
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19/actueel
+        uses: healthcare-workers
+        x: year-week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of cases"
+            xAxes:
+              - scaleLabel:
+                  labelString: "year-week"
+        datasets:
+          - label: Hospitalized 
+            column: hospitalised
+            backgroundColor: patients
+            borderColor: patients
+          - label: Deceased
+            column: deceased
+            backgroundColor: deaths
+            borderColor: deaths
+
+      - name: cumulative-hospitalized-deceased-healthcare-workers
+        title: Cumulative hospitalized and deceased counts healthcare workers
+        type: line
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19/actueel
+        uses: healthcare-workers
+        x: year-week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of cases"
+            xAxes:
+              - scaleLabel:
+                  labelString: "year-week"
+        datasets:
+          - label: Hospitalized 
+            column: hospitalised_cum
+            backgroundColor: patients
+            borderColor: patients
+          - label: Deceased
+            column: deceased_cum
+            backgroundColor: deaths
+            borderColor: deaths
+
+      - name: infected-healthcare-workers-perc
+        title: Infected healthcare workers as a percentage of all infected in that week
+        type: line
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19/actueel
+        uses: healthcare-workers
+        x: year-week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage of total infected"
+            xAxes:
+              - scaleLabel:
+                  labelString: "year-week"
+        datasets:
+          - label: Percentage of total
+            column: infected_perc_of_total
+            backgroundColor: derivate
+            borderColor: derivate
+            filter:
+              - percentage_fraction_to_percentage
+
       - name: birth-rates
         title: Number of births
         type: line
