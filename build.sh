@@ -16,6 +16,7 @@ python scripts/agedistributions.py
 python scripts/outbreakmonitor.py &
 python scripts/excessmortality.py &
 python scripts/cards.py &
+scripts/monkeypatch-lcps.py &
 wait
 
 python scripts/build.py 
