@@ -13,6 +13,9 @@ tz = timezone('Europe/Amsterdam')
 last_update = datetime.now().astimezone(tz)
 last_update_str = last_update.strftime("%Y%m%d-%H%M")
 
+image = 'sikerdebaard/browsercap:latest'
+#image = 'joyzoursky/python-chromedriver:3.8-selenium'
+
 print(last_update_str)
 
 with open('data/charts.yml', 'r') as fh:
@@ -36,7 +39,7 @@ for page, data in pages.items():
     pagefile = workdir / page
     with open(workdir / page, 'w') as fh:
         json.dump(data, fh)
-    dockercmd = f"docker run --rm -w /usr/workspace -v {workdir.absolute()}:/usr/workspace joyzoursky/python-chromedriver:3.8-selenium bash -c \"pip install Pillow && python screencap.py '{page}'\""
+    dockercmd = f"docker run --rm -w /usr/workspace -v {workdir.absolute()}:/usr/workspace {image} bash -c \"pip install Pillow && python screencap.py '{page}'\""
     print(dockercmd)
     cmds.append(dockercmd)
 
