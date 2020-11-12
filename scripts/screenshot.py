@@ -39,7 +39,7 @@ for page, data in pages.items():
     pagefile = workdir / page
     with open(workdir / page, 'w') as fh:
         json.dump(data, fh)
-    dockercmd = f"docker run --rm -w /usr/workspace -v {workdir.absolute()}:/usr/workspace {image} bash -c \"pip install Pillow && python screencap.py '{page}'\""
+    dockercmd = f"docker run --rm -w /usr/workspace -v {workdir.absolute()}:/usr/workspace {image} bash -c \"python screencap.py '{page}'\""
     print(dockercmd)
     cmds.append(dockercmd)
 
