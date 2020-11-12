@@ -12,11 +12,12 @@ python scripts/case-counts.py &
 python scripts/euromomo.py &
 wait
 
+python scripts/healthcare-workers.py &
 python scripts/agedistributions.py
 python scripts/outbreakmonitor.py &
 python scripts/excessmortality.py &
-python scripts/cards.py &
 scripts/monkeypatch-lcps.py &
 wait
 
+python scripts/cards.py 
 python scripts/build.py 
