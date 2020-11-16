@@ -866,6 +866,7 @@ pages:
       - casus-by-age.csv
       - deceased-by-age.csv
       - healthcare-workers.csv
+      - nursing-homes.csv
     cards:
 #      - id: rivm-total-tests
 #        icon: fa-vial
@@ -895,6 +896,10 @@ pages:
         icon: fa-head-side-cough
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
+      - id: rivm-current-nursing-homes-infected-locations
+        icon: fa-wheelchair
+        sources:
+          RIVM: https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/0179dd26-7bf6-4021-857f-8623aaf8e73a?tab=relations
 
     charts:
       - name: rivm-infected
@@ -1864,6 +1869,35 @@ pages:
 #            backgroundColor: deaths
 #            borderColor: deaths
 #            filter: filter_zero_values
+
+      - name: rivm-nursing-homes-infected-locations
+        title: Nursing homes
+        type: line
+        uses: nursing-homes 
+        x: Date_of_statistic_reported
+        sources:
+          RIVM: https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/0179dd26-7bf6-4021-857f-8623aaf8e73a?tab=relations
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Total number"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Infected
+            column: Total_cases_reported
+            backgroundColor: patients
+            borderColor: patients
+          - label: Deceased
+            column: Total_deceased_reported
+            backgroundColor: deaths
+            borderColor: deaths
+          - label: Total infected locations reported
+            column: Total_infected_locations_reported
+            backgroundColor: icu-beds
+            borderColor: icu-beds
 
       - name: cumulative-outbreak-monitor
         title: Top-10 municipality by fastest cumulative growth in hospitalized case count

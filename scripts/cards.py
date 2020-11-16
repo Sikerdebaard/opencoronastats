@@ -232,6 +232,24 @@ cards['rivm-contagious'] = {
     'color': 'blue'
 }
 
+
+
+
+# nursing homes
+df_national = pd.read_csv('html/nursing-homes.csv')
+
+nursing_homes_reported_infected = df_national.loc[df_national.last_valid_index()]['Total_infected_locations_reported']
+
+trend = 1 if df_national['Total_infected_locations_reported'].tail(5).mean() <= df_national.loc[df_national.last_valid_index()]['Total_infected_locations_reported'] else -1
+
+cards['rivm-current-nursing-homes-infected-locations'] = {
+    'value': nursing_homes_reported_infected,
+    'title': 'Nursing homes total number of infected locations',
+    'color': 'green' if trend <= 0 else 'red',
+    'trend': trend
+}
+
+
 output_path = Path('./html/')
 
 from pprint import pprint

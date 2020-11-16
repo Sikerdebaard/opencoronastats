@@ -10,6 +10,7 @@ python scripts/mobility.py &
 python scripts/births.py &
 python scripts/case-counts.py &
 python scripts/euromomo.py &
+python scripts/nursing_homes.py &
 wait
 
 python scripts/healthcare-workers.py &
