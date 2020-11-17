@@ -14,4 +14,5 @@ python scripts/cards.py &
 scripts/monkeypatch-lcps.py &
 wait
 
+cp data/testing-per-group.csv html/
 python scripts/build.py 

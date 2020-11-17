@@ -867,6 +867,7 @@ pages:
       - deceased-by-age.csv
       - healthcare-workers.csv
       - nursing-homes.csv
+      - testing-per-group.csv
     cards:
 #      - id: rivm-total-tests
 #        icon: fa-vial
@@ -1546,7 +1547,7 @@ pages:
             filter: filter_zero_values
 
       - name: excess-mortality-europe
-        title: Z-Score mortality displacement EuroMOMO
+        title: Z-Score mortality displacement Eutesting-per-grouproMOMO
         type: line
         sources:
           EuroMOMO: https://www.euromomo.eu/graphs-and-maps/
@@ -2136,6 +2137,190 @@ pages:
             borderColor: derivate
             filter:
               - percentage_fraction_to_percentage
+              
+      - name: testing-per-group-positive
+        title: Infected per group
+        type: line
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19/actueel
+        uses: testing-per-group
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Total infected"
+            xAxes:
+              - scaleLabel:
+                  labelString: "year-week"
+        datasets:
+          - label: Contact profession
+            column: infected_contactberoep
+            backgroundColor: setcol_0
+            borderColor: setcol_0
+          - label: Tested because of contact tracing
+            column: infected_getest_ihkv_bco
+            backgroundColor: setcol_1
+            borderColor: setcol_1
+          - label: Enforcement profession
+            column: infected_handhaving
+            backgroundColor: setcol_2
+            borderColor: setcol_2
+          - label: Catering industry
+            column: infected_horeca
+            backgroundColor: setcol_3
+            borderColor: setcol_3
+          - label: Children 0-3 years old
+            column: infected_kinderen_0-3_jaar
+            backgroundColor: setcol_4
+            borderColor: setcol_4
+          - label: Children 4-11 years old
+            column: infected_kinderen_4-11_jaar
+            backgroundColor: setcol_5
+            borderColor: setcol_5
+          - label: Children 12-17 years old
+            column: infected_kinderen_12-17_jaar
+            backgroundColor: setcol_6
+            borderColor: setcol_6
+          - label: Caregivers
+            column: infected_mantelzorgers
+            backgroundColor: setcol_7
+            borderColor: setcol_7
+          - label: Healthcare workers
+            column: infected_zorgmedewerkers
+            backgroundColor: setcol_8
+            borderColor: setcol_8
+          - label: Education and childcare
+            column: infected_onderwijs/kinderopvang
+            backgroundColor: setcol_9
+            borderColor: setcol_9
+          - label: Unknown/others
+            column: infected_overig/onbekend
+            backgroundColor: setcol_11
+            borderColor: setcol_11
+            
+      - name: testing-per-group-total
+        title: Total tests per group
+        type: line
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19/actueel
+        uses: testing-per-group
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Total tested"
+            xAxes:
+              - scaleLabel:
+                  labelString: "year-week"
+        datasets:
+          - label: Contact profession
+            column: tested_contactberoep
+            backgroundColor: setcol_0
+            borderColor: setcol_0
+          - label: Tested because of contact tracing
+            column: tested_getest_ihkv_bco
+            backgroundColor: setcol_1
+            borderColor: setcol_1
+          - label: Enforcement profession
+            column: tested_handhaving
+            backgroundColor: setcol_2
+            borderColor: setcol_2
+          - label: Catering industry
+            column: tested_horeca
+            backgroundColor: setcol_3
+            borderColor: setcol_3
+          - label: Children 0-3 years old
+            column: tested_kinderen_0-3_jaar
+            backgroundColor: setcol_4
+            borderColor: setcol_4
+          - label: Children 4-11 years old
+            column: tested_kinderen_4-11_jaar
+            backgroundColor: setcol_5
+            borderColor: setcol_5
+          - label: Children 12-17 years old
+            column: tested_kinderen_12-17_jaar
+            backgroundColor: setcol_6
+            borderColor: setcol_6
+          - label: Caregivers
+            column: tested_mantelzorgers
+            backgroundColor: setcol_7
+            borderColor: setcol_7
+          - label: Healthcare workers
+            column: tested_zorgmedewerkers
+            backgroundColor: setcol_8
+            borderColor: setcol_8
+          - label: Education and childcare
+            column: tested_onderwijs/kinderopvang
+            backgroundColor: setcol_9
+            borderColor: setcol_9
+          - label: Unknown/others
+            column: tested_overig/onbekend
+            backgroundColor: setcol_11
+            borderColor: setcol_11
+
+      - name: testing-per-group-perc-positive
+        title: Percentage of tests positive per group
+        type: line
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19/actueel
+        uses: testing-per-group
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage positive"
+            xAxes:
+              - scaleLabel:
+                  labelString: "year-week"
+        datasets:
+          - label: Contact profession
+            column: perc_positive_contactberoep
+            backgroundColor: setcol_0
+            borderColor: setcol_0
+          - label: Tested because of contact tracing
+            column: perc_positive_getest_ihkv_bco
+            backgroundColor: setcol_1
+            borderColor: setcol_1
+          - label: Enforcement profession
+            column: perc_positive_handhaving
+            backgroundColor: setcol_2
+            borderColor: setcol_2
+          - label: Catering industry
+            column: perc_positive_horeca
+            backgroundColor: setcol_3
+            borderColor: setcol_3
+          - label: Children 0-3 years old
+            column: perc_positive_kinderen_0-3_jaar
+            backgroundColor: setcol_4
+            borderColor: setcol_4
+          - label: Children 4-11 years old
+            column: perc_positive_kinderen_4-11_jaar
+            backgroundColor: setcol_5
+            borderColor: setcol_5
+          - label: Children 12-17 years old
+            column: perc_positive_kinderen_12-17_jaar
+            backgroundColor: setcol_6
+            borderColor: setcol_6
+          - label: Caregivers
+            column: perc_positive_mantelzorgers
+            backgroundColor: setcol_7
+            borderColor: setcol_7
+          - label: Healthcare workers
+            column: perc_positive_zorgmedewerkers
+            backgroundColor: setcol_8
+            borderColor: setcol_8
+          - label: Education and childcare
+            column: perc_positive_onderwijs/kinderopvang
+            backgroundColor: setcol_9
+            borderColor: setcol_9
+          - label: Unknown/others
+            column: perc_positive_overig/onbekend
+            backgroundColor: setcol_11
+            borderColor: setcol_11
+
 
       - name: birth-rates
         title: Number of births
