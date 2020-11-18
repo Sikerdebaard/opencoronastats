@@ -17,7 +17,7 @@ python scripts/healthcare-workers.py &
 python scripts/agedistributions.py &
 python scripts/outbreakmonitor.py &
 python scripts/excessmortality.py &
-scripts/monkeypatch-lcps.py &
+python scripts/monkeypatch-lcps.py &
 wait
 
 cp data/testing-per-group.csv html/

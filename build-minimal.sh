@@ -11,7 +11,7 @@ python scripts/nursing_homes.py &
 wait
 
 python scripts/cards.py &
-scripts/monkeypatch-lcps.py &
+python scripts/monkeypatch-lcps.py &
 wait
 
 cp data/testing-per-group.csv html/
