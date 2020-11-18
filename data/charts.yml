@@ -2514,8 +2514,8 @@ pages:
               - percentage_fraction_to_percentage
             backgroundColor: derivate-aone
             borderColor: derivate-aone
-          - label: "Simple Moving Average (5 days)"
-            column: sma5_growth_intakeCount
+          - label: "Simple Moving Average (7 days)"
+            column: sma7_growth_intakeCount
             filter:
               - remove_last_three
               - filter_zero_values
@@ -2889,8 +2889,8 @@ pages:
               - percentage_fraction_to_percentage
             backgroundColor: derivate-aone
             borderColor: derivate-aone
-          - label: "Simple Moving Average (5 days)"
-            column: sma5_growth_intakeCount
+          - label: "Simple Moving Average (7 days)"
+            column: sma7_growth_intakeCount
             filter:
               - remove_last_three
               - filter_zero_values
