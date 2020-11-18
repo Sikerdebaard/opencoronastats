@@ -14,7 +14,7 @@ df_data = pd.read_csv('html/data.csv')
 
 # -- growth
 
-growth = df_data['sma5_growth_intakeCount'].tail(5).values[0:2]
+growth = df_data['sma7_growth_intakeCount'].tail(5).values[0:2]
 
 if growth[0] == growth[1]:
     trend = 0
@@ -102,7 +102,7 @@ df_data = pd.read_csv('html/hospitalized.csv')
 
 # -- growth
 
-growth = df_data['sma5_growth_intakeCount'].tail(5).values[0:2]
+growth = df_data['sma7_growth_intakeCount'].tail(5).values[0:2]
 
 if growth[0] == growth[1]:
     trend = 0

@@ -6,7 +6,7 @@ output_path = Path('./html/')
 
 def calc_growth(df, column):
     df[f'growth_{column}'] = df[column].pct_change()
-    df[f'sma5_growth_{column}'] = df[f'growth_{column}'].rolling(window=5).mean()
+    df[f'sma7_growth_{column}'] = df[f'growth_{column}'].rolling(window=7).mean()
 
     return df
 
