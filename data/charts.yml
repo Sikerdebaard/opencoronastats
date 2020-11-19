@@ -2841,13 +2841,11 @@ pages:
             filter: remove_last_three
             backgroundColor: patients
             borderColor: patients
-            showLine: false
           - label: "Points still being updated by hospitals"
             column: intakeCount
             filter: last_three_rest_null
             backgroundColor: patients-afive
             borderColor: patients-afive
-            showLine: false
           - label: "LCPS Reported patients"
             column: lcps_beds
             filter: filter_zero_values
@@ -2886,6 +2884,7 @@ pages:
               - percentage_fraction_to_percentage
             backgroundColor: derivate-atwo
             borderColor: derivate-atwo
+            showLine: false
           - label: "Points still being updated by hospitals"
             column: growth_intakeCount
             filter:
@@ -2893,6 +2892,7 @@ pages:
               - percentage_fraction_to_percentage
             backgroundColor: derivate-aone
             borderColor: derivate-aone
+            showLine: false
           - label: "Simple Moving Average (7 days)"
             column: sma7_growth_intakeCount
             filter:
