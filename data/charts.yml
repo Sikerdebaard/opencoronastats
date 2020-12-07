@@ -1423,15 +1423,14 @@ pages:
         title: Tests performed
         type: line
         uses: tests_performed
-        x: week
+        x: year-week
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
-          GGD: https://ggdghor.nl/actueel-bericht/weekupdate-cijfers-coronatests-bij-de-ggden-2/
         options:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Number of tests"
+                  labelString: "Number of tests / people"
             xAxes:
               - scaleLabel:
                   labelString: "Weeknumber"
@@ -1443,42 +1442,40 @@ pages:
             filter:
               - filter_zero_values
           - label: Number of tests performed as reported by GGD 
-            column: ggd-tests
+            column: tested_total
             backgroundColor: zuid-holland 
             borderColor: zuid-holland
             filter:
               - filter_zero_values
           - label: Infected reported by RIVM
-            column: infected
+            column: tested_pos
             backgroundColor: patients
             borderColor: patients
             filter:
               - filter_zero_values
       
-#      - name: tests-percentage-positive
-#        title: Percentage of tests positive 
-#        type: line
-#        uses: tests_performed
-#        x: week
-#        sources:
-#          RIVM: https://www.rivm.nl/coronavirus-covid-19
-#          GGD: https://ggdghor.nl/actueel-bericht/weekupdate-cijfers-coronatests-bij-de-ggden-2/
-#        options:
-#          scales:
-#            yAxes:
-#              - scaleLabel:
-#                  labelString: "Percentage of tests positive"
-#            xAxes:
-#              - scaleLabel:
-#                  labelString: "Weeknumber"
-#        datasets:
-#          - label: Percentage positive based on GGD 
-#            column: pos_ggd
-#            backgroundColor: derivate 
-#            borderColor: derivate
-#            filter:
-#              - filter_zero_values
-#              - percentage_fraction_to_percentage
+      - name: tests-percentage-positive
+        title: Percentage of tests positive 
+        type: line
+        uses: tests_performed
+        x: year-week
+        sources:
+          RIVM: https://www.rivm.nl/coronavirus-covid-19
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage of tests positive"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Weeknumber"
+        datasets:
+          - label: Percentage positive by RIVM 
+            column: percent_pos
+            backgroundColor: derivate 
+            borderColor: derivate
+            filter:
+              - filter_zero_values
 
       - name: excess-mortality
         title: Mortality displacement over the population of NL by weeknumber
