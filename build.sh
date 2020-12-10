@@ -17,7 +17,8 @@ wait
 python scripts/healthcare-workers.py &
 python scripts/agedistributions.py &
 python scripts/outbreakmonitor.py &
-python scripts/excessmortality.py &
+#python scripts/excessmortality.py &
+python scripts/mortality-displacement.py &
 python scripts/monkeypatch-lcps.py &
 wait
 
