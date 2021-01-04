@@ -24,7 +24,11 @@ df_daily_cum.index.rename('date', inplace=True)
 
 df_weekly_cum = df_daily_cum.resample('W-MON', label='left', closed='left').max()  # label=left prevents off-by-one error in weeknum
 #df_weekly_cum.index = df_weekly_cum.index.week
-df_weekly_cum.index = df_weekly_cum.index.week
+
+#df_weekly_cum.index = df_weekly_cum.index.week
+df_weekly_cum.index = df_weekly_cum.index.strftime('%Y-%U')
+
+
 df_weekly_cum.index.rename('week', inplace=True)
 #df_weekly_cum.to_csv('weekly_cumulative_from_municipality.csv')
 
@@ -60,7 +64,10 @@ df_daily.index.rename('date', inplace=True)
 
 df_weekly = df_daily.resample('W-MON', label='left', closed='left').sum()  # label=left prevents off-by-one error in weeknum
 #df_weekly.index = df_weekly.index.week
-df_weekly.index = df_weekly.index.week
+
+#df_weekly.index = df_weekly.index.week
+df_weekly.index = df_weekly.index.strftime('%Y-%U')
+
 df_weekly.index.rename('week', inplace=True)
 #df_weekly.to_csv('weekly_from_municipality.csv')
 
@@ -105,7 +112,8 @@ df_intermediate['Week_of_death'] = pd.to_datetime(df_intermediate['Week_of_death
 # First deaths
 df_deceased = pd.DataFrame(df_intermediate.resample('W-MON', label='left', on='Week_of_death', closed='left').count()['Week_of_death'])
 #df_deceased.index = df_deceased.index.week
-df_deceased.index = df_deceased.index.week
+#df_deceased.index = df_deceased.index.week
+df_deceased.index = df_deceased.index.strftime('%Y-%U')
 df_deceased.rename(columns={'Week_of_death': 'deceased'}, inplace=True) # rename week_of_deaths, it is no longer this number but is transformed in number of deaths instead
 df_deceased.index.rename('weeknum', inplace=True)  # rename index to something more pleasing
 
@@ -119,7 +127,8 @@ df_infected = df_casus.copy()
 df_infected['Date_statistics'] = pd.to_datetime(df_infected['Date_statistics'])
 df_infected = pd.DataFrame(df_infected.resample('W-MON', label='left', on='Date_statistics', closed='left').count()['Date_statistics'])
 #df_infected.index = df_infected.index.week
-df_infected.index = df_infected.index.week
+#df_infected.index = df_infected.index.week
+df_infected.index = df_infected.index.strftime('%Y-%U')
 df_infected.rename(columns={'Date_statistics': 'infected'}, inplace=True)
 df_infected.index.rename('weeknum', inplace=True)
 
@@ -169,7 +178,8 @@ df_osirisgeo = df_osirisgeo.pivot(columns='Type')
 df_osirisgeo_cum = df_osirisgeo['AantalCumulatief']
 df_osirisgeo_cum = df_osirisgeo_cum.resample('W-MON', label='left', closed='left').max().rename(columns={'Overleden': 'deceased', 'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
 #df_osirisgeo_cum.index = df_osirisgeo_cum.index.week
-df_osirisgeo_cum.index = df_osirisgeo_cum.index.week
+#df_osirisgeo_cum.index = df_osirisgeo_cum.index.week
+df_osirisgeo_cum.index = df_osirisgeo_cum.index.strftime('%Y-%U')
 
 #df_osirisgeo_cum.to_csv('osirisgeo_cum.csv')
 
@@ -178,7 +188,8 @@ df_osirisgeo = df_osirisgeo['Aantal']
 
 df_osirisgeo = df_osirisgeo.resample('W-MON', label='left', closed='left').sum().rename(columns={'Overleden': 'deceased', 'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
 #df_osirisgeo.index = df_osirisgeo.index.week
-df_osirisgeo.index = df_osirisgeo.index.week
+#df_osirisgeo.index = df_osirisgeo.index.week
+df_osirisgeo.index = df_osirisgeo.index.strftime('%Y-%U')
 
 #df_osirisgeo.to_csv('osirisgeo.csv')
 
@@ -203,7 +214,8 @@ df_osiris = df_osiris['Aantal']
 
 df_osiris = df_osiris.resample('W-MON', label='left', closed='left').sum().rename(columns={'Overleden': 'deceased', 'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
 #df_osiris.index = df_osiris.index.week
-df_osiris.index = df_osiris.index.week
+#df_osiris.index = df_osiris.index.week
+df_osiris.index = df_osiris.index.strftime('%Y-%U')
 
 #df_osiris.to_csv('osiris.csv')
 
@@ -232,7 +244,8 @@ df_dashboard = df_dashboard.pivot(columns='Type')
 df_dashboard_cum = df_dashboard['AantalCumulatief']
 df_dashboard_cum = df_dashboard_cum.resample('W-MON', label='left', closed='left').max().rename(columns={'Overleden': 'deceased', 'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
 #df_dashboard_cum.index = df_dashboard_cum.index.week
-df_dashboard_cum.index = df_dashboard_cum.index.week
+#df_dashboard_cum.index = df_dashboard_cum.index.week
+df_dashboard_cum.index = df_dashboard_cum.index.strftime('%Y-%U')
 
 #df_dashboard_cum.to_csv('dashboard_cum.csv')
 
@@ -242,7 +255,8 @@ df_dashboard = df_dashboard['Aantal']
 
 df_dashboard = df_dashboard.resample('W-MON', label='left', closed='left').sum().rename(columns={'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
 #df_dashboard.index = df_dashboard.index.week
-df_dashboard.index = df_dashboard.index.week
+#df_dashboard.index = df_dashboard.index.week
+df_dashboard.index = df_dashboard.index.strftime('%Y-%U')
 
 #df_dashboard.to_csv('dashboard.csv')
 
