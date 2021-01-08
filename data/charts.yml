@@ -868,6 +868,7 @@ pages:
       - healthcare-workers.csv
       - nursing-homes.csv
       - testing-per-group.csv
+      - daily-tests-performed.csv
     cards:
 #      - id: rivm-total-tests
 #        icon: fa-vial
@@ -1476,6 +1477,67 @@ pages:
             borderColor: derivate
             filter:
               - filter_zero_values
+
+      - name: daily-tests-performed
+        title: Daily tests performed
+        type: line
+        uses: daily-tests-performed
+        x: date
+        sources:
+          GGD: https://coronadashboard.rijksoverheid.nl/ 
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of tests / people"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Number of tests performed as reported by GGD 
+            column: tested_total
+            backgroundColor: zuid-holland 
+            borderColor: zuid-holland
+            filter:
+              - filter_zero_values
+          - label: Infected reported by RIVM
+            column: infected
+            backgroundColor: patients
+            borderColor: patients
+            filter:
+              - filter_zero_values
+
+      - name: daily-tests-percentage-positive
+        title: Percentage of tests positive 
+        type: line
+        uses: daily-tests-performed
+        x: date
+        sources:
+          GGD: https://coronadashboard.rijksoverheid.nl/ 
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage of tests positive"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Percentage positive by GGD
+            column: infected_percentage
+            backgroundColor: derivate-atwo
+            borderColor: derivate-atwo
+            filter:
+              - filter_zero_values
+            showLine: false
+          - label: Moving averag 7 days percentage positive
+            column: sma7_infected_percentage
+            backgroundColor: derivate 
+            borderColor: derivate
+            filter:
+              - filter_zero_values
+
+
 
       - name: excess-mortality
         title: Mortality displacement over the population of NL by weeknumber

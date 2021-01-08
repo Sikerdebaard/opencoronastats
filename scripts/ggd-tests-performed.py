@@ -11,7 +11,7 @@ data = nl['tested_ggd_daily']['values']
 rows = []
 for week in nl['tested_ggd_average']['values']:
     rows.append({
-        'year-week': datetime.datetime.fromtimestamp(int(week['date_start_unix']) - 1),
+        'year-week': datetime.datetime.fromtimestamp(int(week['date_start_unix'])),
         'tested_pos': week['infected'],
         'tested_total': week['tested_total'],
         'percent_pos': week['infected_percentage'],
@@ -20,7 +20,8 @@ for week in nl['tested_ggd_average']['values']:
 df_ggd = pd.DataFrame(rows).set_index('year-week')
 
 
-df_ggd = df_ggd.resample('W-MON', label='left', closed='left').last()
+df_ggd = df_ggd.resample('W-MON', label='left', closed='left').agg({'tested_pos': 'sum', 'tested_total': 'sum', 'percent_pos': 'mean'})
+df_ggd['percent_pos'] = df_ggd['percent_pos'].round(2)
 df_ggd.index = df_ggd.index.strftime('%Y-%U')
 
 
@@ -51,5 +52,7 @@ df = df.set_index('date_unix')
 df.index = df.index.rename('date')
 df.index = pd.to_datetime(df.index, unit='s')
 df = df.drop(columns='date_of_insertion_unix')
+
+df['sma7_infected_percentage'] = df['infected_percentage'].rolling(7).mean()
 
 df.to_csv('html/daily-tests-performed.csv')
