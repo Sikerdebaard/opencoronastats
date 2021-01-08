@@ -54,5 +54,6 @@ df.index = pd.to_datetime(df.index, unit='s')
 df = df.drop(columns='date_of_insertion_unix')
 
 df['sma7_infected_percentage'] = df['infected_percentage'].rolling(7).mean()
+df['sma7_infected_percentage'] = df['sma7_infected_percentage'].round(2)
 
 df.to_csv('html/daily-tests-performed.csv')
