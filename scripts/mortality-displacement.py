@@ -132,7 +132,9 @@ df_deceased = df_rivm[columns[0]].rename(columns[0].replace(' ', '_')).to_frame(
 for col in columns[1:]:
     df_deceased[col.replace(' ', '_')] = df_rivm[col]
 
+df_deceased = df_deceased[df_deceased.index.str.contains('2020')]
+df_deceased.index = [int(i.split('-')[1]) for i in df_deceased.index]
+
+
 df_statistics = df_statistics.join(df_deceased)
-
-
 df_statistics.to_csv('html/mortality-displacement.csv')
