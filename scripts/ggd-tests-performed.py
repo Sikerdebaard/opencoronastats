@@ -1,28 +1,27 @@
 import requests
 import pandas as pd
-import zipfile
 import json
-from io import BytesIO
 import datetime
 
-dashboard_datablob = 'https://coronadashboard.rijksoverheid.nl/latest-data.zip'
 
-r = requests.get(dashboard_datablob, stream=True)
-z = zipfile.ZipFile(BytesIO(r.content))
+nl = requests.get('https://coronadashboard.rijksoverheid.nl/json/NL.json').json()
+data = nl['tested_ggd_daily']['values']
 
-with z.open('json/NL.json') as fh:
-    nl = json.load(fh)
 
 rows = []
-for week in nl['ggd']['values']:
+for week in nl['tested_ggd_average']['values']:
     rows.append({
-        'year-week': datetime.datetime.fromtimestamp(int(week['week_end_unix'])).strftime('%Y-%U'),
+        'year-week': datetime.datetime.fromtimestamp(int(week['date_start_unix']) - 1),
         'tested_pos': week['infected'],
         'tested_total': week['tested_total'],
         'percent_pos': week['infected_percentage'],
     })
-    
+
 df_ggd = pd.DataFrame(rows).set_index('year-week')
+
+
+df_ggd = df_ggd.resample('W-MON', label='left', closed='left').last()
+df_ggd.index = df_ggd.index.strftime('%Y-%U')
 
 
 df_labs = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-test/RIVM_NL_test_latest.csv')
@@ -40,3 +39,17 @@ df_merged = pd.merge(df_labs, df_ggd, how='outer', left_index=True, right_index=
 print(df_merged)
 
 df_merged.to_csv('html/tests_performed.csv')
+
+
+## DAILY DAILY DAILY ##
+## DAILY DAILY DAILY ##
+## DAILY DAILY DAILY ##
+## DAILY DAILY DAILY ##
+
+df = pd.DataFrame.from_dict(data)
+df = df.set_index('date_unix')
+df.index = df.index.rename('date')
+df.index = pd.to_datetime(df.index, unit='s')
+df = df.drop(columns='date_of_insertion_unix')
+
+df.to_csv('html/daily-tests-performed.csv')
