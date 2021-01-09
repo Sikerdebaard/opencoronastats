@@ -110,7 +110,7 @@ df_intermediate
 
 
 #df_intermediate['Week_of_death'] = df_intermediate['Week_of_death'] - 1 + 0.6 # actually - 0.4 prevent off-by-one error in weeks and set day on sunday
-df_intermediate['Week_of_death'] = pd.to_datetime(df_intermediate['Week_of_death'].astype(str), format='%Y%W.%w') - pd.Timedelta(weeks=1)
+df_intermediate['Week_of_death'] = pd.to_datetime(df_intermediate['Week_of_death'].astype(str), format='%Y%U.%w')
 df_intermediate['Week_of_death'] = df_intermediate['Week_of_death'].dt.strftime('%Y-%U')
 
 # # First deaths
