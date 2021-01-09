@@ -106,16 +106,17 @@ df_deceased = df_casus[(df_casus['Deceased'] == 'Yes') & ~(df_casus['Week_of_dea
 #print(f'Deceased Yes with week of death [{df_deceased.shape[0]}]', df_deceased)
 
 df_intermediate = df_deceased[['Date_file', 'Date_statistics', 'Week_of_death']].copy()
-df_intermediate['Week_of_death'] = df_intermediate['Week_of_death'] - 1 + 0.6 # actually - 0.4 prevent off-by-one error in weeks and set day on sunday
-df_intermediate['Week_of_death'] = pd.to_datetime(df_intermediate['Week_of_death'].astype(str), format='%Y%U.%w')
+df_intermediate
 
-# First deaths
-df_deceased = pd.DataFrame(df_intermediate.resample('W-MON', label='left', on='Week_of_death', closed='left').count()['Week_of_death'])
-#df_deceased.index = df_deceased.index.week
-#df_deceased.index = df_deceased.index.week
-df_deceased.index = df_deceased.index.strftime('%Y-%U')
-df_deceased.rename(columns={'Week_of_death': 'deceased'}, inplace=True) # rename week_of_deaths, it is no longer this number but is transformed in number of deaths instead
+
+df_intermediate['Week_of_death'] = pd.to_datetime(df_intermediate['Week_of_death'].astype(str), format='%Y%U.%w')
+df_intermediate['Week_of_death'] = df_intermediate['Week_of_death'].dt.strftime('%Y-%U')
+
+# # First deaths
+df_deceased = pd.DataFrame(df_intermediate.groupby(['Week_of_death']).count()['Date_statistics'].rename('deceased'))
 df_deceased.index.rename('weeknum', inplace=True)  # rename index to something more pleasing
+
+df_deceased
 
 total_deceased = df_deceased['deceased'].sum()
 print(f'Unaccounted deaths in weekly deaths due to unknown date or conflicting data: {deceased_extra}')
