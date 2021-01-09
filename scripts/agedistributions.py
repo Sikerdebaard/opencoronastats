@@ -32,8 +32,7 @@ df_age
 # Second deaths age distribution
 
 df_tf = df_casus[(df_casus['Deceased'] == 'Yes') & ~(df_casus['Week_of_death'].isnull())][['Date_file', 'Date_statistics', 'Week_of_death', 'Agegroup']].copy()
-df_tf['Week_of_death'] = df_tf['Week_of_death'] - 1 + 0.6
-df_tf['Week_of_death'] = pd.to_datetime(df_tf['Week_of_death'].astype(str), format='%Y%U.%w')
+df_tf['Week_of_death'] = pd.to_datetime(df_tf['Week_of_death'].astype(str), format='%G%V.%w')
 
 df_deceased = df_tf.groupby(['Agegroup'])[['Week_of_death']].resample('W-MON', label='left', on='Week_of_death', closed='left').count().rename(columns={'Week_of_death': 'count'})
 

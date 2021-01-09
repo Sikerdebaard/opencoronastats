@@ -22,7 +22,7 @@ df_ggd = pd.DataFrame(rows).set_index('year-week')
 
 df_ggd = df_ggd.resample('W-MON', label='left', closed='left').agg({'tested_pos': 'sum', 'tested_total': 'sum', 'percent_pos': 'mean'})
 df_ggd['percent_pos'] = df_ggd['percent_pos'].round(2)
-df_ggd.index = df_ggd.index.strftime('%Y-%U')
+df_ggd.index = df_ggd.index.strftime('%G-%V')
 
 
 df_labs = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-test/RIVM_NL_test_latest.csv')
