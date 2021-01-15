@@ -1577,7 +1577,7 @@ pages:
             borderColor: derivate
             lineTension: 0
             pointRadius: 0
-          - label: '%column%'
+          - label: 'Mortality'
             column: pattern
             backgroundColor: icu-beds
             borderColor: icu-beds
