@@ -1540,12 +1540,12 @@ pages:
 
 
       - name: excess-mortality
-        title: Mortality displacement over the population of NL by weeknumber
+        title: Mortality displacement over the population of NL 
         type: line
         sources:
           CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70895ned/table?fromstatweb
         uses: mortality-displacement
-        x: week
+        x: year-week
         options:
           scales:
             yAxes:
@@ -1555,7 +1555,7 @@ pages:
                   beginAtZero: true
             xAxes:
               - scaleLabel:
-                  labelString: "Weeknumber"
+                  labelString: "Year-week"
         datasets:
           - label: 95th percentile top
             column: expected_seasonal_pattern_high
@@ -1578,7 +1578,7 @@ pages:
             lineTension: 0
             pointRadius: 0
           - label: '%column%'
-            column: 2020  
+            column: pattern
             backgroundColor: icu-beds
             borderColor: icu-beds
             pointRadius: 0
@@ -1735,7 +1735,7 @@ pages:
         title: Mortality displacement vs. RIVM reported deaths
         type: line
         uses: mortality-displacement
-        x: week
+        x: year-week
         sources:
           CBS: https://opendata.cbs.nl/statline/#/CBS/nl/dataset/70895ned/table?fromstatweb
           RIVM: https://www.rivm.nl/coronavirus-covid-19
@@ -1746,10 +1746,10 @@ pages:
                   labelString: "Number of deceased"
             xAxes:
               - scaleLabel:
-                  labelString: "Weeknumber"
+                  labelString: "Year-week"
         datasets:
           - label: Estimated mortality displacement upper
-            column: displacement_2020_high
+            column: displacement_high
             fill: 0
             backgroundColor: derivate-atwo
             borderColor: transparent
@@ -1758,7 +1758,7 @@ pages:
             filter:
               - filter_zero_values
           - label: Estimated mortality displacement lower
-            column: displacement_2020_low
+            column: displacement_low
             fill: 0
             backgroundColor: derivate-atwo
             borderColor: transparent
@@ -1767,7 +1767,7 @@ pages:
             filter:
               - filter_zero_values
           - label: Estimated mortality displacement 
-            column: displacement_2020
+            column: displacement
             backgroundColor: derivate
             borderColor: derivate
             lineTension: 0
