@@ -82,6 +82,17 @@ function filter_zero_vals(arr) {
     })
 }
 
+function filter_zero_except_first(arr) {
+    output = filter_zero_vals(arr)
+    for (var i = 0; i < output.length; i++) {
+       if(output[i] !== null) {
+           output[i-1] = 0;
+	   break;
+       }
+    }
+    return output
+}
+
 function filter_last_three(arr) {
     return arr.slice(0, -3)
 }
@@ -126,6 +137,7 @@ function remove_last(arr) {
 
 filter_functions = {
     'filter_zero_values': filter_zero_vals,
+    'filter_zero_except_first': filter_zero_except_first,
     'remove_last_three': filter_last_three,
     'last_three_rest_null' : last_three,
     'to_int': to_int,

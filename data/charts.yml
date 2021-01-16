@@ -1,5 +1,9 @@
 chart_config:
   colors:
+    denmark: "rgba(199, 4, 45, 1)"
+    france: "rgba(0, 85, 164, 1)"
+    germany: "rgba(255, 255, 255, 1)"
+    belgium: "rgba(253, 218, 36, 1)"
     patients: "rgba(75, 192, 192, 1)"
     patients-afive: "rgba(75, 192, 192, .5)"
     patients-atwo: "rgba(75, 192, 192, .2)"
@@ -183,6 +187,127 @@ chart_config:
     pointHoverRadius: 1
 
 pages:
+
+  vaccination:
+    file: vaccination.html
+    datasets:
+      - daily-vaccine-rollout.csv
+      - compare-vaccine.csv
+    cards:
+      - id: vaccine-total-doses-administered 
+        icon: fa-syringe
+        postfix: doses
+        sources:
+          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
+      - id: vaccine-one-in-hundred-people-doses-administered
+        icon: fa-chart-line
+        sources:
+          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
+      - id: avg-doses-per-week
+        icon: fa-calendar-check
+        sources:
+          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
+
+    charts:
+      - name: pct-population-min-one-dose
+        title: Percentage of population that received at least one dose
+        type: line
+        sources:
+          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
+        uses: daily-vaccine-rollout
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage of total population"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Percentage of population
+            column: people_vaccinated_per_hundred
+            backgroundColor: patients
+            borderColor: patients
+
+      - name: doses-administered-per-day
+        title: Vaccine doses administered per day
+        type: line
+        sources:
+          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
+        uses: daily-vaccine-rollout
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Doses administered per day"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Doses administered per day
+            column: daily_vaccinations_raw
+            backgroundColor: derivate-atwo 
+            borderColor: derivate-atwo
+            showLine: false
+            filter:
+              - filter_zero_values 
+          - label: Rolling average doses administered per day
+            column: sma7_daily_vaccinations
+            backgroundColor: derivate
+            borderColor: derivate
+            filter:
+              - filter_zero_values 
+
+      - name: pct-pop-min-one-dose-compare
+        title: Comparison percentage of population that received at least one dose
+        type: line
+        sources:
+          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
+        uses: compare-vaccine
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage of total population"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Netherlands
+            column: people_vaccinated_per_hundred_NLD
+            backgroundColor: national
+            borderColor: national
+            filter:
+              - filter_zero_except_first 
+          - label: Belgium 
+            column: people_vaccinated_per_hundred_BEL
+            backgroundColor: belgium 
+            borderColor: belgium
+            filter:
+              - filter_zero_except_first 
+          - label: Germany
+            column: people_vaccinated_per_hundred_DEU
+            backgroundColor: germany
+            borderColor: germany
+            filter:
+              - filter_zero_except_first 
+          - label: France
+            column: people_vaccinated_per_hundred_FRA
+            backgroundColor: france
+            borderColor: france
+            filter:
+              - filter_zero_except_first 
+          - label: Denmark
+            column: people_vaccinated_per_hundred_DNK
+            backgroundColor: denmark
+            borderColor: denmark
+            filter:
+              - filter_zero_except_first 
+
+
   mobility:
     file: mobility.html
     datasets:
