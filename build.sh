@@ -3,6 +3,7 @@
 
 pip install -r ./requirements.txt 
 
+python scripts/vaccine.py &
 python scripts/generate_data.py &
 python scripts/hospitalized.py &
 python scripts/covidwatchnl.py &
