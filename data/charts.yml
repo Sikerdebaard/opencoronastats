@@ -2,7 +2,7 @@ chart_config:
   colors:
     denmark: "rgba(199, 4, 45, 1)"
     france: "rgba(0, 85, 164, 1)"
-    germany: "rgba(255, 255, 255, 1)"
+    germany: "rgba(0, 0, 0, 1)"
     belgium: "rgba(253, 218, 36, 1)"
     patients: "rgba(75, 192, 192, 1)"
     patients-afive: "rgba(75, 192, 192, .5)"
