@@ -14,6 +14,7 @@ df_nl = df_nl.set_index('date')
 df_nl.sort_index(inplace=True)
 
 df_nl = df_nl.ffill()
+df_nl['daily_vaccinations_raw'] = df_nl['total_vaccinations'].diff()  # fix this column after ffill
 
 vaccinated = df_nl.iloc[-1]['total_vaccinations'].astype(int)
 
