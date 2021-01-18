@@ -2954,6 +2954,8 @@ pages:
     file: hospital.html
     datasets:
       - hospitalized.csv
+      - hospital_demographics.csv
+      - hospital_treatment_durations.csv
       #- demographics.csv
       #- treatment_durations.csv
       - timestamp.json
@@ -3313,6 +3315,135 @@ pages:
 #            scalelabel: 'Number of patients'
 #        sources:
 #          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: hospital-demographics
+        title: Demographics of patients currently in hospital
+        uses: hospital_demographics
+        type: 'demographics'
+        x: 'age_group'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of patients"
+        datasets:
+          - label: "Demographics of hospitalized patients"
+            column: patients_in_hospital
+            backgroundColor: patients
+            borderColor: patients
+            filter: 'filter_zero_values'
+            scalelabel: 'Number of patients'
+
+      - name: hospital-demographics-death
+        title: Demographics of deaths in hospital
+        uses: hospital_demographics
+        type: 'demographics'
+        x: 'age_group'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased"
+        datasets:
+          - label: "Demographics of deceased (hospital)"
+            column: patients_deceased
+            backgroundColor: 'deaths'
+            borderColor: 'deaths'
+            filter: 'filter_zero_values'
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: hospital-demographics-recovered
+        title: Demographics of recovered patients (hospital)
+        uses: hospital_demographics
+        type: 'demographics'
+        x: 'age_group'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of recovered"
+        datasets:
+          - label: "Demographics of recovered patients (hospital)"
+            column: patients_recovered
+            backgroundColor: 'recovered'
+            borderColor: 'recovered'
+            filter: 'filter_zero_values'
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: hospital-treament-times
+        title: Treament times of patients currently in hospital
+        uses: hospital_treatment_durations
+        type: 'demographics'
+        x: 'days_of_treatment'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of patients"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Number of days"
+        datasets:
+          - label: "Treatment times of current patients"
+            column: patients_in_hospital
+            backgroundColor: patients
+            borderColor: patients
+            filter: filter_zero_values
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: hospital-treament-times-deceased
+        title: Treament times of deceased patients (hospital)
+        uses: hospital_treatment_durations
+        type: 'demographics'
+        x: 'days_of_treatment'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of deceased patients"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Number of days"
+        datasets:
+          - label: "Treatment times of deceased patients"
+            column: patients_deceased
+            backgroundColor: deaths
+            borderColor: deaths
+            filter: filter_zero_values
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
+
+      - name: hospital-treament-times-recovered
+        title: Treament times of recovered patients (hospital)
+        uses: hospital_treatment_durations
+        type: 'demographics'
+        x: 'days_of_treatment'
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of recovered patients"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Number of days"
+        datasets:
+          - label: "Treatment times of recovered patients"
+            column: patients_recovered
+            backgroundColor: recovered
+            borderColor: recovered
+            filter: filter_zero_values
+            scalelabel: 'Number of patients'
+        sources:
+          Stichting NICE: https://www.stichting-nice.nl/
 
       - name: age-distribution-hospitalized
         title: Age distribution hospitalized as a percentage of total by first week of symptom onset

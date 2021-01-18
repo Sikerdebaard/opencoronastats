@@ -73,13 +73,13 @@ df.to_csv(output_path / 'hospitalized.csv', index_label='date')
 
 # demographics
 
-#df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/age-distribution-status.xlsx', index_col=0)
-#df.to_csv(output_path / 'demographics.csv', index_label='age_group')
+df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/hospitalized/age-distribution-status.xlsx', index_col=0)
+df.to_csv(output_path / 'hospital_demographics.csv', index_label='age_group')
 
 
 # alt demographics - recovery times
-#df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/behandelduur-distribution.xlsx', index_col=0)
-#df.to_csv(output_path / 'treatment_durations.csv', index_label='days_of_treatment')
+df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/hospitalized/behandelduur-distribution.xlsx', index_col=0)
+df.to_csv(output_path / 'hospital_treatment_durations.csv', index_label='days_of_treatment')
 
 
 
