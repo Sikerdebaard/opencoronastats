@@ -31,6 +31,17 @@ def make_screenshot(driver, url, output):
     driver.save_screenshot("/tmp/tmp.png")
 
     el_id = url.split('#')[1]
+
+
+    times = 0
+    while driver.execute_script(f"return document.getElementById('{el_id}');") is None:
+        time.sleep(10)
+        times += 1
+        if times >= 6:
+            times = 0
+            driver.get(url)
+            time.sleep(20)
+
     retval = driver.execute_script(f"return document.getElementById('{el_id}').getBoundingClientRect();")
 
     box = [retval['left'], retval['top'], retval['right'], retval['bottom']]
