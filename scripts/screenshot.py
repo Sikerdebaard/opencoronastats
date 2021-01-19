@@ -5,9 +5,10 @@ from pathlib import Path
 import json
 import time
 import os
+import sys
 
 output_path = Path('./screenshots')
-website_path = Path('html/')
+domain = sys.argv[1]
 
 
 tz = timezone('Europe/Amsterdam')
@@ -26,7 +27,7 @@ cmds = []
 
 pages = {}
 for page, data in pdata['pages'].items():
-    url = "file:///website/" + data['file']
+    url = domain.rstrip('/') + '/' + data['file']
     charts = {}
     for chart in data['charts']:
         chart_url = url + '#chart-' + chart['name']
@@ -40,7 +41,7 @@ for page, data in pages.items():
     pagefile = workdir / page
     with open(workdir / page, 'w') as fh:
         json.dump(data, fh)
-    dockercmd = f"docker run --rm -w /usr/workspace -v {website_path.absolute()}:/website -v {workdir.absolute()}:/usr/workspace {image} bash -c \"python screencap.py '{page}'\""
+    dockercmd = f"docker run --rm -w /usr/workspace -v {workdir.absolute()}:/usr/workspace {image} bash -c \"python screencap.py '{page}'\""
     print(dockercmd)
     cmds.append(dockercmd)
 
