@@ -19,6 +19,7 @@ chrome_options.add_argument("--ignore-certificate-errors")
 chrome_options.add_argument("--verbose")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--disable-web-security")
+chrome_options.add_argument("--allow-file-access-from-files")
 chrome_options.binary_location = CHROME_PATH
 
 def make_screenshot(driver, url, output):
