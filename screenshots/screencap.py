@@ -54,6 +54,9 @@ def make_screenshot(driver, url, output):
     im2 = im.crop(box)
     im2.save(output)
 
+    for log in driver.get_log('browser'):
+        print(log)
+
 
 if __name__ == '__main__':
     usage = "usage: %prog [options] <urlmap>"
@@ -72,6 +75,7 @@ if __name__ == '__main__':
         executable_path=CHROMEDRIVER_PATH,
         chrome_options=chrome_options
     )
+
 
     for url, output in pagemap.items():
         make_screenshot(driver, url, output)
