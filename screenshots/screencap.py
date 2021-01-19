@@ -18,6 +18,7 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--ignore-certificate-errors")
 chrome_options.add_argument("--verbose")
 chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--disable-web-security")
 chrome_options.binary_location = CHROME_PATH
 
 def make_screenshot(driver, url, output):
