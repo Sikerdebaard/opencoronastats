@@ -299,7 +299,11 @@ function drawDemographics(chart_info) {
         options: generate_options(chart_info, chartconfig['default_options'], chartconfig['default_demographics_options'])
     }, chart_info['datasets'], {}, demographics_stats)
 
-    var template = generate_demographics_annotations(retval['template'], retval['stats'])
+    if(chart_info['datasets'][0]['disable_median']){
+	    var template = retval['template']
+    } else {
+	    var template = generate_demographics_annotations(retval['template'], retval['stats'])
+    }
 
     new Chart(document.getElementById(chart_info['name']), template)
 }

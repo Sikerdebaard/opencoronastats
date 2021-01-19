@@ -193,6 +193,7 @@ pages:
     datasets:
       - daily-vaccine-rollout.csv
       - compare-vaccine.csv
+      - vaccinated-demographics.csv
     cards:
       - id: vaccine-total-doses-administered 
         icon: fa-syringe
@@ -306,6 +307,33 @@ pages:
             borderColor: denmark
             filter:
               - filter_zero_except_first 
+
+      - name: vaccinated-demographics
+        title: Demographics of vaccinated groups (one or more doses)
+        uses: vaccinated-demographics
+        type: 'demographics'
+        x: 'subgroup'
+        sources:
+          RIVM: https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Number of people"
+                ticks:
+                  beginAtZero: true
+            xAxes:
+              - scaleLabel:
+                  labelString: "Vaccinated group"
+        datasets:
+          - label: "Vaccinated per group (one or more dose)"
+            column: number_of_people
+            backgroundColor: recovered
+            borderColor: recovered
+            filter: 'filter_zero_values'
+            disable_median: True
+            scalelabel: "testing"
+
 
 
   mobility:
