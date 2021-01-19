@@ -10,7 +10,7 @@ df_demographics['number_of_people'] = df_demographics['number_of_people'].astype
 
 translations = {
     'Ziekenhuismedewerkers acute zorg': 'Acute Care Workers',
-    'Verpleeghuismedewerkers': 'Care Worker Nursing Home',
+    'Verpleeghuismedewerkers': 'Nursing Home Care Workers',
 }
 df_demographics['subgroup'] = df_demographics['subgroup'].replace(translations)
 
