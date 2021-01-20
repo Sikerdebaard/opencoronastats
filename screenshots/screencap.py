@@ -25,7 +25,6 @@ chrome_options.binary_location = CHROME_PATH
 
 def make_screenshot(driver, url, output):
     driver.get(url)
-    time.sleep(10)
 
     retval = ""
     while retval.lower().strip() != 'complete':
@@ -78,6 +77,8 @@ if __name__ == '__main__':
         chrome_options=chrome_options
     )
 
+    driver.get(pagemap.keys())
+    time.sleep(10)
 
     for url, output in pagemap.items():
         make_screenshot(driver, url, output)
