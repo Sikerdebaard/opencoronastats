@@ -77,7 +77,7 @@ if __name__ == '__main__':
         chrome_options=chrome_options
     )
 
-    driver.get(pagemap.keys())
+    driver.get(list(pagemap.keys())[0])
     time.sleep(10)
 
     for url, output in pagemap.items():
