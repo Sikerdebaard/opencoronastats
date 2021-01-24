@@ -4,11 +4,22 @@ import pandas as pd
 import cbsodata
 import requests
 from pathlib import Path
+from datetime import date
+from pathlib import Path
+
+cachekey = date.today().strftime('%G-%V')
 
 output_path = Path('./html/')
 
 try:
-    cbs_df = pd.DataFrame(cbsodata.get_data('83474NED'))
+    cbscachefile = Path('cache') / f'{cachekey}-83474NED'
+
+    if cbscachefile.exists():
+        cbs_df = pd.read_json(cbscachefile)
+        print('Using cached 83474NED')
+    else:
+        cbs_df = pd.DataFrame(cbsodata.get_data('83474NED'))
+        cbs_df.to_json(cbscachefile)
 
     by_year = {}
     by_month = {}
