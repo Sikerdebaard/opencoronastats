@@ -1,5 +1,7 @@
 import pandas as pd
 import cbsodata
+from datetime import date
+from pathlib import Path
 
 cachestamp_week = date.today().strftime('%G-%V')
 cbsfile = Path(f'cache/{cachestamp_week}-83474NED')
@@ -14,7 +16,13 @@ popsize = df_83474NED.iloc[-1]['BevolkingAanHetEindVanDePeriode_8']
 
 
 manual_points = [
-    {'date': '2021-01-25', 'total_vaccinations': 150_000, 'people_vaccinated': 150_000, 'total_vaccinations_per_hundred': 150_000 / popsize * 100}  # https://twitter.com/hugodejonge/status/1353722492972638208
+        {
+            'date': '2021-01-25',
+            'total_vaccinations': 150_000,
+            'people_vaccinated': 150_000,
+            'total_vaccinations_per_hundred': 150_000 / popsize * 100,
+            'people_vaccinated_per_hundred': 150_000 / popsize * 100
+        }  # https://twitter.com/hugodejonge/status/1353722492972638208
 ]
 
 
@@ -32,7 +40,6 @@ df_nl = df_nl.set_index('date')
 df_nl.sort_index(inplace=True)
 
 df_nl = df_nl.ffill()
-df_nl['daily_vaccinations_raw'] = df_nl['total_vaccinations'].diff()  # fix this column after ffill
 
 vaccinated = df_nl.iloc[-1]['total_vaccinations'].astype(int)
 
@@ -58,6 +65,7 @@ for mep in manual_points:
         df_nl.loc[mep['date']] = {col: mep[col] if col in mep else None for col in df_nl.columns  }
         
 df_nl.resample('D').last().ffill()
+df_nl['daily_vaccinations_raw'] = df_nl['total_vaccinations'].diff()  # fix this column after ffill
 
 df_nl['sma7_daily_vaccinations'] = df_nl['daily_vaccinations_raw'].rolling(7).mean().round(0)
     
@@ -91,9 +99,13 @@ df_compare = df_owid.pivot_table(
 
 )
 
+
+
 df_compare.columns = df_compare.columns.to_series().str.join('_')
 
-interest_in = ['BEL', 'DEU', 'NLD', 'FRA', 'DNK']  # BELGIUM, GERMANY, NETHERLANDS, FRANCE, DENMARK
+interest_in = ['BEL', 'DEU', 'FRA', 'DNK']  # BELGIUM, GERMANY, FRANCE, DENMARK
+nldcol = 'people_vaccinated_per_hundred_NLD'
+
 keep_cols = [x for x in df_compare.columns if 'people_vaccinated_per_hundred' in x and x.split('_')[-1] in interest_in]
 
 df_compare = df_compare[keep_cols]
@@ -106,6 +118,9 @@ idx = (df_compare.index[0] - pd.Timedelta(days=1))
 
 df_compare.loc[idx] = None
 df_compare.sort_index(inplace=True)
+
+df_compare = df_compare.join(df_nl['people_vaccinated_per_hundred'].rename('people_vaccinated_per_hundred_NLD'))
+df_compare[nldcol] = df_compare[nldcol].ffill()
 
 df_compare.to_csv('html/compare-vaccine.csv')
 
