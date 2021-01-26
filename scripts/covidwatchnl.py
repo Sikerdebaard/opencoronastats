@@ -132,7 +132,7 @@ if df_sewage.index[-1].week == pd.to_datetime(datetime.date.today()).week:
 
 df_sewage.index = df_sewage.index.format(formatter=lambda a: f'{a.year}-{a.week}')
 df_sewage.index.rename('week', inplace=True)
-df_sewage.to_csv('html/sewage.csv', float_format='%.2g')
+df_sewage.to_csv('html/sewage.csv', float_format='%.3g')
 
 
 #df = pd.read_excel('https://github.com/Sikerdebaard/dutchcovid19data/raw/master/data/hospitalized/new-intake.xlsx', index_col=0)
