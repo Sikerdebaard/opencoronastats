@@ -1,4 +1,22 @@
 import pandas as pd
+import cbsodata
+
+cachestamp_week = date.today().strftime('%G-%V')
+cbsfile = Path(f'cache/{cachestamp_week}-83474NED')
+
+if cbsfile.exists():
+    df_83474NED = pd.read_json(cbsfile)
+else:
+    df_83474NED = pd.DataFrame(cbsodata.get_data('83474NED'))
+    df_83474NED.to_json(cbsfile)
+
+popsize = df_83474NED.iloc[-1]['BevolkingAanHetEindVanDePeriode_8']
+
+
+manual_points = [
+    {'date': '2021-01-25', 'total_vaccinations': 150_000, 'people_vaccinated': 150_000, 'total_vaccinations_per_hundred': 150_000 / popsize * 100}  # https://twitter.com/hugodejonge/status/1353722492972638208
+]
+
 
 ## DAILY DAILY ##
 
@@ -31,6 +49,15 @@ if df_nl.iloc[0]['total_vaccinations'] != 0:
     df_nl.at[idx, 'people_vaccinated_per_hundred'] = 0
              
     df_nl.sort_index(inplace=True)
+
+
+for mep in manual_points:
+    mep['date'] = pd.to_datetime(mep['date'])
+    if mep['date'] not in df_nl.index:
+        print(f'Appending manual datapoint {mep}')
+        df_nl.loc[mep['date']] = {col: mep[col] if col in mep else None for col in df_nl.columns  }
+        
+df_nl.resample('D').last().ffill()
 
 df_nl['sma7_daily_vaccinations'] = df_nl['daily_vaccinations_raw'].rolling(7).mean().round(0)
     
