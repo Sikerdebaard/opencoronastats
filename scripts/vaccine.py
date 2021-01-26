@@ -22,7 +22,14 @@ manual_points = [
             'people_vaccinated': 150_000,
             'total_vaccinations_per_hundred': 150_000 / popsize * 100,
             'people_vaccinated_per_hundred': 150_000 / popsize * 100
-        }  # https://twitter.com/hugodejonge/status/1353722492972638208
+        },  # https://twitter.com/hugodejonge/status/1353722492972638208
+        {
+            'date': '2021-01-26',
+            'total_vaccinations': 163_931,
+            'people_vaccinated':  163_931,
+            'total_vaccinations_per_hundred': 163_931 / popsize * 100,
+            'people_vaccinated_per_hundred': 163_931 / popsize * 100
+        },  # corona dashboard 
 ]
 
 
