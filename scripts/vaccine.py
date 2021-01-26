@@ -15,23 +15,21 @@ else:
 popsize = df_83474NED.iloc[-1]['BevolkingAanHetEindVanDePeriode_8']
 
 
-manual_points = [
-        {
-            'date': '2021-01-25',
-            'total_vaccinations': 150_000,
-            'people_vaccinated': 150_000,
-            'total_vaccinations_per_hundred': 150_000 / popsize * 100,
-            'people_vaccinated_per_hundred': 150_000 / popsize * 100
-        },  # https://twitter.com/hugodejonge/status/1353722492972638208
-        {
-            'date': '2021-01-26',
-            'total_vaccinations': 173638,
-            'people_vaccinated':  173638,
-            'total_vaccinations_per_hundred': 173638 / popsize * 100,
-            'people_vaccinated_per_hundred': 173638 / popsize * 100
-        },  # corona dashboard 
-]
+df_dashboard = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/people-vaccinated.csv', index_col=0)
+df_dashboard.index = pd.to_datetime(df_dashboard.index)
 
+manual_points = []
+for idx, row in df_dashboard.iterrows():
+    vaccinations = row['total_vaccinations']
+    date = idx.date()
+    data = {
+        'date': date,
+        'total_vaccinations': vaccinations,
+        'people_vaccinated': vaccinations,
+        'total_vaccinations_per_hundred': vaccinations / popsize * 100,
+        'people_vaccinated_per_hundred': vaccinations / popsize * 100,
+    }
+    manual_points.append(data)
 
 ## DAILY DAILY ##
 
