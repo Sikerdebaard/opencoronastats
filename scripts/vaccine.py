@@ -31,6 +31,8 @@ for idx, row in df_dashboard.iterrows():
     }
     manual_points.append(data)
 
+print(manual_points)
+
 ## DAILY DAILY ##
 
 
@@ -111,7 +113,7 @@ df_compare.columns = df_compare.columns.to_series().str.join('_')
 interest_in = ['BEL', 'DEU', 'FRA', 'DNK']  # BELGIUM, GERMANY, FRANCE, DENMARK
 nldcol = 'people_vaccinated_per_hundred_NLD'
 
-keep_cols = [x for x in df_compare.columns if 'people_vaccinated_per_hundred' in x and x.split('_')[-1] in interest_in]
+keep_cols = [x for x in df_compare.columns if 'total_vaccinations_per_hundred' in x and x.split('_')[-1] in interest_in]
 
 df_compare = df_compare[keep_cols]
 
@@ -124,7 +126,7 @@ idx = (df_compare.index[0] - pd.Timedelta(days=1))
 df_compare.loc[idx] = None
 df_compare.sort_index(inplace=True)
 
-df_compare = df_compare.join(df_nl['people_vaccinated_per_hundred'].rename('people_vaccinated_per_hundred_NLD'))
+df_compare = df_compare.join(df_nl['total_vaccinations_per_hundred'].rename('total_vaccinations_per_hundred_NLD'))
 df_compare[nldcol] = df_compare[nldcol].ffill()
 
 df_compare.to_csv('html/compare-vaccine.csv')

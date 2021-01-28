@@ -221,13 +221,13 @@ pages:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Percentage of total population"
+                  labelString: "Doses administered over total population"
             xAxes:
               - scaleLabel:
                   labelString: "Date"
         datasets:
           - label: Percentage of population
-            column: people_vaccinated_per_hundred
+            column: total_vaccinations_per_hundred
             backgroundColor: patients
             borderColor: patients
 
@@ -262,7 +262,7 @@ pages:
               - filter_zero_values 
 
       - name: pct-pop-min-one-dose-compare
-        title: Comparison percentage of population that received at least one dose
+        title: Comparison doses administered over total population
         type: line
         sources:
           Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
@@ -278,31 +278,31 @@ pages:
                   labelString: "Date"
         datasets:
           - label: Netherlands
-            column: people_vaccinated_per_hundred_NLD
+            column: total_vaccinations_per_hundred_NLD
             backgroundColor: national
             borderColor: national
             filter:
               - filter_zero_except_first 
           - label: Belgium 
-            column: people_vaccinated_per_hundred_BEL
+            column: total_vaccinations_per_hundred_BEL
             backgroundColor: belgium 
             borderColor: belgium
             filter:
               - filter_zero_except_first 
           - label: Germany
-            column: people_vaccinated_per_hundred_DEU
+            column: total_vaccinations_per_hundred_DEU
             backgroundColor: germany
             borderColor: germany
             filter:
               - filter_zero_except_first 
           - label: France
-            column: people_vaccinated_per_hundred_FRA
+            column: total_vaccinations_per_hundred_FRA
             backgroundColor: france
             borderColor: france
             filter:
               - filter_zero_except_first 
           - label: Denmark
-            column: people_vaccinated_per_hundred_DNK
+            column: total_vaccinations_per_hundred_DNK
             backgroundColor: denmark
             borderColor: denmark
             filter:
