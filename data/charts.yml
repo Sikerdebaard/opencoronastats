@@ -263,7 +263,7 @@ pages:
               - filter_zero_values 
 
       - name: delivered-vs-administered
-        title: Vaccine doses delivered vs. administered
+        title: Cumulative doses delivered vs. administered
         type: line
         sources:
           Corona Dashboard: https://coronadashboard.rijksoverheid.nl/landelijk/vaccinaties
@@ -278,13 +278,13 @@ pages:
               - scaleLabel:
                   labelString: "Year-week"
         datasets:
-          - label: Doses administered
+          - label: Cumulative doses administered
             column: total_vaccinations
             backgroundColor: patients 
             borderColor: patients
             filter:
               - filter_zero_except_first 
-          - label: Doses delivered
+          - label: Cumulative doses delivered
             column: cumulative
             backgroundColor: icu-beds 
             borderColor: icu-beds
