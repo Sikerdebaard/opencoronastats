@@ -100,7 +100,7 @@ df_weekly.to_csv('html/weekly-vaccine-rollout.csv')
 
 ## COMPARISON COMPARISON ##
 df_compare = df_owid.pivot_table(
-    values=['people_vaccinated', 'people_fully_vaccinated', 'daily_vaccinations_raw', 'people_vaccinated_per_hundred', 'people_fully_vaccinated_per_hundred'],
+    values=['total_vaccinations_per_hundred', 'people_vaccinated', 'people_fully_vaccinated', 'daily_vaccinations_raw', 'people_vaccinated_per_hundred', 'people_fully_vaccinated_per_hundred'],
     index='date',
     columns='iso_code',
 
