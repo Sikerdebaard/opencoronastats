@@ -111,7 +111,7 @@ df_compare = df_owid.pivot_table(
 df_compare.columns = df_compare.columns.to_series().str.join('_')
 
 interest_in = ['BEL', 'DEU', 'FRA', 'DNK']  # BELGIUM, GERMANY, FRANCE, DENMARK
-nldcol = 'people_vaccinated_per_hundred_NLD'
+nldcol = 'total_vaccinations_per_hundred_NLD'
 
 keep_cols = [x for x in df_compare.columns if 'total_vaccinations_per_hundred' in x and x.split('_')[-1] in interest_in]
 
