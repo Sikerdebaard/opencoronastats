@@ -11,34 +11,12 @@ def calc_growth(df, column):
     return df
 
 
-#df = pd.read_csv('https://github.com/J535D165/CoronaWatchNL/raw/master/data/rivm_NL_covid19_national_by_date/rivm_NL_covid19_national_by_date_latest.csv')
+df = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json')
+df
+df['Date_of_publication'] = pd.to_datetime(df['Date_of_publication'])
+df = df.set_index('Date_of_publication')
 
-#transformed_data = {}
-#for idx, row in df.iterrows():
-#    if row['Datum'] not in transformed_data:
-#        transformed_data[row['Datum']] = {}
-#    #transformed_data[row['Datum']][f'Labs'] = row['Labs']
-#    transformed_data[row['Datum']][f'{row["Type"]}'] = row['Aantal']
-#
-#df_transformed = pd.DataFrame.from_dict(transformed_data, orient='index')
-#df_transformed.rename(
-#    columns={'Totaal': 'infected', 'Ziekenhuisopname': 'hospitalized', 'Overleden': 'deceased'},
-#    inplace=True)
-
-# df_transformed.to_csv(output_path / 'tests.csv', index_label='date')
-
-#df_rivmnums = df_transformed.copy()
-
-# df_rivmnums = calc_growth(df_rivmnums, 'infected')
-# df_rivmnums = calc_growth(df_rivmnums, 'hospitalized')
-# df_rivmnums = calc_growth(df_rivmnums, 'deceased')
-
-df = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_cumulatief.json')
-
-df['Date_of_report'] = pd.to_datetime(df['Date_of_report'])
-df = df.set_index('Date_of_report')
-
-df_daily = df.resample('D').sum().diff()
+df_daily = df.resample('D').sum()
 df_daily = df_daily.iloc[1:]
 
 for col in df_daily.columns:
@@ -50,53 +28,8 @@ df_daily.index.rename('date', inplace=True)
 df_rivmnums = df_daily
 
 
-# -------------------------------------------------------------------------
-# -------------------------------------------------------------------------
-# -------------------------------------------------------------------------
 
-#  df_tests = pd.read_csv('https://github.com/J535D165/CoronaWatchNL/raw/master/data/rivm_NL_covid19_tests.csv')
-#  
-#  transformed_data = {}
-#  for idx, row in df_tests.iterrows():
-#      if row['Datum'] not in transformed_data:
-#          transformed_data[row['Datum']] = {}
-#      transformed_data[row['Datum']][f'Labs'] = row['Labs']
-#      transformed_data[row['Datum']][f'{row["Type"]}'] = row['Aantal']
-#  
-#  df_transformed = pd.DataFrame.from_dict(transformed_data, orient='index')
-#  df_transformed.rename(
-#      columns={'Labs': 'labs_participating', 'Totaal': 'tests_cumulative', 'Positief': 'positive_tests_cumulative'},
-#      inplace=True)
-#  df_transformed['tests'] = df_transformed['tests_cumulative'].diff().fillna(0).astype(int)
-#  df_transformed['positive_tests'] = df_transformed['positive_tests_cumulative'].diff().fillna(0).astype(int)
-#  
-#  df_out = df_rivmnums.join(df_transformed)
-
-# this replaces above commented code
-#df_out = df_rivmnums
-
-# -------------------------------------------------------------------------
-# -------------------------------------------------------------------------
-# -------------------------------------------------------------------------
-
-#df = pd.read_csv('https://github.com/J535D165/CoronaWatchNL/raw/master/data/rivm_NL_covid19_national.csv')
-
-#transformed_data = {}
-#for idx, row in df.iterrows():
-#    if row['Datum'] not in transformed_data:
-#        transformed_data[row['Datum']] = {}
-#    transformed_data[row['Datum']][f'{row["Type"]}'] = row['Aantal']
-
-#df_transformed = pd.DataFrame.from_dict(transformed_data, orient='index')
-#df_transformed.rename(
-#    columns={'Totaal': 'infected_cumulative', 'Ziekenhuisopname': 'hospitalized_cumulative', 'Overleden': 'deceased_cumulative'},
-#    inplace=True)
-#
-#df_out = df_out.join(df_transformed)
-#
-#df_out.to_csv(output_path / 'rivm.csv', index_label='date')
-
-df_daily_cum = df.resample('D').sum()
+df_daily_cum = df.resample('D').sum().cumsum()
 df_daily_cum = df_daily_cum.iloc[1:]
 df_daily_cum.rename(columns={'Total_reported': 'infected_cumulative', 'Hospital_admission':  'hospitalized_cumulative', 'Deceased': 'deceased_cumulative'}, inplace=True)
 df_rivmnums = df_rivmnums.join(df_daily_cum)
@@ -104,7 +37,6 @@ df_rivmnums = df_rivmnums.join(df_daily_cum)
 
 df_out = df_rivmnums
 df_out.to_csv(output_path / 'rivm.csv', index_label='date')
-
 
 ## INFECTIONS
 #df_data = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-dashboard/data-sewage/RIVM_NL_sewage_counts.csv', index_col=0)
