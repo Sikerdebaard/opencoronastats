@@ -194,6 +194,7 @@ pages:
       - daily-vaccine-rollout.csv
       - compare-vaccine.csv
       - vaccinated-demographics.csv
+      - vaccine-delivered-vs-administered.csv
     cards:
       - id: vaccine-total-doses-administered 
         icon: fa-syringe
@@ -260,6 +261,36 @@ pages:
             borderColor: derivate
             filter:
               - filter_zero_values 
+
+      - name: delivered-vs-administered
+        title: Vaccine doses delivered vs. administered
+        type: line
+        sources:
+          Corona Dashboard: https://coronadashboard.rijksoverheid.nl/landelijk/vaccinaties
+        uses: vaccine-delivered-vs-administered
+        x: year-week
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Doses"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Year-week"
+        datasets:
+          - label: Doses administered
+            column: total_vaccinations
+            backgroundColor: patients 
+            borderColor: patients
+            filter:
+              - filter_zero_except_first 
+          - label: Doses delivered
+            column: cumulative
+            backgroundColor: icu-beds 
+            borderColor: icu-beds
+            filter:
+              - filter_zero_except_first 
+
 
       - name: pct-pop-min-one-dose-compare
         title: Comparison doses administered over total population
