@@ -200,10 +200,10 @@ pages:
         postfix: doses
         sources:
           Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
-      - id: vaccine-one-in-hundred-people-doses-administered
-        icon: fa-chart-line
-        sources:
-          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
+#      - id: vaccine-one-in-hundred-people-doses-administered
+#        icon: fa-chart-line
+#        sources:
+#          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
       - id: avg-doses-per-week
         icon: fa-calendar-check
         sources:
