@@ -118,6 +118,7 @@ keep_cols = [x for x in df_compare.columns if 'total_vaccinations_per_hundred' i
 df_compare = df_compare[keep_cols]
 
 df_compare = df_compare.ffill().dropna(how='all')
+df_compare = df_compare[df_compare.sum(axis=1) > 0]  # filter any rows that sum to <= 0
 
 df_compare.index = pd.to_datetime(df_compare.index)
 
