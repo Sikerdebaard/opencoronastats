@@ -244,12 +244,14 @@ pages:
             yAxes:
               - scaleLabel:
                   labelString: "Doses administered per day"
+                ticks:
+                  beginAtZero: true
             xAxes:
               - scaleLabel:
                   labelString: "Date"
         datasets:
           - label: Doses administered per day
-            column: daily_vaccinations_raw
+            column: daily_vaccinations
             backgroundColor: derivate-atwo 
             borderColor: derivate-atwo
             showLine: false

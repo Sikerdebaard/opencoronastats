@@ -15,81 +15,64 @@ else:
 popsize = df_83474NED.iloc[-1]['BevolkingAanHetEindVanDePeriode_8']
 
 
-df_dashboard = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/people-vaccinated.csv', index_col=0)
-df_dashboard.index = pd.to_datetime(df_dashboard.index)
-
-manual_points = []
-for idx, row in df_dashboard.iterrows():
-    vaccinations = row['total_vaccinations']
-    date = idx.date()
-    data = {
-        'date': date,
-        'total_vaccinations': vaccinations,
-        'people_vaccinated': vaccinations,
-        'total_vaccinations_per_hundred': vaccinations / popsize * 100,
-        'people_vaccinated_per_hundred': vaccinations / popsize * 100,
-    }
-    manual_points.append(data)
-
-print(manual_points)
-
-## DAILY DAILY ##
-
 
 df_owid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv')
 
-df_owid['date'] = pd.to_datetime(df_owid['date'])
+df_owid_nl = df_owid[df_owid['iso_code'] == 'NLD'].copy()
+df_owid_nl.set_index('date', inplace=True)
+df_owid_nl.index = pd.to_datetime(df_owid_nl.index)
+df_owid_nl.sort_index(inplace=True)
 
-df_nl = df_owid[df_owid['iso_code'] == 'NLD'].copy()
+df_owid_nl['total_vaccinations'] = df_owid_nl['total_vaccinations'].interpolate('linear').astype(int)
 
-df_nl['date'] = pd.to_datetime(df_nl['date'])
-df_nl = df_nl.set_index('date')
-df_nl.sort_index(inplace=True)
+df_vaccinated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/people-vaccinated.csv', index_col=0)
+df_vaccinated.index = pd.to_datetime(df_vaccinated.index)
 
-df_nl = df_nl.ffill()
+df_vaccinated_estimated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/estimated-people-vaccinated.csv', index_col=0)
+df_vaccinated_estimated.index = pd.to_datetime(df_vaccinated_estimated.index)
 
-vaccinated = df_nl.iloc[-1]['total_vaccinations'].astype(int)
+interpolate = df_vaccinated_estimated.loc['2021-01-31']['total_vaccinations'] - df_vaccinated.loc['2021-01-30']['total_vaccinations']
 
-# insert 0 datapoint at beginning
-if df_nl.iloc[0]['total_vaccinations'] != 0:
-    idx = (df_nl.index[0] - pd.Timedelta(days=1))
-    df_nl.loc[idx] = None
-    df_nl.at[idx, 'location'] = 'Netherlands'
-    df_nl.at[idx, 'iso_code'] = 'NLD'
-    df_nl.at[idx, 'total_vaccinations'] = 0.0
-    df_nl.at[idx, 'daily_vaccinations'] = 0.0
-    df_nl.at[idx, 'total_vaccinations_per_hundred'] = 0
-    df_nl.at[idx, 'daily_vaccinations_per_million'] = 0
-    df_nl.at[idx, 'people_vaccinated_per_hundred'] = 0
-             
-    df_nl.sort_index(inplace=True)
+idx = pd.date_range('2021-01-18', '2021-01-31')
+interpolatedays = idx.shape[0] + 1
+df_interpolate = pd.DataFrame(columns=['total_vaccinations'], index=idx)
+df_interpolate['total_vaccinations'] = interpolate // interpolatedays
+df_interpolate = df_interpolate.iloc[:-1]
 
-
-for mep in manual_points:
-    mep['date'] = pd.to_datetime(mep['date'])
-    if mep['date'] not in df_nl.index:
-        print(f'Appending manual datapoint {mep}')
-        df_nl.loc[mep['date']] = {col: mep[col] if col in mep else None for col in df_nl.columns  }
-        
-df_nl.resample('D').last().ffill()
-df_nl['daily_vaccinations_raw'] = df_nl['total_vaccinations'].diff()  # fix this column after ffill
-
-df_nl['sma7_daily_vaccinations'] = df_nl['daily_vaccinations_raw'].rolling(7).mean().round(0)
+df_merged = df_owid_nl['total_vaccinations'].to_frame().copy()
+df_merged.update(df_vaccinated)
+df_merged.update(df_vaccinated_estimated)
+df_merged[df_merged.index.isin(df_interpolate.index)] += df_interpolate.cumsum()
+if df_merged.iloc[0]['total_vaccinations'] != 0:
+    idx = (df_merged.index[0] - pd.Timedelta(days=1))
+    df_merged.loc[idx] = 0
     
-df_nl.drop(columns=['location', 'iso_code']).to_csv('html/daily-vaccine-rollout.csv')
+df_merged.sort_index(inplace=True)
+df_merged = df_merged.ffill().astype(int)
+
+df_nl = df_merged.copy()
+
+
+## DAILY DAILY ##
+
+df_nl['daily_vaccinations'] = df_nl['total_vaccinations'].diff().fillna(0).astype(int)
+df_nl['sma7_daily_vaccinations'] = df_nl['daily_vaccinations'].rolling(7).mean().round(0).fillna(0).astype(int)
+df_nl['total_vaccinations_per_hundred'] = (df_nl['total_vaccinations'] / popsize * 100).round(2)
+
+df_nl.to_csv('html/daily-vaccine-rollout.csv')
 
 ## < /> DAILY DAILY ##
 
 ## WEEKLY WEEKLY ##
 df_weekly = df_nl.resample('W-MON', label='left', closed='left').agg({
     'total_vaccinations': 'max',
-    'people_vaccinated': 'max',
-    'people_fully_vaccinated': 'max',
-    'daily_vaccinations_raw': 'mean',
+#    'people_vaccinated': 'max',
+#    'people_fully_vaccinated': 'max',
+#    'daily_vaccinations_raw': 'mean',
     'total_vaccinations_per_hundred': 'max',
-    'people_vaccinated_per_hundred': 'max',
-    'people_fully_vaccinated_per_hundred': 'max',
-    'daily_vaccinations_per_million': 'mean',
+#    'people_vaccinated_per_hundred': 'max',
+#    'people_fully_vaccinated_per_hundred': 'max',
+#    'daily_vaccinations_per_million': 'mean',
 })
 df_weekly.index = df_weekly.index.strftime('%G-%V')
 
@@ -99,14 +82,15 @@ df_weekly.to_csv('html/weekly-vaccine-rollout.csv')
 
 
 ## COMPARISON COMPARISON ##
+
+df_owid['date'] = pd.to_datetime(df_owid['date'])
 df_compare = df_owid.pivot_table(
-    values=['total_vaccinations_per_hundred', 'people_vaccinated', 'people_fully_vaccinated', 'daily_vaccinations_raw', 'people_vaccinated_per_hundred', 'people_fully_vaccinated_per_hundred'],
+    values=['total_vaccinations_per_hundred', 'daily_vaccinations', 'people_vaccinated_per_hundred'],
     index='date',
     columns='iso_code',
-
 )
 
-
+df_compare.sort_index(inplace=True)
 
 df_compare.columns = df_compare.columns.to_series().str.join('_')
 
