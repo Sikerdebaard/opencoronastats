@@ -274,7 +274,7 @@ cards['vaccine-total-doses-administered'] = {
     'color': 'blue',
 }
 cards['vaccine-one-in-hundred-people-doses-administered'] = {
-    'value': f"{round(float(latest_daily['people_vaccinated_per_hundred']), 2)}/100",
+    'value': f"{round(float(latest_daily['total_vaccinations_per_hundred']), 2)}/100",
     'title': 'People vaccinated per hundred',
     'color': 'blue',
 }

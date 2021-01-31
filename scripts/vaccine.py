@@ -85,7 +85,7 @@ df_weekly.to_csv('html/weekly-vaccine-rollout.csv')
 
 df_owid['date'] = pd.to_datetime(df_owid['date'])
 df_compare = df_owid.pivot_table(
-    values=['total_vaccinations_per_hundred', 'daily_vaccinations', 'people_vaccinated_per_hundred'],
+    values=['total_vaccinations_per_hundred', 'daily_vaccinations'],
     index='date',
     columns='iso_code',
 )
