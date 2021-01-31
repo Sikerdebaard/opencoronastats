@@ -16,7 +16,7 @@ import pandas as pd
 #
 #df_demographics.to_csv('html/vaccinated-demographics.csv', index=False)
 
-df = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/people-vaccinated-by-instance.csv', index_col=0)
+df = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/estimated-people-vaccinated-by-instance.csv', index_col=0)
 df = df.iloc[-1].to_frame()
 df.index.rename('organ', inplace=True)
 df.columns = ['data']
