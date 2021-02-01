@@ -212,7 +212,7 @@ pages:
 
     charts:
       - name: pct-population-min-one-dose
-        title: Percentage of population that received at least one dose
+        title: Doses administered divided over total population size
         type: line
         sources:
           Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
@@ -227,7 +227,7 @@ pages:
               - scaleLabel:
                   labelString: "Date"
         datasets:
-          - label: Percentage of population
+          - label: Indicator
             column: total_vaccinations_per_hundred
             backgroundColor: patients
             borderColor: patients
