@@ -2,6 +2,7 @@ import pandas as pd
 import cbsodata
 from datetime import date
 from pathlib import Path
+import numpy as np
 
 cachestamp_week = date.today().strftime('%G-%V')
 cbsfile = Path(f'cache/{cachestamp_week}-83474NED')
@@ -13,7 +14,6 @@ else:
     df_83474NED.to_json(cbsfile)
 
 popsize = df_83474NED.iloc[-1]['BevolkingAanHetEindVanDePeriode_8']
-
 
 
 df_owid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv')
@@ -40,8 +40,15 @@ df_interpolate['total_vaccinations'] = interpolate // interpolatedays
 df_interpolate = df_interpolate.iloc[:-1]
 
 df_merged = df_owid_nl['total_vaccinations'].to_frame().copy()
-df_merged.update(df_vaccinated)
-df_merged.update(df_vaccinated_estimated)
+
+for idx, row in df_vaccinated.iterrows():
+    df_merged.at[idx, 'total_vaccinations'] = row['total_vaccinations']
+#df_merged.update(df_vaccinated)
+
+for idx, row in df_vaccinated_estimated.iterrows():
+    df_merged.at[idx, 'total_vaccinations'] = row['total_vaccinations']
+#df_merged.update(df_vaccinated_estimated)
+
 df_merged[df_merged.index.isin(df_interpolate.index)] += df_interpolate.cumsum()
 if df_merged.iloc[0]['total_vaccinations'] != 0:
     idx = (df_merged.index[0] - pd.Timedelta(days=1))
@@ -49,6 +56,15 @@ if df_merged.iloc[0]['total_vaccinations'] != 0:
     
 df_merged.sort_index(inplace=True)
 df_merged = df_merged.ffill().astype(int)
+
+# remove the weird numbers that don't add up, so called Magical Hugo Numbers
+df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(float)
+for i in range(0, df_merged.shape[0] - 1):
+    if df_merged.iloc[i]['total_vaccinations'] > df_merged.iloc[i+1]['total_vaccinations']:
+        df_merged.at[df_merged.index[i], 'total_vaccinations'] = np.nan
+        
+df_merged['total_vaccinations'] = df_merged['total_vaccinations'].interpolate('linear')
+df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(int)
 
 df_nl = df_merged.copy()
 
