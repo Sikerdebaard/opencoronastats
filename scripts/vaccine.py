@@ -31,9 +31,12 @@ df_vaccinated.index = pd.to_datetime(df_vaccinated.index)
 df_vaccinated_estimated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/estimated-people-vaccinated.csv', index_col=0)
 df_vaccinated_estimated.index = pd.to_datetime(df_vaccinated_estimated.index)
 
-interpolate = df_vaccinated_estimated.loc['2021-01-31']['total_vaccinations'] - df_vaccinated.loc['2021-01-30']['total_vaccinations']
+#interpolate = df_vaccinated_estimated.loc['2021-01-31']['total_vaccinations'] - df_vaccinated.loc['2021-01-30']['total_vaccinations']
 
-idx = pd.date_range('2021-01-18', '2021-01-31')
+# manually adjust to new magical Hugo number
+interpolate = df_vaccinated_estimated.loc['2021-02-01']['total_vaccinations'] - df_vaccinated.loc['2021-01-30']['total_vaccinations']
+
+idx = pd.date_range('2021-01-18', '2021-02-01')
 interpolatedays = idx.shape[0] + 1
 df_interpolate = pd.DataFrame(columns=['total_vaccinations'], index=idx)
 df_interpolate['total_vaccinations'] = interpolate // interpolatedays
