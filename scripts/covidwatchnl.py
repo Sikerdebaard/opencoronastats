@@ -48,13 +48,17 @@ df_out.to_csv(output_path / 'rivm.csv', index_label='date')
 #df_data.to_csv(output_path / 'sewage.csv')
 
 import datetime
+import numpy as np
 
 df_sewage = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_rioolwaterdata.json')
 
-df_sewage = df_sewage[df_sewage['Representative_measurement'] == True]
+df_sewage = df_sewage[df_sewage['Representative_measurement'].str.contains('true', case=False)]
+
 
 df_sewage['Date_measurement'] = pd.to_datetime(df_sewage['Date_measurement'])
 df_sewage = df_sewage.set_index('Date_measurement')
+
+df_sewage['RNA_flow_per_100000'] = df_sewage['RNA_flow_per_100000'].replace('', np.nan).astype(float)
 
 df_sewage = pd.DataFrame(df_sewage['RNA_flow_per_100000'].resample('W-MON', label='left', closed='left').mean()).dropna()
 
