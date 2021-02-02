@@ -69,6 +69,31 @@ for i in range(0, df_merged.shape[0] - 1):
 df_merged['total_vaccinations'] = df_merged['total_vaccinations'].interpolate('linear')
 df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(int)
 
+
+
+## ADD MANUAL REAL-WORLD DATAPOINTS ON PEOPLE FULLY VACCINATED ##
+
+people_fully_vaccinated = [
+    ('2021-01-31', 13_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-13500-medewerkers-acute-zorg-voor-de-2de-keer-gevaccineerd
+    ('2021-02-01', 26_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-26500-tweede-vaccinaties-gezet
+]
+
+df_realworld = pd.DataFrame(people_fully_vaccinated, columns=['date', 'people_fully_vaccinated'])
+df_realworld.set_index('date', inplace=True)
+df_realworld.index = pd.to_datetime(df_realworld.index)
+df_realworld.sort_index(inplace=True)
+
+interpolate = False
+if interpolate:
+    idx = pd.date_range('2021-01-27', df_realworld.index[-1])
+    df_realworld = df_realworld.reindex(idx)
+    df_realworld.at[df_realworld.index[0], 'people_fully_vaccinated'] = 0
+    df_realworld['people_fully_vaccinated'] = df_realworld['people_fully_vaccinated'].interpolate('linear')
+
+## < /> MANUAL REAL WORLD POINTS ##
+
+
+
 df_nl = df_merged.copy()
 
 
