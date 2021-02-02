@@ -76,6 +76,7 @@ df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(int)
 people_fully_vaccinated = [
     ('2021-01-31', 13_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-13500-medewerkers-acute-zorg-voor-de-2de-keer-gevaccineerd
     ('2021-02-01', 26_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-26500-tweede-vaccinaties-gezet
+    ('2021-02-02', 34_000),
 ]
 
 df_realworld = pd.DataFrame(people_fully_vaccinated, columns=['date', 'people_fully_vaccinated'])
