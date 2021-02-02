@@ -90,6 +90,8 @@ if interpolate:
     df_realworld.at[df_realworld.index[0], 'people_fully_vaccinated'] = 0
     df_realworld['people_fully_vaccinated'] = df_realworld['people_fully_vaccinated'].interpolate('linear')
 
+df_merged = df_merged.join(df_realworld)
+
 ## < /> MANUAL REAL WORLD POINTS ##
 
 
