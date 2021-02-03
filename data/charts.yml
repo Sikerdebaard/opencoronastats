@@ -1772,7 +1772,7 @@ pages:
               - filter_zero_values
 
       - name: excess-mortality-europe
-        title: Z-Score mortality displacement Eutesting-per-grouproMOMO
+        title: Z-Score mortality displacement europe by MOMO
         type: line
         sources:
           EuroMOMO: https://www.euromomo.eu/graphs-and-maps/
