@@ -52,6 +52,7 @@ wait
 wait
 
 cp data/testing-per-group.csv html/
+cp data/vaccine_estimate/vaccinated-estimate-latest.csv html/
 `which time` -ao logs/log-cards python scripts/cards.py
 `which time` -ao logs/log-build python scripts/build.py
 
