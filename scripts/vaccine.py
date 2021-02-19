@@ -25,16 +25,12 @@ df_owid_nl.sort_index(inplace=True)
 
 df_owid_nl['total_vaccinations'] = df_owid_nl['total_vaccinations'].interpolate('linear').astype(int)
 
-df_vaccinated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/people-vaccinated.csv', index_col=0)
+df_vaccinated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/vaccine_administered_total.csv', index_col=0)
 df_vaccinated.index = pd.to_datetime(df_vaccinated.index)
-
-df_vaccinated_estimated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/estimated-people-vaccinated.csv', index_col=0)
-df_vaccinated_estimated.index = pd.to_datetime(df_vaccinated_estimated.index)
-
-#interpolate = df_vaccinated_estimated.loc['2021-01-31']['total_vaccinations'] - df_vaccinated.loc['2021-01-30']['total_vaccinations']
+df_vaccinated = df_vaccinated['estimated'].rename('total_vaccinations').to_frame()
 
 # manually adjust to new magical Hugo number
-interpolate = df_vaccinated_estimated.loc['2021-02-01']['total_vaccinations'] - df_vaccinated.loc['2021-01-30']['total_vaccinations']
+interpolate = df_vaccinated.loc['2021-02-01']['total_vaccinations'] - df_vaccinated.loc['2021-01-30']['total_vaccinations']
 
 idx = pd.date_range('2021-01-18', '2021-02-01')
 interpolatedays = idx.shape[0] + 1
@@ -46,17 +42,12 @@ df_merged = df_owid_nl['total_vaccinations'].to_frame().copy()
 
 for idx, row in df_vaccinated.iterrows():
     df_merged.at[idx, 'total_vaccinations'] = row['total_vaccinations']
-#df_merged.update(df_vaccinated)
-
-for idx, row in df_vaccinated_estimated.iterrows():
-    df_merged.at[idx, 'total_vaccinations'] = row['total_vaccinations']
-#df_merged.update(df_vaccinated_estimated)
 
 df_merged[df_merged.index.isin(df_interpolate.index)] += df_interpolate.cumsum()
 if df_merged.iloc[0]['total_vaccinations'] != 0:
     idx = (df_merged.index[0] - pd.Timedelta(days=1))
     df_merged.loc[idx] = 0
-    
+
 df_merged.sort_index(inplace=True)
 df_merged = df_merged.ffill().astype(int)
 
@@ -65,10 +56,9 @@ df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(float)
 for i in range(0, df_merged.shape[0] - 1):
     if df_merged.iloc[i]['total_vaccinations'] > df_merged.iloc[i+1]['total_vaccinations']:
         df_merged.at[df_merged.index[i], 'total_vaccinations'] = np.nan
-        
+
 df_merged['total_vaccinations'] = df_merged['total_vaccinations'].interpolate('linear')
 df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(int)
-
 
 
 ## ADD MANUAL REAL-WORLD DATAPOINTS ON PEOPLE FULLY VACCINATED ##
