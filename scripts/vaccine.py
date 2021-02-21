@@ -25,7 +25,7 @@ import numpy as np
 
 df_vaccinated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/augmented/doses_administered_cumulative.csv', index_col=0)
 df_vaccinated.index = pd.to_datetime(df_vaccinated.index)
-df_vaccinated = df_vaccinated['estimated'].rename('total_vaccinations').interpolate('linear').to_frame()
+df_vaccinated = df_vaccinated['estimated'].rename('total_vaccinations').resample('D').interpolate('linear').to_frame()
 
 # manually adjust to new magical Hugo number
 interpolate = df_vaccinated.loc['2021-01-30']['total_vaccinations'] - df_vaccinated.loc['2021-01-29']['total_vaccinations']
