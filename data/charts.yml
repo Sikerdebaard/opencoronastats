@@ -233,7 +233,7 @@ pages:
               - scaleLabel:
                   labelString: "Date"
         datasets:
-          - label: "Real people fully vaccinated"
+          - label: "People fully vaccinated (real)"
             column: people_fully_vaccinated
             backgroundColor: derivate
             borderColor: derivate
