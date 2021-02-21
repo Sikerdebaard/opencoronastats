@@ -16,50 +16,36 @@ else:
 popsize = df_83474NED.iloc[-1]['BevolkingAanHetEindVanDePeriode_8']
 
 
-df_owid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv')
+import pandas as pd
+import cbsodata
+from datetime import date
+from pathlib import Path
+import numpy as np
 
-df_owid_nl = df_owid[df_owid['iso_code'] == 'NLD'].copy()
-df_owid_nl.set_index('date', inplace=True)
-df_owid_nl.index = pd.to_datetime(df_owid_nl.index)
-df_owid_nl.sort_index(inplace=True)
 
-df_owid_nl['total_vaccinations'] = df_owid_nl['total_vaccinations'].interpolate('linear').astype(int)
-
-df_vaccinated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/vaccine_administered_total.csv', index_col=0)
+df_vaccinated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/augmented/doses_administered_cumulative.csv', index_col=0)
 df_vaccinated.index = pd.to_datetime(df_vaccinated.index)
-df_vaccinated = df_vaccinated['estimated'].rename('total_vaccinations').to_frame()
+df_vaccinated = df_vaccinated['estimated'].rename('total_vaccinations').interpolate('linear').to_frame()
 
 # manually adjust to new magical Hugo number
-interpolate = df_vaccinated.loc['2021-02-01']['total_vaccinations'] - df_vaccinated.loc['2021-01-30']['total_vaccinations']
+interpolate = df_vaccinated.loc['2021-01-30']['total_vaccinations'] - df_vaccinated.loc['2021-01-29']['total_vaccinations']
 
-idx = pd.date_range('2021-01-18', '2021-02-01')
+idx = pd.date_range('2021-01-18', '2021-01-30')
 interpolatedays = idx.shape[0] + 1
 df_interpolate = pd.DataFrame(columns=['total_vaccinations'], index=idx)
 df_interpolate['total_vaccinations'] = interpolate // interpolatedays
 df_interpolate = df_interpolate.iloc[:-1]
 
-df_merged = df_owid_nl['total_vaccinations'].to_frame().copy()
-
-for idx, row in df_vaccinated.iterrows():
-    df_merged.at[idx, 'total_vaccinations'] = row['total_vaccinations']
+df_merged = df_vaccinated['total_vaccinations'].to_frame().copy()
 
 df_merged[df_merged.index.isin(df_interpolate.index)] += df_interpolate.cumsum()
-if df_merged.iloc[0]['total_vaccinations'] != 0:
-    idx = (df_merged.index[0] - pd.Timedelta(days=1))
-    df_merged.loc[idx] = 0
-
-df_merged.sort_index(inplace=True)
-df_merged = df_merged.ffill().astype(int)
-
-# remove the weird numbers that don't add up, so called Magical Hugo Numbers
-df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(float)
-for i in range(0, df_merged.shape[0] - 1):
-    if df_merged.iloc[i]['total_vaccinations'] > df_merged.iloc[i+1]['total_vaccinations']:
-        df_merged.at[df_merged.index[i], 'total_vaccinations'] = np.nan
-
+        
 df_merged['total_vaccinations'] = df_merged['total_vaccinations'].interpolate('linear')
 df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(int)
 
+df_diff = df_merged['total_vaccinations'].diff()
+
+assert df_diff[df_diff < 0].shape[0] == 0  # make sure that the data is still cumulative
 
 ## ADD MANUAL REAL-WORLD DATAPOINTS ON PEOPLE FULLY VACCINATED ##
 
@@ -124,6 +110,8 @@ df_weekly.to_csv('html/weekly-vaccine-rollout.csv')
 
 ## COMPARISON COMPARISON ##
 
+
+df_owid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv')
 df_owid['date'] = pd.to_datetime(df_owid['date'])
 df_compare = df_owid.pivot_table(
     values=['total_vaccinations_per_hundred', 'daily_vaccinations'],
