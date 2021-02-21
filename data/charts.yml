@@ -233,14 +233,25 @@ pages:
               - scaleLabel:
                   labelString: "Date"
         datasets:
-          - label: People fully vaccinated 
+          - label: "Real people fully vaccinated"
+            column: people_fully_vaccinated
+            backgroundColor: derivate
+            borderColor: derivate
+            showLine: false
+            filter:
+              - filter_zero_values
+          - label: "Doses administered"
+            column: total_vaccinations
+            backgroundColor: flevoland
+            borderColor: flevoland
+            showLine: false
+
+          - label: People fully vaccinated (estimate)
             column: fully_vaccinated
             backgroundColor: fully_vaccinated
             borderColor: fully_vaccinated
             filter:
               - filter_zero_except_first
-              
-             
           - label: Fully vaccinated minimum
             column: fully_vaccinated_min
             fill: -1
@@ -250,13 +261,13 @@ pages:
             pointRadius: 0
           - label: Fully vaccinated maximum
             column: fully_vaccinated_max
-            fill: 1
+            fill: 3
             backgroundColor: fully_vaccinated_ci
             borderColor: transparent
             lineTension: 0
             pointRadius: 0
              
-          - label: People that started a vaccine regimen 
+          - label: People that started a vaccine regimen (estimate)
             column: single_dose_vaccinated
             backgroundColor: single_dose
             borderColor: single_dose
@@ -272,7 +283,7 @@ pages:
             pointRadius: 0
           - label: People that started a vaccine regimen maximum
             column: single_dose_vaccinated_max
-            fill: 4
+            fill: 6
             backgroundColor: single_dose_ci
             borderColor: transparent
             lineTension: 0

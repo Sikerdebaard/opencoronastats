@@ -174,3 +174,12 @@ df_merged['total_vaccinations'] = df_merged['total_vaccinations'].fillna(0).asty
 df_merged = df_merged[df_merged.index <= df_merged[df_merged['total_vaccinations'] != 0].index[-1]]
 df_merged = df_merged[['cumulative', 'total_vaccinations']]
 df_merged.to_csv('html/vaccine-delivered-vs-administered.csv')
+
+
+
+## model estimates
+df_model = pd.read_csv('data/vaccine_estimate/vaccinated-estimate-latest.csv', index_col=0)
+df_model.index = pd.to_datetime(df_model.index)
+df_model = df_model.join(df_nl[['people_fully_vaccinated', 'total_vaccinations']])
+
+df_model.to_csv('html/vaccinated-estimate-latest.csv')
