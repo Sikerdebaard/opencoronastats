@@ -1795,7 +1795,7 @@ pages:
             filter:
               - filter_zero_values
             showLine: false
-          - label: Moving averag 7 days percentage positive
+          - label: Moving average 7 days percentage positive
             column: sma7_infected_percentage
             backgroundColor: derivate 
             borderColor: derivate
