@@ -421,31 +421,31 @@ pages:
             filter:
               - filter_zero_except_first 
 
-      - name: vaccinated-demographics
-        title: Demographics of doses administered by gov. organ
-        uses: vaccinated-demographics
-        type: 'demographics'
-        x: 'organ'
-        sources:
-          RIVM: https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-        options:
-          scales:
-            yAxes:
-              - scaleLabel:
-                  labelString: "Number of doses"
-                ticks:
-                  beginAtZero: true
-            xAxes:
-              - scaleLabel:
-                  labelString: "Doses by gov. organ"
-        datasets:
-          - label: "Doses administered per gov. organ"
-            column: data
-            backgroundColor: recovered
-            borderColor: recovered
-            filter: 'filter_zero_values'
-            disable_median: True
-
+#        - name: vaccinated-demographics
+#          title: Demographics of doses administered by gov. organ
+#          uses: vaccinated-demographics
+#          type: 'demographics'
+#          x: 'organ'
+#          sources:
+#            RIVM: https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#          options:
+#            scales:
+#              yAxes:
+#                - scaleLabel:
+#                    labelString: "Number of doses"
+#                  ticks:
+#                    beginAtZero: true
+#              xAxes:
+#                - scaleLabel:
+#                    labelString: "Doses by gov. organ"
+#          datasets:
+#            - label: "Doses administered per gov. organ"
+#              column: data
+#              backgroundColor: recovered
+#              borderColor: recovered
+#              filter: 'filter_zero_values'
+#              disable_median: True
+#  
 
 
   mobility:
