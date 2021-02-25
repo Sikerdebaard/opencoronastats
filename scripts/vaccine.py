@@ -152,17 +152,17 @@ df_compare.to_csv('html/compare-vaccine.csv')
 
 ## doses received vs administered
 df_weekly = pd.read_csv('html/weekly-vaccine-rollout.csv', index_col=0)
-df_initial = pd.read_csv('data/non-dashboard-vaccine-deliveries.csv', index_col=0)
+
+#df_initial = pd.read_csv('data/non-dashboard-vaccine-deliveries.csv', index_col=0).sum(axis=1).cumsum().rename('total').to_frame()
 df_deliveries = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/vaccine-dose-deliveries-by-manufacturer.csv', index_col=0)
 df_deliveries = df_deliveries[[col for col in df_deliveries.columns if 'date_' not in col]]
-df_deliveries = df_deliveries[~df_deliveries.index.isin(df_initial.index)]
+#df_deliveries = df_deliveries[~df_deliveries.index.isin(df_initial.index)]
+#df_initial = df_initial[~df_initial.index.isin(df_deliveries.index)]
 
 
-df_merged = pd.concat([df_initial, df_deliveries]).fillna(0)
-df_merged = df_merged.astype(pd.Int64Dtype())
-
-df_merged['sum'] = df_merged.sum(axis=1)
-df_merged['cumulative'] = df_merged['sum'].cumsum()
+#df_merged = pd.concat([df_initial, df_deliveries])
+df_merged = df_deliveries.copy()
+df_merged = df_merged.astype(pd.Int64Dtype()).rename(columns={'total': 'cumulative'})
 
 df_merged = df_merged.astype(int)
 df_merged.index.rename('year-week', inplace=True)
