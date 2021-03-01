@@ -58,16 +58,16 @@ df_sewage = df_sewage[df_sewage['Representative_measurement'].str.contains('true
 df_sewage['Date_measurement'] = pd.to_datetime(df_sewage['Date_measurement'])
 df_sewage = df_sewage.set_index('Date_measurement')
 
+df_sewage.sort_index(inplace=True)
 df_sewage['RNA_flow_per_100000'] = df_sewage['RNA_flow_per_100000'].replace('', np.nan).astype(float)
-
 df_sewage = pd.DataFrame(df_sewage['RNA_flow_per_100000'].resample('W-MON', label='left', closed='left').mean()).dropna()
 
-if df_sewage.index[-1].week == pd.to_datetime(datetime.date.today()).week:
-    print('Sewage: removing current week as it is incomplete')
-    df_sewage = df_sewage[:-1]
+thisweek = pd.to_datetime(datetime.date.today()).strftime('%G-%V')
+df_sewage = df_sewage[df_sewage.index < thisweek]
 
-df_sewage.index = df_sewage.index.format(formatter=lambda a: f'{a.year}-{a.week}')
+df_sewage.index = df_sewage.index.strftime('%G-%V')
 df_sewage.index.rename('week', inplace=True)
+
 df_sewage.to_csv('html/sewage.csv', float_format='%.3g')
 
 
