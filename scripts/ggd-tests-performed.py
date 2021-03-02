@@ -52,6 +52,7 @@ df = df.set_index('date_unix')
 df.index = df.index.rename('date')
 df.index = pd.to_datetime(df.index, unit='s')
 df = df.drop(columns='date_of_insertion_unix')
+df.sort_index(inplace=True)
 
 df['sma7_infected_percentage'] = df['infected_percentage'].rolling(7).mean()
 df['sma7_infected_percentage'] = df['sma7_infected_percentage'].round(2)
