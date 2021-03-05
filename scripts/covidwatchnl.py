@@ -52,7 +52,7 @@ import numpy as np
 
 df_sewage = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_rioolwaterdata.json')
 
-df_sewage = df_sewage[df_sewage['Representative_measurement'].str.contains('true', case=False)]
+#df_sewage = df_sewage[df_sewage['Representative_measurement'].str.contains('true', case=False)]
 
 
 df_sewage['Date_measurement'] = pd.to_datetime(df_sewage['Date_measurement'])
