@@ -3497,7 +3497,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: hospital-demographics-recovered
-        title: Demographics of recovered patients (hospital)
+        title: Demographics patients discharged from hospital
         uses: hospital_demographics
         type: 'demographics'
         x: 'age_group'
@@ -3507,7 +3507,7 @@ pages:
               - scaleLabel:
                   labelString: "Number of recovered"
         datasets:
-          - label: "Demographics of recovered patients (hospital)"
+          - label: "Demographics patients discharged from hospital"
             column: patients_recovered
             backgroundColor: 'recovered'
             borderColor: 'recovered'
@@ -3571,12 +3571,12 @@ pages:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Number of recovered patients"
+                  labelString: "Number of discharged patients"
             xAxes:
               - scaleLabel:
                   labelString: "Number of days"
         datasets:
-          - label: "Treatment times of recovered patients"
+          - label: "Treatment times of discharged patients"
             column: patients_recovered
             backgroundColor: recovered
             borderColor: recovered
