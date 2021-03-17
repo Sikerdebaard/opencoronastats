@@ -2959,7 +2959,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: icu-demographics-recovered
-        title: Demographics of discharged patients in ICU
+        title: Demographics patients discharged from ICU
         uses: demographics
         type: 'demographics'
         x: 'age_group'
@@ -2969,7 +2969,7 @@ pages:
               - scaleLabel:
                   labelString: "Number of discharged"
         datasets:
-          - label: "Demographics of discharged patients from ICU"
+          - label: "Demographics patients discharged from ICU"
             column: recovered_patients
             backgroundColor: 'recovered'
             borderColor: 'recovered'
@@ -3045,7 +3045,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: icu-treament-times-recovered
-        title: Treament times of discharged patients
+        title: Treament times until discharged
         uses: treatment_durations
         type: 'demographics'
         x: 'days_of_treatment'
@@ -3058,7 +3058,7 @@ pages:
               - scaleLabel:
                   labelString: "Number of days"
         datasets:
-          - label: "Treatment times of discharged patients"
+          - label: "Treatment times until discharged"
             column: recovered_patients
             backgroundColor: recovered
             borderColor: recovered
