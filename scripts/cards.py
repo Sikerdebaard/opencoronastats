@@ -66,7 +66,7 @@ cards['doubling-rate'] = {
 
 cards['patients-recovered-from-icu'] = {
     'value': df_data['survivors'].tail(4).values[0],
-    'title': 'Patients recovered from ICU',
+    'title': 'Patients discharged from ICU',
     'color': 'blue'
 }
 
@@ -154,7 +154,7 @@ cards['hospitalized-doubling-rate'] = {
 
 cards['patients-recovered-from-hospital'] = {
     'value': df_data['cumulative_recovered'].tail(4).values[0],
-    'title': 'Hospitalized patients recovered',
+    'title': 'Patients discharged from hospital',
     'color': 'blue'
 }
 
