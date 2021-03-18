@@ -3563,7 +3563,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: hospital-treament-times-recovered
-        title: Treament times of recovered patients (hospital)
+        title: Treament time until discharged (hospital)
         uses: hospital_treatment_durations
         type: 'demographics'
         x: 'days_of_treatment'
