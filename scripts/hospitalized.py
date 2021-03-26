@@ -60,12 +60,14 @@ df['mortality_rate'] = df['mortality_rate'].replace(0, np.NaN)
 
 df = calc_growth(df, 'intakeCount')
 
-df_lcps = pd.read_csv('https://github.com/J535D165/CoronaWatchNL/raw/master/data/lcps_clinic.csv', index_col=0)
-df_lcps.rename(columns={'Aantal': 'lcps_beds'}, inplace=True)
+df_lcps = pd.read_csv('https://lcps.nu/wp-content/uploads/covid-19.csv', index_col=0)
+df_lcps.index = pd.to_datetime(df_lcps.index, format='%d-%m-%Y')
+df_lcps.sort_index(inplace=True)
+df_lcps.index = df_lcps.index.astype(str)
+#df_lcps.rename(columns={'Aantal': 'lcps_beds'}, inplace=True)
 #df_lcps.drop_duplicates(inplace=True)
 
-df = df.join(df_lcps)
-
+df = df.join(df_lcps['Kliniek_Bedden'].rename('lcps_beds'))
 output_path = Path('./html')
 
 df.to_csv(output_path / 'hospitalized.csv', index_label='date')

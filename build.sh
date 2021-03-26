@@ -48,7 +48,7 @@ wait
 #python scripts/outbreakmonitor.py &
 #python scripts/excessmortality.py &
 `which time` -ao logs/log-mortality-displacement python scripts/mortality-displacement.py &
-`which time` -ao logs/log-monkeypatch-lcps python scripts/monkeypatch-lcps.py &
+#`which time` -ao logs/log-monkeypatch-lcps python scripts/monkeypatch-lcps.py &
 wait
 
 cp data/testing-per-group.csv html/

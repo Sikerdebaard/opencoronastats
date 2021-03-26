@@ -14,7 +14,7 @@ python scripts/mortality-displacement.py &
 wait
 
 python scripts/cards.py &
-python scripts/monkeypatch-lcps.py &
+#python scripts/monkeypatch-lcps.py &
 wait
 
 cp data/testing-per-group.csv html/
