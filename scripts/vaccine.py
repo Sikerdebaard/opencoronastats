@@ -63,6 +63,7 @@ people_fully_vaccinated = [
     ('2021-03-14', 493_123),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-03-21', 605_491),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-03-28', 690_062),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+    ('2021-04-04', 806_424),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
 ]
 
 df_realworld = pd.DataFrame(people_fully_vaccinated, columns=['date', 'people_fully_vaccinated'])
