@@ -52,9 +52,6 @@ import numpy as np
 
 df_sewage = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_rioolwaterdata.json')
 
-#df_sewage = df_sewage[df_sewage['Representative_measurement'].str.contains('true', case=False)]
-
-
 df_sewage['Date_measurement'] = pd.to_datetime(df_sewage['Date_measurement'])
 df_sewage = df_sewage.set_index('Date_measurement')
 
@@ -63,10 +60,12 @@ df_sewage['RNA_flow_per_100000'] = df_sewage['RNA_flow_per_100000'].replace('', 
 df_sewage = pd.DataFrame(df_sewage['RNA_flow_per_100000'].resample('W-MON', label='left', closed='left').mean()).dropna()
 
 thisweek = pd.to_datetime(datetime.date.today()).strftime('%G-%V')
-df_sewage = df_sewage[df_sewage.index < thisweek]
 
 df_sewage.index = df_sewage.index.strftime('%G-%V')
 df_sewage.index.rename('week', inplace=True)
+
+
+df_sewage = df_sewage[df_sewage.index < thisweek]
 
 df_sewage.to_csv('html/sewage.csv', float_format='%.3g')
 
