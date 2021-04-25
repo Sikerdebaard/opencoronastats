@@ -63,7 +63,7 @@ df = calc_growth(df, 'intakeCount')
 df_lcps = pd.read_csv('https://lcps.nu/wp-content/uploads/covid-19.csv', index_col=0)
 df_lcps.index = pd.to_datetime(df_lcps.index, format='%d-%m-%Y')
 
-df_lcps.loc[pd.to_datetime('2021-04-25')] = df_lcps.loc[pd.to_datetime('2021-05-25')]
+#df_lcps.loc[pd.to_datetime('2021-04-25')] = df_lcps.loc[pd.to_datetime('2021-05-25')]
 
 df_lcps.sort_index(inplace=True)
 df_lcps.index = df_lcps.index.astype(str)
