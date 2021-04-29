@@ -64,8 +64,9 @@ people_fully_vaccinated = [
     ('2021-03-21', 605_491),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-03-28', 690_062),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-04-04', 806_424),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-04-11', 826_135),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-04-18', 943_197),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+# FAULY -> https://www.rivm.nl/nieuws/correctie-vaccinatiecijfers-totaal-aantal-prikken-naar-beneden-bijgesteld
+# FAULTY    ('2021-04-11', 826_135),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+# FAULTY    ('2021-04-18', 943_197),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-04-25', 8_883 + 1_111_391),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
 ]
 
