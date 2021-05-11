@@ -69,6 +69,7 @@ people_fully_vaccinated = [
 # FAULTY    ('2021-04-18', 943_197),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-04-25', 8_883 + 1_111_391),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-05-02', 48_422 + 1_203_113),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+    ('2021-05-09', 95_466 + 1_471_268),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
 ]
 
 df_realworld = pd.DataFrame(people_fully_vaccinated, columns=['date', 'people_fully_vaccinated'])
