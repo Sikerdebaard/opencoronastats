@@ -73,6 +73,7 @@ people_fully_vaccinated = [
     ('2021-05-16', 124_373 + 1_786_899),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-05-23', 142_069 + 2_304_562),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-05-30', 156_277 + 2_805_074),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+    ('2021-06-06', 166_141 + 217_994 + 3_401_840),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     
 ]
 
