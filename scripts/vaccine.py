@@ -74,7 +74,7 @@ people_fully_vaccinated = [
     ('2021-05-23', 142_069 + 2_304_562),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-05-30', 156_277 + 2_805_074),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
     ('2021-06-06', 166_141 + 217_994 + 3_401_840),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    
+    ('2021-06-13', 172_542 + 258_536 + 4_019_591),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
 ]
 
 df_realworld = pd.DataFrame(people_fully_vaccinated, columns=['date', 'people_fully_vaccinated'])
