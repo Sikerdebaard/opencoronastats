@@ -282,6 +282,7 @@ latest_model = df_model.iloc[-1]
 #projection = df_vaccinated_weekly.iloc[-1]['daily_vaccinations_raw'] / weekday * 7  # extremely simplified projection, this needs to be improved once more data is available
 #trend = 1 if projection >= df_vaccinated_weekly.iloc[-2]['daily_vaccinations_raw'] else -1
 
+c = 'blue' if int(latest_model['percentage_pop_fully_vaccinated']) != int(latest_model['percentage_pop_vaccinated']) else 'green'
 cards['percentage-pop-card'] = {
     'value': f"{int(latest_model['percentage_pop_vaccinated'])}%",
     'title': 'Percentage population vaccinated',
