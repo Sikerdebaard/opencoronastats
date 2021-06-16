@@ -42,56 +42,73 @@ df_merged[df_merged.index.isin(df_interpolate.index)] += df_interpolate.cumsum()
         
 df_merged['total_vaccinations'] = df_merged['total_vaccinations'].interpolate('linear')
 df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(int)
-
 df_diff = df_merged['total_vaccinations'].diff()
 
 assert df_diff[df_diff < 0].shape[0] == 0  # make sure that the data is still cumulative
 
 ## ADD MANUAL REAL-WORLD DATAPOINTS ON PEOPLE FULLY VACCINATED ##
 
-people_fully_vaccinated = [
-    ('2021-01-31', 13_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-13500-medewerkers-acute-zorg-voor-de-2de-keer-gevaccineerd
-    ('2021-02-01', 26_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-26500-tweede-vaccinaties-gezet
-    ('2021-02-02', 34_000),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-34000-tweede-vaccinaties-gezet
-    ('2021-02-03', 38_000),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-38000-tweede-vaccinaties-gezet-en-7000-huisartsen-gevaccineerd
-    ('2021-02-04', 39_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-39500-tweede-vaccinaties-gezet
-    ('2021-02-07', 66_409),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-02-14', 154_445),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-02-21', 218_713),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-02-28', 331_671),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-03-07', 411_935),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-03-14', 493_123),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-03-21', 605_491),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-03-28', 690_062),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-04-04', 806_424),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-# FAULY -> https://www.rivm.nl/nieuws/correctie-vaccinatiecijfers-totaal-aantal-prikken-naar-beneden-bijgesteld
-# FAULTY    ('2021-04-11', 826_135),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-# FAULTY    ('2021-04-18', 943_197),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-04-25', 8_883 + 1_111_391),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-05-02', 48_422 + 1_203_113),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-05-09', 95_466 + 1_471_268),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-05-16', 124_373 + 1_786_899),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-05-23', 142_069 + 2_304_562),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-05-30', 156_277 + 2_805_074),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-06-06', 166_141 + 217_994 + 3_401_840),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-    ('2021-06-13', 172_542 + 258_536 + 4_019_591),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
-]
+#  people_fully_vaccinated = [
+#      ('2021-01-31', 13_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-13500-medewerkers-acute-zorg-voor-de-2de-keer-gevaccineerd
+#      ('2021-02-01', 26_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-26500-tweede-vaccinaties-gezet
+#      ('2021-02-02', 34_000),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-34000-tweede-vaccinaties-gezet
+#      ('2021-02-03', 38_000),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-38000-tweede-vaccinaties-gezet-en-7000-huisartsen-gevaccineerd
+#      ('2021-02-04', 39_500),  # https://www.lnaz.nl/nieuws/ziekenhuizen-hebben-39500-tweede-vaccinaties-gezet
+#      ('2021-02-07', 66_409),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-02-14', 154_445),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-02-21', 218_713),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-02-28', 331_671),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-03-07', 411_935),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-03-14', 493_123),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-03-21', 605_491),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-03-28', 690_062),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-04-04', 806_424),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#  # FAULY -> https://www.rivm.nl/nieuws/correctie-vaccinatiecijfers-totaal-aantal-prikken-naar-beneden-bijgesteld
+#  # FAULTY    ('2021-04-11', 826_135),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#  # FAULTY    ('2021-04-18', 943_197),  # https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-04-25', 8_883 + 1_111_391),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-05-02', 48_422 + 1_203_113),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-05-09', 95_466 + 1_471_268),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-05-16', 124_373 + 1_786_899),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-05-23', 142_069 + 2_304_562),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-05-30', 156_277 + 2_805_074),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-06-06', 166_141 + 217_994 + 3_401_840),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#      ('2021-06-13', 172_542 + 258_536 + 4_019_591),  # janssen estimate dashboard json + https://www.rivm.nl/covid-19-vaccinatie/cijfers-vaccinatieprogramma
+#  ]
+#  
+#  df_realworld = pd.DataFrame(people_fully_vaccinated, columns=['date', 'people_fully_vaccinated'])
+#  df_realworld.set_index('date', inplace=True)
+#  df_realworld.index = pd.to_datetime(df_realworld.index)
+#  df_realworld.sort_index(inplace=True)
 
-df_realworld = pd.DataFrame(people_fully_vaccinated, columns=['date', 'people_fully_vaccinated'])
-df_realworld.set_index('date', inplace=True)
-df_realworld.index = pd.to_datetime(df_realworld.index)
-df_realworld.sort_index(inplace=True)
 
-interpolate = False
-if interpolate:
-    idx = pd.date_range('2021-01-27', df_realworld.index[-1])
-    df_realworld = df_realworld.reindex(idx)
-    df_realworld.at[df_realworld.index[0], 'people_fully_vaccinated'] = 0
-    df_realworld['people_fully_vaccinated'] = df_realworld['people_fully_vaccinated'].interpolate('linear')
-
-df_merged = df_merged.join(df_realworld)
+#  interpolate = False
+#  if interpolate:
+#      idx = pd.date_range('2021-01-27', df_realworld.index[-1])
+#      df_realworld = df_realworld.reindex(idx)
+#      df_realworld.at[df_realworld.index[0], 'people_fully_vaccinated'] = 0
+#      df_realworld['people_fully_vaccinated'] = df_realworld['people_fully_vaccinated'].interpolate('linear')
+#  
+#  df_merged = df_merged.join(df_realworld)
 
 ## < /> MANUAL REAL WORLD POINTS ##
+
+import requests
+
+
+req = requests.get('https://coronadashboard.rijksoverheid.nl/json/NL.json')
+req.raise_for_status()
+req.json()['vaccine_coverage']['values']
+
+df_rivm_vacc = pd.DataFrame.from_dict(req.json()['vaccine_coverage']['values'])
+df_rivm_vacc.index = pd.to_datetime(df_rivm_vacc['date_end_unix'], unit='s').rename('date')
+df_rivm_vacc.sort_index(inplace=True)
+
+#cols = ['partially_vaccinated', 'fully_vaccinated', 'partially_or_fully_vaccinated']
+
+df_merged = df_merged.join(df_rivm_vacc['partially_vaccinated'].rename('rivm_partially_vaccinated'))
+df_merged = df_merged.join(df_rivm_vacc['partially_or_fully_vaccinated'].rename('rivm_partially_or_fully_vaccinated'))
+df_merged = df_merged.join(df_rivm_vacc['fully_vaccinated'].rename('people_fully_vaccinated'))
 
 
 
@@ -198,6 +215,18 @@ df_merged.to_csv('html/vaccine-delivered-vs-administered.csv')
 ## model estimates
 df_model = pd.read_csv('data/vaccine_estimate/vaccinated-estimate-latest.csv', index_col=0)
 df_model.index = pd.to_datetime(df_model.index)
-df_model = df_model.join(df_nl[['people_fully_vaccinated', 'total_vaccinations']])
+df_model = df_model.join(df_nl[['people_fully_vaccinated', 'rivm_partially_vaccinated', 'total_vaccinations']])
+
+df_model['percentage_pop_vaccinated'] = (df_model['vaccinated'] / popsize * 100).round(2)
+df_model['percentage_pop_vaccinated_min'] = (df_model['vaccinated_min'] / popsize * 100).round(2)
+df_model['percentage_pop_vaccinated_max'] = (df_model['vaccinated_max'] / popsize * 100).round(2)
+
+df_model['percentage_pop_fully_vaccinated'] = (df_model['fully_vaccinated'] / popsize * 100).round(2)
+df_model['percentage_pop_fully_vaccinated_min'] = (df_model['fully_vaccinated_min'] / popsize * 100).round(2)
+df_model['percentage_pop_fully_vaccinated_max'] = (df_model['fully_vaccinated_max'] / popsize * 100).round(2)
+
+df_model['percentage_pop_partially_vaccinated'] = (df_model['single_dose_vaccinated'] / popsize * 100).round(2)
+df_model['percentage_pop_partially_vaccinated_min'] = (df_model['single_dose_vaccinated_min'] / popsize * 100).round(2)
+df_model['percentage_pop_partially_vaccinated_max'] = (df_model['single_dose_vaccinated_max'] / popsize * 100).round(2)
 
 df_model.to_csv('html/vaccinated-estimate-latest.csv')

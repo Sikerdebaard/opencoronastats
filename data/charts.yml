@@ -202,23 +202,106 @@ pages:
       - vaccine-delivered-vs-administered.csv
       - vaccinated-estimate-latest.csv
     cards:
+      - id: percentage-pop-card 
+        icon: fa-battery-half
+      - id: percentage-pop-fully-card
+        icon: fa-battery-full
       - id: vaccine-total-doses-administered 
         icon: fa-syringe
         postfix: doses
-        sources:
-          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
 #      - id: vaccine-one-in-hundred-people-doses-administered
 #        icon: fa-chart-line
 #        sources:
 #          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
       - id: avg-doses-per-week
         icon: fa-calendar-check
-        sources:
-          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
 
     charts:
+      - name: pp-vacc
+        title: Model based estimates percentage population vaccinated
+        type: line
+        sources:
+          Model Based Analysis: https://github.com/Sikerdebaard/opencoronastats/tree/master/data/vaccine_estimate
+        uses: vaccinated-estimate-latest
+        x: date
+        options:
+          scales:
+            yAxes:
+              - scaleLabel:
+                  labelString: "Percentage"
+            xAxes:
+              - scaleLabel:
+                  labelString: "Date"
+        datasets:
+          - label: Percentage population fully vaccinated (estimate)
+            column: percentage_pop_fully_vaccinated
+            backgroundColor: fully_vaccinated
+            borderColor: fully_vaccinated
+            filter:
+              - filter_zero_except_first
+          - label: min 
+            legend: false
+            column: percentage_pop_fully_vaccinated_min
+            fill: -1 
+            backgroundColor: fully_vaccinated_ci
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+          - label: max 
+            legend: false
+            column: percentage_pop_fully_vaccinated_max
+            fill: 1
+            backgroundColor: fully_vaccinated_ci
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+             
+          - label: Percentage population that started a vaccine regimen (estimate)
+            column: percentage_pop_partially_vaccinated
+            backgroundColor: single_dose
+            borderColor: single_dose
+            filter:
+              - filter_zero_except_first
+            
+          - label: min
+            column: percentage_pop_partially_vaccinated_min
+            fill: 3
+            backgroundColor: single_dose_ci
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+          - label: max
+            column: percentage_pop_partially_vaccinated_max
+            fill: 4
+            backgroundColor: single_dose_ci
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+
+          - label: Percentage population vaccinated with at least one dose (estimate)
+            column: percentage_pop_vaccinated
+            backgroundColor: derivate 
+            borderColor: derivate
+            filter:
+              - filter_zero_except_first
+          - label: min
+            column: percentage_pop_vaccinated_min
+            fill: 6
+            backgroundColor: derivate-afive
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+          - label: max
+            column: percentage_pop_vaccinated_max
+            fill: 6
+            backgroundColor: derivate-afive
+            borderColor: transparent
+            lineTension: 0
+            pointRadius: 0
+
+
       - name: estimated-people-vaccinated
-        title: Estimated number of people vaccinated, a model based approach
+        title: Model based estimates people (fully) vaccinated
         type: line
         sources:
           Model Based Analysis: https://github.com/Sikerdebaard/opencoronastats/tree/master/data/vaccine_estimate
@@ -233,57 +316,66 @@ pages:
               - scaleLabel:
                   labelString: "Date"
         datasets:
-          - label: "People fully vaccinated (real)"
+          - label: "Doses administered"
+            column: total_vaccinations
+            backgroundColor: flevoland
+            borderColor: flevoland
+            showLine: false
+          - label: "People fully vaccinated (RIVM estimate)"
             column: people_fully_vaccinated
             backgroundColor: derivate
             borderColor: derivate
             showLine: false
             filter:
               - filter_zero_values
-          - label: "Doses administered"
-            column: total_vaccinations
-            backgroundColor: flevoland
-            borderColor: flevoland
+          - label: People that started a vaccine regimen (RIVM estimate)
+            column: rivm_partially_vaccinated
+            backgroundColor: zuid-holland 
+            borderColor: zuid-holland
             showLine: false
+            filter:
+              - filter_zero_values
 
-          - label: People fully vaccinated (estimate)
+          - label: People fully vaccinated (prediction)
             column: fully_vaccinated
             backgroundColor: fully_vaccinated
             borderColor: fully_vaccinated
             filter:
               - filter_zero_except_first
-          - label: Fully vaccinated minimum
+          - label: min 
+            legend: false
             column: fully_vaccinated_min
             fill: -1
             backgroundColor: fully_vaccinated_ci
             borderColor: transparent
             lineTension: 0
             pointRadius: 0
-          - label: Fully vaccinated maximum
+          - label: max 
+            legend: false
             column: fully_vaccinated_max
-            fill: 3
+            fill: 4
             backgroundColor: fully_vaccinated_ci
             borderColor: transparent
             lineTension: 0
             pointRadius: 0
              
-          - label: People that started a vaccine regimen (estimate)
+          - label: People that started a vaccine regimen (prediction)
             column: single_dose_vaccinated
             backgroundColor: single_dose
             borderColor: single_dose
             filter:
               - filter_zero_except_first
             
-          - label: People that started a vaccine regimen minimum
+          - label: min
             column: single_dose_vaccinated_min
             fill: -1
             backgroundColor: single_dose_ci
             borderColor: transparent
             lineTension: 0
             pointRadius: 0
-          - label: People that started a vaccine regimen maximum
+          - label: max
             column: single_dose_vaccinated_max
-            fill: 6
+            fill: 7
             backgroundColor: single_dose_ci
             borderColor: transparent
             lineTension: 0
