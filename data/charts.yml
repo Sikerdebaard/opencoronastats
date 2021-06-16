@@ -311,7 +311,7 @@ pages:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Number of people"
+                  labelString: "Number of people / doses"
             xAxes:
               - scaleLabel:
                   labelString: "Date"
