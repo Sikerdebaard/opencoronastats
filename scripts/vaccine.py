@@ -230,3 +230,7 @@ df_model['percentage_pop_partially_vaccinated_min'] = (df_model['single_dose_vac
 df_model['percentage_pop_partially_vaccinated_max'] = (df_model['single_dose_vaccinated_max'] / popsize * 100).round(2)
 
 df_model.to_csv('html/vaccinated-estimate-latest.csv')
+
+
+df_projection = pd.read_csv('data/vaccine_estimate/projections/latest-projection.csv', index_col=0)
+df_projection.to_csv('html/latest-projection.csv')
