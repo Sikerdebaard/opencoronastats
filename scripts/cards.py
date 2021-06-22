@@ -285,7 +285,7 @@ latest_model = df_model.iloc[-1]
 c = 'blue' if int(latest_model['percentage_pop_fully_vaccinated']) != int(latest_model['percentage_pop_vaccinated']) else 'green'
 cards['percentage-pop-card'] = {
     'value': f"{int(latest_model['percentage_pop_vaccinated'])}%",
-    'title': 'Percentage population vaccinated',
+    'title': 'Percentage population vaccinated (partial + fully)',
     'color': 'blue',
 }
 cards['percentage-pop-fully-card'] = {
