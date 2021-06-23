@@ -36,14 +36,14 @@ else:
 
 cards['icu-growth'] = {
     'trend': trend,
-    'value': round(growth[1] * 100),
+    'value': fnum(round(growth[1] * 100), 2),
     'title': 'Growth rate',
     'color': 'green' if trend <= 0 else 'red'
 }
 
 # -- doubling rate / half life
 
-growth = cards['icu-growth']['value']
+growth = round(growth[1] * 100) 
 growth_trend = cards['icu-growth']['trend']
 if growth < 0:  # half-life
     value = int(log(1 / 2) / log(1 + growth / 100))
@@ -68,7 +68,7 @@ else:
 
 cards['doubling-rate'] = {
     'trend': trend,
-    'value': value,
+    'value': fnum(value),
     'title': title,
     'color': color
 }
@@ -76,19 +76,19 @@ cards['doubling-rate'] = {
 # -- patients recovered / deceased / beds
 
 cards['patients-recovered-from-icu'] = {
-    'value': df_data['survivors'].tail(4).values[0],
+    'value': fnum(df_data['survivors'].tail(4).values[0]),
     'title': 'Patients discharged from ICU',
     'color': 'blue'
 }
 
 cards['patients-deceased-from-icu'] = {
-    'value': df_data['died'].tail(4).values[0],
+    'value': fnum(df_data['died'].tail(4).values[0]),
     'title': 'Patients deceased in ICU',
     'color': 'blue'
 }
 
 cards['beds-used-in-icu'] = {
-    'value': df_data['lcps_beds'].loc[df_data['lcps_beds'].last_valid_index()].astype(int),
+    'value': fnum(df_data['lcps_beds'].loc[df_data['lcps_beds'].last_valid_index()].astype(int)),
     'title': 'Beds used for COVID',
     'color': 'blue'
 
@@ -97,7 +97,7 @@ cards['beds-used-in-icu'] = {
 cfr = df_data['mortality_rate'].tail(5).values[0:2]
 trend = 1 if cfr[0] < cfr[1] else -1
 cards['cfr-icu'] = {
-    'value': round(cfr[1] * 100, 2),
+    'value': fnum(cfr[1] * 100, 2),
     'title': 'Case Fatality Rate in ICU',
     'color': 'red' if trend == 1 else 'green',
     'trend': trend
@@ -124,14 +124,14 @@ else:
 
 cards['hospitalized-growth'] = {
     'trend': trend,
-    'value': round(growth[1] * 100),
+    'value': fnum(round(growth[1] * 100)),
     'title': 'Growth rate',
     'color': 'green' if trend <= 0 else 'red'
 }
 
 # -- doubling rate / half life
 
-growth = cards['hospitalized-growth']['value']
+growth = round(growth[1] * 100)
 growth_trend = cards['hospitalized-growth']['trend']
 if growth < 0:  # half-life
     value = int(log(1 / 2) / log(1 + growth / 100))
@@ -156,7 +156,7 @@ else:
 
 cards['hospitalized-doubling-rate'] = {
     'trend': trend,
-    'value': value,
+    'value': fnum(value),
     'title': title,
     'color': color
 }
@@ -164,13 +164,13 @@ cards['hospitalized-doubling-rate'] = {
 # -- patients recovered / deceased / beds
 
 cards['patients-recovered-from-hospital'] = {
-    'value': df_data['cumulative_recovered'].tail(4).values[0],
+    'value': fnum(df_data['cumulative_recovered'].tail(4).values[0]),
     'title': 'Patients discharged from hospital',
     'color': 'blue'
 }
 
 cards['hospitalized-deceased'] = {
-    'value': df_data['cumulative_deceased'].tail(4).values[0],
+    'value': fnum(df_data['cumulative_deceased'].tail(4).values[0]),
     'title': 'Hospitalized patients deceased',
     'color': 'blue'
 }
@@ -178,7 +178,7 @@ cards['hospitalized-deceased'] = {
 cfr = df_data['mortality_rate'].tail(5).values[0:2]
 trend = 1 if cfr[0] < cfr[1] else -1
 cards['cfr-hospitalized'] = {
-    'value': round(cfr[1] * 100, 2),
+    'value': fnum(cfr[1] * 100, 2),
     'title': 'Case Fatality Rate for hospitalized patients',
     'color': 'red' if trend == 1 else 'green',
     'trend': trend
@@ -203,19 +203,19 @@ df_rivm = pd.read_csv('html/rivm.csv')
 # }
 
 cards['rivm-total-infected'] = {
-    'value': df_rivm['infected_cumulative'].loc[df_rivm['infected_cumulative'].last_valid_index()].astype(int),
+    'value': fnum(df_rivm['infected_cumulative'].loc[df_rivm['infected_cumulative'].last_valid_index()].astype(int)),
     'title': 'Total confirmed infected',
     'color': 'blue'
 }
 
 cards['rivm-total-hospitalized'] = {
-    'value': df_rivm['hospitalized_cumulative'].loc[df_rivm['hospitalized_cumulative'].last_valid_index()].astype(int),
+    'value': fnum(df_rivm['hospitalized_cumulative'].loc[df_rivm['hospitalized_cumulative'].last_valid_index()].astype(int)),
     'title': 'Total hospitalized',
     'color': 'blue'
 }
 
 cards['rivm-total-deceased'] = {
-    'value': df_rivm['deceased_cumulative'].loc[df_rivm['deceased_cumulative'].last_valid_index()].astype(int),
+    'value': fnum(df_rivm['deceased_cumulative'].loc[df_rivm['deceased_cumulative'].last_valid_index()].astype(int)),
     'title': 'Total deceased',
     'color': 'blue'
 }
@@ -232,13 +232,13 @@ r = df_data['r'].loc[df_data['r'].last_valid_index()].astype(float)
 contagious = df_data['contagious'].loc[df_data['contagious'].last_valid_index()].astype(int)
 
 cards['rivm-r'] = {
-    'value': r,
+    'value': fnum(r, 2),
     'title': 'Estimated reproduction index',
     'color': 'blue'
 }
 
 cards['rivm-contagious'] = {
-    'value': contagious,
+    'value': fnum(contagious),
     'title': 'Estimated contagious people',
     'color': 'blue'
 }
