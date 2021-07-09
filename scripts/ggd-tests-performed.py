@@ -5,13 +5,13 @@ import datetime
 
 
 nl = requests.get('https://coronadashboard.rijksoverheid.nl/json/NL.json').json()
-data = nl['tested_ggd_daily']['values']
+data = nl['tested_ggd']['values']
 
 
 rows = []
-for week in nl['tested_ggd_average']['values']:
+for week in data:
     rows.append({
-        'year-week': datetime.datetime.fromtimestamp(int(week['date_start_unix'])),
+        'year-week': datetime.datetime.fromtimestamp(int(week['date_unix'])),
         'tested_pos': week['infected'],
         'tested_total': week['tested_total'],
         'percent_pos': week['infected_percentage'],
