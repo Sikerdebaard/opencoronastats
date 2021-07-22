@@ -60,7 +60,29 @@ df['mortality_rate'] = df['mortality_rate'].replace(0, np.NaN)
 
 df = calc_growth(df, 'intakeCount')
 
-df_lcps = pd.read_csv('https://lcps.nu/wp-content/uploads/covid-19.csv', index_col=0)
+import requests
+from io import BytesIO
+
+cookies = {
+    'rm_scroll_pos': '1168',
+}
+
+url = 'http://lcps.nu/wp-content/uploads/covid-19.csv'
+
+headers = {
+    'User-Agent': 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.5',
+    'Referer': 'https://lcps.nu/datafeed/',
+    'Connection': 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'TE': 'Trailers',
+}
+
+req = requests.get(url, cookies=cookies, headers=headers)
+req.raise_for_status()
+
+df_lcps = pd.read_csv(BytesIO(req.content), index_col=0)
 df_lcps.index = pd.to_datetime(df_lcps.index, format='%d-%m-%Y')
 
 #df_lcps.loc[pd.to_datetime('2021-04-25')] = df_lcps.loc[pd.to_datetime('2021-05-25')]
