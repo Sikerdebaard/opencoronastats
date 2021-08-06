@@ -478,7 +478,7 @@ pages:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Percentage of total population"
+                  labelString: "Doses per 100 in population"
             xAxes:
               - scaleLabel:
                   labelString: "Date"
