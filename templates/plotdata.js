@@ -419,6 +419,6 @@ function null_array(length) {
 }
 
 update()
-setInterval(function () {
+/*setInterval(function () {
     update()
-}, 600 * 3000) // update every 30 min
+}, 600 * 3000)*/ // update every 30 min
