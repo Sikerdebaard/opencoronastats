@@ -30,6 +30,7 @@
 
 `which time` -ao logs/log-pip pip install -r ./requirements.txt
 
+`which time` -ao logs/log-qrcode python scripts/qrcode.py &
 `which time` -ao logs/log-vaccine-demographics python scripts/vaccine-demographics.py &
 `which time` -ao logs/log-vaccine python scripts/vaccine.py &
 `which time` -ao logs/log-generate_data python scripts/generate_data.py &

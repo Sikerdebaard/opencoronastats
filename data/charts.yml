@@ -202,6 +202,7 @@ pages:
       - vaccine-delivered-vs-administered.csv
       - vaccinated-estimate-latest.csv
       - latest-projection.csv
+      - qr-denylist.csv
     cards:
       - id: percentage-pop-card 
         icon: fa-battery-half
@@ -216,6 +217,8 @@ pages:
 #          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
       - id: avg-doses-per-week
         icon: fa-calendar-check
+      - id: qr-codes-blocked-count 
+        icon: fa-qrcode
 
     charts:
       - name: pp-vacc
@@ -514,72 +517,37 @@ pages:
             filter:
               - filter_zero_except_first 
 
-      - name: projected-people-vaccinated
-        title: Model based projection on dashboard planning
+      - name: qr-codes-blocked
+        title: Number of QR Codes blocked by coronacheck.nl scanner
         type: line
         sources:
-          Model Based Analysis: https://github.com/Sikerdebaard/opencoronastats/tree/master/data/vaccine_estimate
-        uses: latest-projection
+          coronacheck.nl: https://github.com/Sikerdebaard/coronacheck-denylist
+        uses: qr-denylist
         x: date
         options:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Number of people / doses"
+                  labelString: "Number of QR Codes"
             xAxes:
               - scaleLabel:
                   labelString: "Date"
         datasets:
-          - label: "Doses administered"
-            column: total_vaccinations
-            backgroundColor: flevoland
-            borderColor: flevoland
-            showLine: false
-
-          - label: People fully vaccinated (projection)
-            column: fully_vaccinated
+          - label: Total QR Codes blocked
+            column: num_total
             backgroundColor: fully_vaccinated
             borderColor: fully_vaccinated
-            filter:
-              - filter_zero_except_first
-          - label: min 
-            legend: false
-            column: fully_vaccinated_min
-            fill: -1
-            backgroundColor: fully_vaccinated_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-          - label: max 
-            legend: false
-            column: fully_vaccinated_max
-            fill: 2
-            backgroundColor: fully_vaccinated_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-             
-          - label: People that started a vaccine regimen (projection)
-            column: single_dose_vaccinated
-            backgroundColor: single_dose
+          - label: Domestic QR Codes blocked
+            column: num_national
+            backgroundColor: single_dose 
             borderColor: single_dose
-            filter:
-              - filter_zero_except_first
+          - label: International QR Codes blocked
+            column: num_international
+            backgroundColor: flevoland
+            borderColor: flevoland
+
             
-          - label: min
-            column: single_dose_vaccinated_min
-            fill: -1
-            backgroundColor: single_dose_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-          - label: max
-            column: single_dose_vaccinated_max
-            fill: 5 
-            backgroundColor: single_dose_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
+
 
 #        - name: vaccinated-demographics
 #          title: Demographics of doses administered by gov. organ

@@ -3,6 +3,7 @@
 
 pip install -r ./requirements.txt 
 
+python scripts/qrcode.py &
 python scripts/vaccine-demographics.py &
 python scripts/vaccine.py &
 python scripts/generate_data.py &

@@ -316,6 +316,15 @@ cards['avg-doses-per-week'] = {
 
 
 
+df_denylist = pd.read_csv('html/qr-denylist.csv', index_col=0)
+latest = df_denylist.iloc[-1]
+
+cards['qr-codes-blocked-count'] = {
+    'value': f"{fnum(int(latest['num_total']))}",
+    'title': "CoronaCheck QR Codes blocked",
+    'color': 'blue',
+}
+
 
 output_path = Path('./html/')
 
