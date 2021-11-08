@@ -28,19 +28,19 @@ df_vaccinated.index = pd.to_datetime(df_vaccinated.index)
 df_vaccinated = df_vaccinated['estimated'].rename('total_vaccinations').resample('D').interpolate('linear').to_frame()
 
 # manually adjust to new magical Hugo number
-interpolate = df_vaccinated.loc['2021-01-30']['total_vaccinations'] - df_vaccinated.loc['2021-01-29']['total_vaccinations']
+#interpolate = df_vaccinated.loc['2021-01-30']['total_vaccinations'] - df_vaccinated.loc['2021-01-29']['total_vaccinations']
 
-idx = pd.date_range('2021-01-18', '2021-01-30')
-interpolatedays = idx.shape[0] + 1
-df_interpolate = pd.DataFrame(columns=['total_vaccinations'], index=idx)
-df_interpolate['total_vaccinations'] = interpolate // interpolatedays
-df_interpolate = df_interpolate.iloc[:-1]
+#idx = pd.date_range('2021-01-18', '2021-01-30')
+#interpolatedays = idx.shape[0] + 1
+#df_interpolate = pd.DataFrame(columns=['total_vaccinations'], index=idx)
+#df_interpolate['total_vaccinations'] = interpolate // interpolatedays
+#df_interpolate = df_interpolate.iloc[:-1]
 
 df_merged = df_vaccinated['total_vaccinations'].to_frame().copy()
 
-df_merged[df_merged.index.isin(df_interpolate.index)] += df_interpolate.cumsum()
+#df_merged[df_merged.index.isin(df_interpolate.index)] += df_interpolate.cumsum()
         
-df_merged['total_vaccinations'] = df_merged['total_vaccinations'].interpolate('linear')
+#df_merged['total_vaccinations'] = df_merged['total_vaccinations'].interpolate('linear')
 df_merged['total_vaccinations'] = df_merged['total_vaccinations'].astype(int)
 df_diff = df_merged['total_vaccinations'].diff()
 
@@ -121,7 +121,37 @@ df_nl['daily_vaccinations'] = df_nl['total_vaccinations'].diff().fillna(0).astyp
 df_nl['sma7_daily_vaccinations'] = df_nl['daily_vaccinations'].rolling(7).mean().round(0).fillna(0).astype(int)
 df_nl['total_vaccinations_per_hundred'] = (df_nl['total_vaccinations'] / popsize * 100).round(2)
 
+
+
+## booster
+
+df_booster1 = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/booster-shots-immune-disorders.csv', index_col=0)
+df_booster1.index = pd.to_datetime(df_booster1.index)
+
+df_booster1.loc[pd.to_datetime('2021-10-03')] = [39, 0]
+
+df_booster1.sort_index(inplace=True)
+
+df_diff_booster1 = df_booster1['cumulative_number_of_booster1_shots'].resample('D').last().interpolate('linear').diff().fillna(0).astype(int)
+
+total_vaccinations_sans_boosters = df_nl.loc[df_diff_booster1.index]['total_vaccinations'] - df_diff_booster1
+
+df_nl['total_vaccinations_sans_boosters'] = df_nl['total_vaccinations']
+df_nl.loc[df_diff_booster1.index, 'total_vaccinations_sans_boosters'] = total_vaccinations_sans_boosters
+
+diff_test = df_nl['total_vaccinations_sans_boosters'].diff()
+if diff_test[diff_test < 0].shape[0] != 0:
+    print('WARNING! diff-test failed')
+
+df_nl = df_nl.join(df_booster1['cumulative_number_of_booster1_shots'].astype(pd.Int64Dtype()))
+
+## / booster
+
 df_nl.to_csv('html/daily-vaccine-rollout.csv')
+df_vacc_model_data = df_nl['total_vaccinations_sans_boosters'].rename('total_vaccinations').to_frame()
+df_vacc_model_data = df_vacc_model_data.join(df_booster1['cumulative_number_of_booster1_shots'])
+
+df_vacc_model_data.astype(pd.Int64Dtype()).to_csv('html/vaccine-model-nl-country-data.csv')
 
 ## < /> DAILY DAILY ##
 
