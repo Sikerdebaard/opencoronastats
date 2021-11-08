@@ -149,7 +149,8 @@ df_nl = df_nl.join(df_booster1['cumulative_number_of_booster1_shots'].astype(pd.
 
 df_nl.to_csv('html/daily-vaccine-rollout.csv')
 df_vacc_model_data = df_nl['total_vaccinations_sans_boosters'].rename('total_vaccinations').to_frame()
-df_vacc_model_data = df_vacc_model_data.join(df_booster1['cumulative_number_of_booster1_shots'])
+df_vacc_model_data = df_vacc_model_data.join(df_nl[['people_fully_vaccinated']])
+df_vacc_model_data = df_vacc_model_data.join(df_booster1['cumulative_number_of_booster1_shots'].rename('people_booster1'))
 
 df_vacc_model_data.astype(pd.Int64Dtype()).to_csv('html/vaccine-model-nl-country-data.csv')
 
