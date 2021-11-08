@@ -237,6 +237,19 @@ pages:
               - scaleLabel:
                   labelString: "Date"
         datasets:
+          - label: Percentage population booster1 (estimate)
+            column: percentage_pop_booster1
+            backgroundColor: denmark 
+            borderColor: denmark
+            filter:
+              - filter_zero_except_first
+          - label: "Percentage population fully vaccinated (RIVM estimate)"
+            column: percentage_pop_vaccinated_rivm
+            backgroundColor: flevoland
+            borderColor: flevoland
+            showLine: false
+            filter:
+              - filter_zero_values
           - label: Percentage population fully vaccinated (estimate)
             column: percentage_pop_fully_vaccinated
             backgroundColor: fully_vaccinated
@@ -254,7 +267,7 @@ pages:
           - label: max 
             legend: false
             column: percentage_pop_fully_vaccinated_max
-            fill: 1
+            fill: 3
             backgroundColor: fully_vaccinated_ci
             borderColor: transparent
             lineTension: 0
@@ -269,14 +282,14 @@ pages:
             
           - label: min
             column: percentage_pop_partially_vaccinated_min
-            fill: 3
+            fill: 5
             backgroundColor: single_dose_ci
             borderColor: transparent
             lineTension: 0
             pointRadius: 0
           - label: max
             column: percentage_pop_partially_vaccinated_max
-            fill: 4
+            fill: 6
             backgroundColor: single_dose_ci
             borderColor: transparent
             lineTension: 0
@@ -290,18 +303,20 @@ pages:
               - filter_zero_except_first
           - label: min
             column: percentage_pop_vaccinated_min
-            fill: 6
+            fill: 8
             backgroundColor: derivate-afive
             borderColor: transparent
             lineTension: 0
             pointRadius: 0
           - label: max
             column: percentage_pop_vaccinated_max
-            fill: 6
+            fill: 8
             backgroundColor: derivate-afive
             borderColor: transparent
             lineTension: 0
             pointRadius: 0
+
+
 
 
       - name: estimated-people-vaccinated
@@ -325,6 +340,12 @@ pages:
             backgroundColor: flevoland
             borderColor: flevoland
             showLine: false
+          - label: People that received booster 1 (RIVM estimate)
+            column: people_booster1
+            backgroundColor: denmark 
+            borderColor: denmark
+            filter:
+              - filter_zero_values
           - label: "People fully vaccinated (RIVM estimate)"
             column: people_fully_vaccinated
             backgroundColor: derivate
@@ -357,7 +378,7 @@ pages:
           - label: max 
             legend: false
             column: fully_vaccinated_max
-            fill: 4
+            fill: 5
             backgroundColor: fully_vaccinated_ci
             borderColor: transparent
             lineTension: 0
@@ -379,7 +400,7 @@ pages:
             pointRadius: 0
           - label: max
             column: single_dose_vaccinated_max
-            fill: 7
+            fill: 8
             backgroundColor: single_dose_ci
             borderColor: transparent
             lineTension: 0

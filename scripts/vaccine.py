@@ -132,6 +132,8 @@ df_booster1.loc[pd.to_datetime('2021-10-03')] = [39, 0]
 
 df_booster1.sort_index(inplace=True)
 
+df_boosters = df_booster1['cumulative_number_of_booster1_shots'].rename('people_booster1').to_frame()
+
 df_diff_booster1 = df_booster1['cumulative_number_of_booster1_shots'].resample('D').last().interpolate('linear').diff().fillna(0).astype(int)
 
 total_vaccinations_sans_boosters = df_nl.loc[df_diff_booster1.index]['total_vaccinations'] - df_diff_booster1
@@ -247,6 +249,15 @@ df_merged.to_csv('html/vaccine-delivered-vs-administered.csv')
 df_model = pd.read_csv('data/vaccine_estimate/vaccinated-estimate-latest.csv', index_col=0)
 df_model.index = pd.to_datetime(df_model.index)
 df_model = df_model.join(df_nl[['people_fully_vaccinated', 'rivm_partially_vaccinated', 'total_vaccinations']])
+
+df_model = df_model.join(df_boosters.astype(pd.Int64Dtype()))
+
+for booster_name in df_boosters.columns:
+    colname = f'percentage_pop_{booster_name.split("_")[-1]}'
+    df_model[colname] = (df_model[booster_name] / popsize * 100).round(2)
+    df_model[colname] = df_model[colname].interpolate('linear').round(2)
+
+df_model['percentage_pop_vaccinated_rivm'] = (df_model['people_fully_vaccinated'] / popsize * 100).round(2)
 
 df_model['percentage_pop_vaccinated'] = (df_model['vaccinated'] / popsize * 100).round(2)
 df_model['percentage_pop_vaccinated_min'] = (df_model['vaccinated_min'] / popsize * 100).round(2)
