@@ -3148,7 +3148,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: icu-treament-times-inicu
-        title: Treament times of patients in ICU
+        title: Treatment times of patients in ICU
         uses: treatment_durations
         type: 'demographics'
         x: 'days_of_treatment'
@@ -3171,7 +3171,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: icu-treament-times-deceased
-        title: Treament times of deceased patients
+        title: Treatment times of deceased patients
         uses: treatment_durations
         type: 'demographics'
         x: 'days_of_treatment'
@@ -3194,7 +3194,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: icu-treament-times-recovered
-        title: Treament times until discharged
+        title: Treatment times until discharged
         uses: treatment_durations
         type: 'demographics'
         x: 'days_of_treatment'
@@ -3217,7 +3217,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: icu-treament-times-moved
-        title: Treament times of patients moved from ICU to hospital
+        title: Treatment times of patients moved from ICU to hospital
         uses: treatment_durations
         type: 'demographics'
         x: 'days_of_treatment'
@@ -3514,7 +3514,7 @@ pages:
 #          Stichting NICE: https://www.stichting-nice.nl/
 #
 #      - name: icu-treament-times-inicu
-#        title: Treament times of patients in ICU
+#        title: Treatment times of patients in ICU
 #        uses: treatment_durations
 #        type: 'demographics'
 #        x: 'days_of_treatment'
@@ -3537,7 +3537,7 @@ pages:
 #          Stichting NICE: https://www.stichting-nice.nl/
 #
 #      - name: icu-treament-times-deceased
-#        title: Treament times of deceased patients
+#        title: Treatment times of deceased patients
 #        uses: treatment_durations
 #        type: 'demographics'
 #        x: 'days_of_treatment'
@@ -3560,7 +3560,7 @@ pages:
 #          Stichting NICE: https://www.stichting-nice.nl/
 #
 #      - name: icu-treament-times-recovered
-#        title: Treament times of recovered patients
+#        title: Treatment times of recovered patients
 #        uses: treatment_durations
 #        type: 'demographics'
 #        x: 'days_of_treatment'
@@ -3583,7 +3583,7 @@ pages:
 #          Stichting NICE: https://www.stichting-nice.nl/
 #
 #      - name: icu-treament-times-moved
-#        title: Treament times of patients moved from ICU to hospital
+#        title: Treatment times of patients moved from ICU to hospital
 #        uses: treatment_durations
 #        type: 'demographics'
 #        x: 'days_of_treatment'
@@ -3666,7 +3666,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: hospital-treament-times
-        title: Treament times of patients currently in hospital
+        title: Treatment times of patients currently in hospital
         uses: hospital_treatment_durations
         type: 'demographics'
         x: 'days_of_treatment'
@@ -3689,7 +3689,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: hospital-treament-times-deceased
-        title: Treament times of deceased patients (hospital)
+        title: Treatment times of deceased patients (hospital)
         uses: hospital_treatment_durations
         type: 'demographics'
         x: 'days_of_treatment'
@@ -3712,7 +3712,7 @@ pages:
           Stichting NICE: https://www.stichting-nice.nl/
 
       - name: hospital-treament-times-recovered
-        title: Treament time until discharged (hospital)
+        title: Treatment time until discharged (hospital)
         uses: hospital_treatment_durations
         type: 'demographics'
         x: 'days_of_treatment'
