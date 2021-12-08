@@ -74,7 +74,7 @@ df_lcps.index = df_lcps.index.astype(str)
 #df_lcps.rename(columns={'Aantal': 'lcps_beds'}, inplace=True)
 #df_lcps.drop_duplicates(inplace=True)
 
-df = df.join(df_lcps['IC_Bedden_COVID'].rename('lcps_beds'))
+df = df.join(df_lcps['IC_Bedden_COVID_Nederland'].rename('lcps_beds'))
 
 output_path = Path('./html')
 
