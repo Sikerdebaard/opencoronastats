@@ -23,20 +23,20 @@ from pathlib import Path
 import numpy as np
 
 
-df_vaccinated = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/augmented/doses_administered_cumulative.csv', index_col=0)
-df_vaccinated.index = pd.to_datetime(df_vaccinated.index)
-df_vaccinated = df_vaccinated['estimated'].rename('total_vaccinations').resample('D').interpolate('linear').to_frame()
+df_mzelst = pd.read_csv('https://raw.githubusercontent.com/mzelst/covid-19/master/data-rivm/vaccines-ecdc/vaccines_administered_nl.csv')
+df_vaccinated = df_mzelst.copy()
 
-# manually adjust to new magical Hugo number
-#interpolate = df_vaccinated.loc['2021-01-30']['total_vaccinations'] - df_vaccinated.loc['2021-01-29']['total_vaccinations']
+df_vaccinated['date'] = df_vaccinated.index.map(lambda x: pd.to_datetime(f'{df_vaccinated.at[x, "year"].astype(int)}-{df_vaccinated.at[x, "week"].astype(int)}-7', format='%G-%V-%u'))
+df_vaccinated.set_index('date', inplace=True)
+df_vaccinated.sort_index(inplace=True)
 
-#idx = pd.date_range('2021-01-18', '2021-01-30')
-#interpolatedays = idx.shape[0] + 1
-#df_interpolate = pd.DataFrame(columns=['total_vaccinations'], index=idx)
-#df_interpolate['total_vaccinations'] = interpolate // interpolatedays
-#df_interpolate = df_interpolate.iloc[:-1]
+
+df_vaccinated = df_vaccinated.groupby('date')['total_administered'].sum().rename('total_vaccinations')
+df_vaccinated = df_vaccinated.cumsum()
+df_vaccinated = df_vaccinated.resample('D').interpolate('linear').round(0).astype(int).to_frame()
 
 df_merged = df_vaccinated['total_vaccinations'].to_frame().copy()
+
 
 #df_merged[df_merged.index.isin(df_interpolate.index)] += df_interpolate.cumsum()
         
@@ -125,10 +125,20 @@ df_nl['total_vaccinations_per_hundred'] = (df_nl['total_vaccinations'] / popsize
 
 ## booster
 
-df_booster1 = pd.read_csv('https://raw.githubusercontent.com/Sikerdebaard/netherlands-vaccinations-scraper/main/booster-shots-immune-disorders.csv', index_col=0)
-df_booster1.index = pd.to_datetime(df_booster1.index)
+df_booster1 = df_mzelst.copy() 
 
-df_booster1.loc[pd.to_datetime('2021-10-03')] = [39, 0]
+df_booster1['date'] = df_booster1.index.map(lambda x: pd.to_datetime(f'{df_booster1.at[x, "year"].astype(int)}-{df_booster1.at[x, "week"].astype(int)}-7', format='%G-%V-%u'))
+df_booster1.set_index('date', inplace=True)
+df_booster1.sort_index(inplace=True)
+
+df_booster1 = df_booster1[df_booster1['dose_number'] == 3]
+
+df_booster1 = df_booster1.groupby('date')['total_administered'].sum().rename('cumulative_number_of_booster1_shots')
+df_booster1 = df_booster1.cumsum()
+df_booster1 = df_booster1.resample('D').interpolate('linear').round(0).astype(int).to_frame()
+
+startdate = df_booster1[df_booster1['cumulative_number_of_booster1_shots'] == 0].index[-1]
+df_booster1 = df_booster1[df_booster1.index >= startdate]
 
 df_booster1.sort_index(inplace=True)
 
