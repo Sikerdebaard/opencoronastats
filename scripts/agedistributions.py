@@ -1,6 +1,6 @@
 import pandas as pd
 
-df_casus = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_casus_landelijk.json')
+df_casus = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_casus_landelijk.csv', sep=';')
 df_tf = df_casus.copy()
 
 
