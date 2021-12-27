@@ -88,7 +88,7 @@ print(f'Total infected: {total_infected}')
 # In[5]:
 
 
-df_casus = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_casus_landelijk.csv', sep=';')
+df_casus = pd.read_csv('https://data.rivm.nl/covid-19/COVID-19_casus_landelijk.csv', sep=';')
 
 deceased_extra = 0
 
