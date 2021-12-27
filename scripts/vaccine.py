@@ -144,18 +144,20 @@ df_booster1.sort_index(inplace=True)
 
 df_boosters = df_booster1['cumulative_number_of_booster1_shots'].rename('people_booster1').to_frame()
 
-df_diff_booster1 = df_booster1['cumulative_number_of_booster1_shots'].resample('D').last().interpolate('linear').diff().fillna(0).astype(int)
 
-total_vaccinations_sans_boosters = df_nl.loc[df_diff_booster1.index]['total_vaccinations'] - df_diff_booster1
+df_diff_booster1 = df_booster1['cumulative_number_of_booster1_shots']
 
-df_nl['total_vaccinations_sans_boosters'] = df_nl['total_vaccinations']
-df_nl.loc[df_diff_booster1.index, 'total_vaccinations_sans_boosters'] = total_vaccinations_sans_boosters
+total_vaccinations_sans_boosters = df_nl['total_vaccinations'].copy()
+total_vaccinations_sans_boosters.loc[df_diff_booster1.index] -= df_diff_booster1
+total_vaccinations_sans_boosters = total_vaccinations_sans_boosters.rename('total_vaccinations_sans_boosters')
 
-diff_test = df_nl['total_vaccinations_sans_boosters'].diff()
+diff_test = total_vaccinations_sans_boosters.diff()
 if diff_test[diff_test < 0].shape[0] != 0:
     print('WARNING! diff-test failed')
 
-df_nl = df_nl.join(df_booster1['cumulative_number_of_booster1_shots'].astype(pd.Int64Dtype()))
+
+df_nl = df_nl.join(total_vaccinations_sans_boosters.astype(pd.Int64Dtype()))
+
 
 ## / booster
 
