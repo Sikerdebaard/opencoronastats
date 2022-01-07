@@ -26,7 +26,7 @@ import numpy as np
 df_mzelst = pd.read_csv('https://raw.githubusercontent.com/mzelst/covid-19/master/data-rivm/vaccines-ecdc/vaccines_administered_nl.csv')
 df_vaccinated = df_mzelst.copy()
 
-df_vaccinated['date'] = df_vaccinated.index.map(lambda x: pd.to_datetime(f'{df_vaccinated.at[x, "year"].astype(int)}-{df_vaccinated.at[x, "week"].astype(int)}-7', format='%G-%V-%u'))
+df_vaccinated['date'] = df_vaccinated.index.map(lambda x: pd.to_datetime(f'{df_vaccinated.at[x, "year"].astype(int)}-{df_vaccinated.at[x, "week"].astype(int)}-5', format='%G-%V-%u'))
 df_vaccinated.set_index('date', inplace=True)
 df_vaccinated.sort_index(inplace=True)
 
