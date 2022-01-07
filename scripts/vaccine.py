@@ -127,7 +127,7 @@ df_nl['total_vaccinations_per_hundred'] = (df_nl['total_vaccinations'] / popsize
 
 df_booster1 = df_mzelst.copy() 
 
-df_booster1['date'] = df_booster1.index.map(lambda x: pd.to_datetime(f'{df_booster1.at[x, "year"].astype(int)}-{df_booster1.at[x, "week"].astype(int)}-7', format='%G-%V-%u'))
+df_booster1['date'] = df_booster1.index.map(lambda x: pd.to_datetime(f'{df_booster1.at[x, "year"].astype(int)}-{df_booster1.at[x, "week"].astype(int)}-5', format='%G-%V-%u'))
 df_booster1.set_index('date', inplace=True)
 df_booster1.sort_index(inplace=True)
 
