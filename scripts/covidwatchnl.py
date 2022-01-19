@@ -22,7 +22,7 @@ df_daily = df_daily.iloc[1:]
 for col in df_daily.columns:
     df_daily[col] = df_daily[col].astype(int)
     
-df_daily.rename(columns={'Total_reported': 'infected', 'Hospital_admission':  'hospitalized', 'Deceased': 'deceased'}, inplace=True)
+df_daily.rename(columns={'Total_reported': 'infected', 'Deceased': 'deceased'}, inplace=True)
 df_daily.index.rename('date', inplace=True)
 
 df_rivmnums = df_daily
@@ -31,7 +31,8 @@ df_rivmnums = df_daily
 
 df_daily_cum = df.resample('D').sum().cumsum()
 df_daily_cum = df_daily_cum.iloc[1:]
-df_daily_cum.rename(columns={'Total_reported': 'infected_cumulative', 'Hospital_admission':  'hospitalized_cumulative', 'Deceased': 'deceased_cumulative'}, inplace=True)
+df_daily_cum.rename(columns={'Total_reported': 'infected_cumulative', 'Deceased': 'deceased_cumulative'}, inplace=True)
+df_daily_cum.drop(columns='Version', inplace=True)
 df_rivmnums = df_rivmnums.join(df_daily_cum)
 
 

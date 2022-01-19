@@ -17,7 +17,7 @@ df = df.set_index('Date_of_report') # set column as index
 
 df_daily_cum = df.resample('D').sum() # resample to daily
     
-df_daily_cum.rename(columns={'Total_reported': 'infected', 'Hospital_admission':  'hospitalized', 'Deceased': 'deceased'}, inplace=True)
+df_daily_cum.rename(columns={'Total_reported': 'infected', 'Deceased': 'deceased'}, inplace=True)
 df_daily_cum.index.rename('date', inplace=True)
 
 #df_daily_cum.to_csv('daily_cumulative_from_municipality.csv')
@@ -34,10 +34,8 @@ df_weekly_cum.index.rename('week', inplace=True)
 
 
 total_deaths = df_weekly_cum['deceased'].iloc[-1]
-total_hospitalized = df_weekly_cum['hospitalized'].iloc[-1]
 total_infected = df_weekly_cum['infected'].iloc[-1]
 print(f'Total deaths: {total_deaths}')
-print(f'Total hospitalized: {total_hospitalized}')
 print(f'Total infected: {total_infected}')
 
 
@@ -57,7 +55,7 @@ df = df.set_index('Date_of_publication')
 
 df_daily = df.resample('D').sum()
     
-df_daily.rename(columns={'Total_reported': 'infected', 'Hospital_admission':  'hospitalized', 'Deceased': 'deceased'}, inplace=True)
+df_daily.rename(columns={'Total_reported': 'infected', 'Deceased': 'deceased'}, inplace=True)
 df_daily.index.rename('date', inplace=True)
 
 #df_daily.to_csv('daily_from_municipality.csv')
@@ -72,10 +70,8 @@ df_weekly.index.rename('week', inplace=True)
 #df_weekly.to_csv('weekly_from_municipality.csv')
 
 total_deaths = df_weekly['deceased'].sum()
-total_hospitalized = df_weekly['hospitalized'].sum()
 total_infected = df_weekly['infected'].sum()
 print(f'Total deaths: {total_deaths}')
-print(f'Total hospitalized: {total_hospitalized}')
 print(f'Total infected: {total_infected}')
 
 

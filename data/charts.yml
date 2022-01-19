@@ -1525,12 +1525,12 @@ pages:
             borderColor: icu-beds
             filter:
               - filter_zero_values
-          - label: Hospitalized
-            column: hospitalized
-            backgroundColor: patients
-            borderColor: patients
-            filter:
-              - filter_zero_values
+#            - label: Hospitalized
+#              column: hospitalized
+#              backgroundColor: patients
+#              borderColor: patients
+#              filter:
+#                - filter_zero_values
           - label: Deceased
             column: deceased
             backgroundColor: deaths
@@ -1563,12 +1563,12 @@ pages:
             borderColor: icu-beds
             filter:
               - filter_zero_values
-          - label: Hospitalized
-            column: hospitalized_cumulative
-            backgroundColor: patients
-            borderColor: patients
-            filter:
-              - filter_zero_values
+#            - label: Hospitalized
+#              column: hospitalized_cumulative
+#              backgroundColor: patients
+#              borderColor: patients
+#              filter:
+#                - filter_zero_values
           - label: Deceased
             column: deceased_cumulative
             backgroundColor: deaths
@@ -3248,7 +3248,6 @@ pages:
       #- demographics.csv
       #- treatment_durations.csv
       - timestamp.json
-      - hospitalized-by-age.csv
     cards:
       - id: hospitalized-doubling-rate
         icon: fa-superscript
@@ -3734,88 +3733,88 @@ pages:
         sources:
           Stichting NICE: https://www.stichting-nice.nl/
 
-      - name: age-distribution-hospitalized
-        title: Age distribution hospitalized as a percentage of total by first week of symptom onset
-        type: line
-        uses: hospitalized-by-age
-        x: week
-        sources:
-          RIVM: "https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/2c4357c8-76e4-4662-9574-1deb8a73f724"
-        options:
-          scales:
-            yAxes:
-              - scaleLabel:
-                  labelString: "Percentage"
-                stacked: true
-                ticks:
-                  min: 0
-                  max: 100
-            xAxes:
-              - scaleLabel:
-                  labelString: "year-week"
-        datasets:
-          - label: 0-9
-            column: 0-9
-            fill: origin
-            backgroundColor: drenthe 
-            borderColor: drenthe 
-            steppedLine: true
-          - label: 10-19
-            column: 10-19
-            fill: 0
-            backgroundColor: flevoland 
-            borderColor: flevoland 
-            steppedLine: true
-          - label: 20-29
-            column: 20-29
-            fill: 0
-            backgroundColor: friesland
-            borderColor: friesland 
-            steppedLine: true
-          - label: 30-39
-            column: 30-39
-            fill: 0
-            backgroundColor: gelderland 
-            borderColor: gelderland 
-            steppedLine: true
-          - label: 40-49
-            column: 40-49
-            fill: 0
-            backgroundColor: groningen
-            borderColor: groningen
-            steppedLine: true
-          - label: 50-59
-            column: 50-59
-            fill: 0
-            backgroundColor: limburg
-            borderColor: limburg
-            steppedLine: true
-          - label: 60-69
-            column: 60-69
-            fill: 0
-            backgroundColor: noord-brabant
-            borderColor: noord-brabant
-            steppedLine: true
-          - label: 70-79
-            column: 70-79
-            fill: 0
-            backgroundColor: noord-holland 
-            borderColor: noord-holland
-            steppedLine: true
-          - label: 80-89
-            column: 80-89
-            fill: 0
-            backgroundColor: overijssel
-            borderColor: overijssel
-            steppedLine: true
-          - label: 90+
-            column: 90+
-            fill: 0
-            backgroundColor: utrecht
-            borderColor: utrecht
-            steppedLine: true
-#          - label: <50 
-#            column: <50
-#            fill: 0
-#            backgroundColor: zeeland
-#            borderColor: zeeland
+#        - name: age-distribution-hospitalized
+#          title: Age distribution hospitalized as a percentage of total by first week of symptom onset
+#          type: line
+#          uses: hospitalized-by-age
+#          x: week
+#          sources:
+#            RIVM: "https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/2c4357c8-76e4-4662-9574-1deb8a73f724"
+#          options:
+#            scales:
+#              yAxes:
+#                - scaleLabel:
+#                    labelString: "Percentage"
+#                  stacked: true
+#                  ticks:
+#                    min: 0
+#                    max: 100
+#              xAxes:
+#                - scaleLabel:
+#                    labelString: "year-week"
+#          datasets:
+#            - label: 0-9
+#              column: 0-9
+#              fill: origin
+#              backgroundColor: drenthe 
+#              borderColor: drenthe 
+#              steppedLine: true
+#            - label: 10-19
+#              column: 10-19
+#              fill: 0
+#              backgroundColor: flevoland 
+#              borderColor: flevoland 
+#              steppedLine: true
+#            - label: 20-29
+#              column: 20-29
+#              fill: 0
+#              backgroundColor: friesland
+#              borderColor: friesland 
+#              steppedLine: true
+#            - label: 30-39
+#              column: 30-39
+#              fill: 0
+#              backgroundColor: gelderland 
+#              borderColor: gelderland 
+#              steppedLine: true
+#            - label: 40-49
+#              column: 40-49
+#              fill: 0
+#              backgroundColor: groningen
+#              borderColor: groningen
+#              steppedLine: true
+#            - label: 50-59
+#              column: 50-59
+#              fill: 0
+#              backgroundColor: limburg
+#              borderColor: limburg
+#              steppedLine: true
+#            - label: 60-69
+#              column: 60-69
+#              fill: 0
+#              backgroundColor: noord-brabant
+#              borderColor: noord-brabant
+#              steppedLine: true
+#            - label: 70-79
+#              column: 70-79
+#              fill: 0
+#              backgroundColor: noord-holland 
+#              borderColor: noord-holland
+#              steppedLine: true
+#            - label: 80-89
+#              column: 80-89
+#              fill: 0
+#              backgroundColor: overijssel
+#              borderColor: overijssel
+#              steppedLine: true
+#            - label: 90+
+#              column: 90+
+#              fill: 0
+#              backgroundColor: utrecht
+#              borderColor: utrecht
+#              steppedLine: true
+#  #          - label: <50 
+#  #            column: <50
+#  #            fill: 0
+#  #            backgroundColor: zeeland
+#  #            borderColor: zeeland
