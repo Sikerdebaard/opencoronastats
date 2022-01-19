@@ -211,7 +211,7 @@ cards['rivm-total-infected'] = {
 df_hospitalized_nice = pd.read_csv('html/hospitalized.csv', index_col=0)
 df_hospitalized_nice.index = pd.to_datetime(df_hospitalized_nice.index)
 df_hospitalized_nice.sort_index(inplace=True)
-cards['lcps-total-hospitalized'] = {
+cards['nice-total-hospitalized'] = {
     'value': fnum(df_hospitalized_nice['intakeCumulative'].loc[df_hospitalized_nice['intakeCumulative'].last_valid_index()].astype(int)),
     'title': 'Total hospitalized',
     'color': 'blue'

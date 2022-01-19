@@ -1296,7 +1296,7 @@ pages:
         icon: fa-virus
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
-      - id: rivm-total-hospitalized
+      - id: nice-total-hospitalized
         icon: fa-hospital
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
@@ -1307,7 +1307,7 @@ pages:
       - id: rivm-r
         icon: fa-people-arrows
         sources:
-          RIVM: https://www.rivm.nl/coronavirus-covid-19
+          Stichting NICE: https://www.stichting-nice.nl/
       - id: rivm-contagious
         icon: fa-head-side-cough
         sources:
