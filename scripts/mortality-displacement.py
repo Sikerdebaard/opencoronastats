@@ -215,6 +215,9 @@ df_statistics = df_statistics.astype(int)  # set everything in stone -> convert 
 df_2021 = df_cbs[df_cbs['year'] == 2021].pivot_table(index='week', columns='year', values=overleden_col)
 #df_2021.at[1, 2021] += df_cbs[(df_cbs['year'] == 2021) & (df_cbs['week'] == 53)][overleden_col].values[0]
 
+# add week 0 of 2022
+df_2021.at[52, 2021] += df_cbs[(df_cbs['year'] == 2022) & (df_cbs['week'] == 0)].iloc[0]['Overledenen_1']
+
 df_2021
 
 df_statistics = df_statistics.join(df_2021)
