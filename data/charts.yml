@@ -1914,7 +1914,7 @@ pages:
             borderColor: zuid-holland
             filter:
               - filter_zero_values
-          - label: Infected reported by RIVM
+          - label: Number of tests positive as reported by GGD 
             column: infected
             backgroundColor: patients
             borderColor: patients
