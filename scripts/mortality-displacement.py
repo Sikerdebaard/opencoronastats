@@ -244,42 +244,8 @@ displacement_dfs[calcforyear] = df_statistics.copy()
 
 df_statistics
 
-df_output = pd.DataFrame(columns=['pattern', 'expected_seasonal_pattern', 'expected_seasonal_pattern_high', 'expected_seasonal_pattern_low', f'displacement', f'displacement_high', f'displacement_low', 'rivm_casereports', 'rivm_municipality'])
-for year in sorted(displacement_dfs.keys()):
-    cols = [year, 'expected_seasonal_pattern', 'expected_seasonal_pattern_high', 'expected_seasonal_pattern_low', f'displacement_{year}', f'displacement_{year}_high', f'displacement_{year}_low', 'rivm_casereports', 'rivm_municipality']
-    df_displacement = displacement_dfs[year][cols]
-    df_displacement.index = df_displacement.apply(lambda r: f'{year}-{int(r.name):02}', axis=1)
-
-    rename = {
-        year: 'pattern',
-        f'displacement_{year}': 'displacement',
-        f'displacement_{year}_high': f'displacement_high',
-        f'displacement_{year}_low': f'displacement_low',
-    }
-
-    df_displacement = df_displacement.rename(columns=rename)
-
-    df_output = pd.concat([df_output, df_displacement])
 
 
-# manually add week 2020-53 from CBS as it is a bit of a strange week
-# sometimes cbs calculates with week 53, sometimes with week 0
-# in any case, this year its both, and we need to sum 2020-53 and 2021-0 to get the right value
-pattern = df_cbs[((df_cbs['year'] == 2020) & (df_cbs['week'] == 53)) | ((df_cbs['year'] == 2021) & (df_cbs['week'] == 0))]['Overledenen_1'].astype(int).sum()
-expected = 3266
-expected_low = 2906
-expected_high = 3652
-df_output.loc['2020-53'] = {
-    'pattern': pattern,
-    'expected_seasonal_pattern': expected,
-    'expected_seasonal_pattern_high': expected_high,
-    'expected_seasonal_pattern_low': expected_low,
-    'displacement': pattern - expected,
-    'displacement_high': pattern - expected_low,
-    'displacement_low': pattern - expected_high,
-    'rivm_casereports': df_rivm.at['2020-53', 'rivm casereports'],
-    'rivm_municipality': df_rivm.at['2020-53', 'rivm municipality']
-}
 
 
 
@@ -353,7 +319,7 @@ df_statistics = df_statistics.astype(int)  # set everything in stone -> convert 
 # prepare 2022
 
 df_2022 = df_cbs[df_cbs['year'] == 2022].pivot_table(index='week', columns='year', values=overleden_col)
-df_2022.at[1, 2022] += df_cbs[(df_cbs['year'] == 2019) & (df_cbs['week'] == 53)][overleden_col].values[0]
+#df_2022.at[1, 2022] += df_cbs[(df_cbs['year'] == 2019) & (df_cbs['week'] == 53)][overleden_col].values[0]
 
 df_2022
 
@@ -381,8 +347,11 @@ displacement_dfs[calcforyear] = df_statistics.copy()
 
 df_statistics
 
+###### / 2022 #####
+
 df_output = pd.DataFrame(columns=['pattern', 'expected_seasonal_pattern', 'expected_seasonal_pattern_high', 'expected_seasonal_pattern_low', f'displacement', f'displacement_high', f'displacement_low', 'rivm_casereports', 'rivm_municipality'])
 for year in sorted(displacement_dfs.keys()):
+    print(year)
     cols = [year, 'expected_seasonal_pattern', 'expected_seasonal_pattern_high', 'expected_seasonal_pattern_low', f'displacement_{year}', f'displacement_{year}_high', f'displacement_{year}_low', 'rivm_casereports', 'rivm_municipality']
     df_displacement = displacement_dfs[year][cols]
     df_displacement.index = df_displacement.apply(lambda r: f'{year}-{int(r.name):02}', axis=1)
@@ -399,6 +368,26 @@ for year in sorted(displacement_dfs.keys()):
     df_output = pd.concat([df_output, df_displacement])
 
 ###### / 2022 #######
+
+
+# manually add week 2020-53 from CBS as it is a bit of a strange week
+# sometimes cbs calculates with week 53, sometimes with week 0
+# in any case, this year its both, and we need to sum 2020-53 and 2021-0 to get the right value
+pattern = df_cbs[((df_cbs['year'] == 2020) & (df_cbs['week'] == 53)) | ((df_cbs['year'] == 2021) & (df_cbs['week'] == 0))]['Overledenen_1'].astype(int).sum()
+expected = 3266
+expected_low = 2906
+expected_high = 3652
+df_output.loc['2020-53'] = {
+    'pattern': pattern,
+    'expected_seasonal_pattern': expected,
+    'expected_seasonal_pattern_high': expected_high,
+    'expected_seasonal_pattern_low': expected_low,
+    'displacement': pattern - expected,
+    'displacement_high': pattern - expected_low,
+    'displacement_low': pattern - expected_high,
+    'rivm_casereports': df_rivm.at['2020-53', 'rivm casereports'],
+    'rivm_municipality': df_rivm.at['2020-53', 'rivm municipality']
+}
 
 df_output = df_output.sort_index()
 df_output.index.rename('year-week', inplace=True)
