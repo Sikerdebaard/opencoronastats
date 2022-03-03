@@ -1250,7 +1250,7 @@ pages:
                 ticks:
                   beginAtZero: true
                   min: 0
-                  max: 150000
+                  max: 120000
             xAxes:
               - scaleLabel:
                   labelString: "Date"
