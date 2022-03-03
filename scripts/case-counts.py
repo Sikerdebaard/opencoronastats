@@ -158,106 +158,6 @@ for k, v in vals.items():
 #df_deceased.to_csv('weekly_from_casereports.csv')
 
 
-# ## CoronaWatchNL Data: OSIRISGEO
-# [CoronaWatchNL](https://github.com/J535D165/CoronaWatchNL) writes the following about this dataset: "These datasets describe the new and cumulative number of confirmed, hospitalized and deceased COVID-19 cases. Every day, the data is retrieved from the central database OSIRIS at 10:00 AM by RIVM. The datasets are categorized by their geographical level (national, provincial, municipal)."
-# 
-# Both intra-day and cumulative data is available.
-
-# In[6]:
-
-
-# OSIRIS
-df_osirisgeo = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-geo/data-national/RIVM_NL_national.csv', index_col=0)
-df_osirisgeo.index = pd.to_datetime(df_osirisgeo.index)
-
-df_osirisgeo = df_osirisgeo.pivot(columns='Type')
-
-# cumulative data
-df_osirisgeo_cum = df_osirisgeo['AantalCumulatief']
-df_osirisgeo_cum = df_osirisgeo_cum.resample('W-MON', label='left', closed='left').max().rename(columns={'Overleden': 'deceased', 'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
-#df_osirisgeo_cum.index = df_osirisgeo_cum.index.week
-#df_osirisgeo_cum.index = df_osirisgeo_cum.index.week
-df_osirisgeo_cum.index = df_osirisgeo_cum.index.strftime('%G-%V')
-
-#df_osirisgeo_cum.to_csv('osirisgeo_cum.csv')
-
-# intra-day data
-df_osirisgeo = df_osirisgeo['Aantal']
-
-df_osirisgeo = df_osirisgeo.resample('W-MON', label='left', closed='left').sum().rename(columns={'Overleden': 'deceased', 'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
-#df_osirisgeo.index = df_osirisgeo.index.week
-#df_osirisgeo.index = df_osirisgeo.index.week
-df_osirisgeo.index = df_osirisgeo.index.strftime('%G-%V')
-
-#df_osirisgeo.to_csv('osirisgeo.csv')
-
-
-# ## CoronaWatchNL Data: OSIRIS
-# [CoronaWatchNL](https://github.com/J535D165/CoronaWatchNL) writes the following about this dataset: "These datasets describe the new and cumulative number of confirmed, hospitalized and deceased COVID-19 cases per day. The data is retrieved from the central database OSIRIS and counts the number per day (0:00 AM) by RIVM. The dataset concerns numbers on a national level."
-# 
-# This dataset consists of intra-day case counts.
-
-# In[7]:
-
-
-# OSIRIS
-df_osiris = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data/rivm_NL_covid19_national_by_date/rivm_NL_covid19_national_by_date_latest.csv', index_col=0)
-df_osiris.index = pd.to_datetime(df_osiris.index)
-
-
-df_osiris = df_osiris.pivot(columns='Type')
-
-# intra-day data
-df_osiris = df_osiris['Aantal']
-
-df_osiris = df_osiris.resample('W-MON', label='left', closed='left').sum().rename(columns={'Overleden': 'deceased', 'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
-#df_osiris.index = df_osiris.index.week
-#df_osiris.index = df_osiris.index.week
-df_osiris.index = df_osiris.index.strftime('%G-%V')
-
-#df_osiris.to_csv('osiris.csv')
-
-
-# ## CoronaWatchNL Data: OSIRIS
-# [CoronaWatchNL](https://github.com/J535D165/CoronaWatchNL) writes the following about this dataset: "The datasets underlying the National Dashboard are listed in this folder. These datasets concern various topics, such as an overview of the number and age distribution of hospitalized, positively tested, and suspected cases, an estimate of the number of contagious people, the reproduction index, the number of (deceased) infected nursery home residents, and the amount of virus particles measured in the sewage water."
-# 
-# The National Dashboard in question can be found [here.](https://coronadashboard.government.nl/)
-# 
-# Currently we are only interested in infected and deceased so thats the dataset that we will download and process.
-# 
-# Both cumulative data and intra-day data is available.
-
-# In[8]:
-
-
-# Coronadashboard
-df_dashboard = pd.read_csv('https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-dashboard/data-cases/RIVM_NL_national_dashboard.csv', index_col=0)
-df_dashboard.index = pd.to_datetime(df_dashboard.index)
-
-df_dashboard
-
-df_dashboard = df_dashboard.pivot(columns='Type')
-
-# cumulative data
-df_dashboard_cum = df_dashboard['AantalCumulatief']
-df_dashboard_cum = df_dashboard_cum.resample('W-MON', label='left', closed='left').max().rename(columns={'Overleden': 'deceased', 'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
-#df_dashboard_cum.index = df_dashboard_cum.index.week
-#df_dashboard_cum.index = df_dashboard_cum.index.week
-df_dashboard_cum.index = df_dashboard_cum.index.strftime('%G-%V')
-
-#df_dashboard_cum.to_csv('dashboard_cum.csv')
-
-
-# intra-day data
-df_dashboard = df_dashboard['Aantal']
-
-df_dashboard = df_dashboard.resample('W-MON', label='left', closed='left').sum().rename(columns={'Totaal': 'infected', 'Ziekenhuisopname': 'hospital'})
-#df_dashboard.index = df_dashboard.index.week
-#df_dashboard.index = df_dashboard.index.week
-df_dashboard.index = df_dashboard.index.strftime('%G-%V')
-
-#df_dashboard.to_csv('dashboard.csv')
-
 
 # ## Merging the different datasets
 # Lets merge all the different datasets together and get it ready for plotting.
@@ -266,6 +166,29 @@ df_dashboard.index = df_dashboard.index.strftime('%G-%V')
 # For this we will convert datasets between these two formats. E.g. when generating intra-day plots we will plot all intra-day datasets but also attempt to convert the cumulative datasets to intra-day. We will do the same when plotting the cumulative charts, just the other way around.
 
 # In[9]:
+
+
+
+
+
+
+### GGD
+
+
+import pandas as pd
+
+
+df_ggd = pd.read_csv('https://data.rivm.nl/covid-19/COVID-19_uitgevoerde_testen.csv', sep=';').set_index('Date_of_statistics')
+df_ggd.index = pd.to_datetime(df_ggd.index)
+
+df_ggd = df_ggd.groupby(df_ggd.index).sum().sort_index().drop(columns=['Version'])['Tested_positive'].rename('GGD positive tests')
+
+df_ggd.index = df_ggd.index.map(lambda x: x.strftime('%G-%V'))
+df_ggd = df_ggd.groupby(df_ggd.index).sum()
+
+df_ggd_cum = df_ggd.cumsum().rename(f'{df_ggd.name} cumulative')
+
+### /> GGD
 
 
 df_merged = df_infected.copy()
@@ -279,12 +202,6 @@ df_merged_cum = df_merged_cum.join(df_weekly_cum.add_prefix('municipality_cumula
 #df_merged_cum = df_merged_cum.join(df_weekly.cumsum().add_prefix('municipality_')) # convert intra to cum
 df_merged_cum = df_merged_cum.add_prefix('rivm_')
 
-# then cumulative CoronaWatchNL data
-df_merged_cum = df_merged_cum.join(df_osirisgeo_cum.add_prefix('coronawatchnl_osirisgeo_cumulative_'))
-#df_merged_cum = df_merged_cum.join(df_osirisgeo.cumsum().add_prefix('coronawatchnl_osirisgeo_')) # convert intra to cum
-#df_merged_cum = df_merged_cum.join(df_osiris.cumsum().add_prefix('coronawatchnl_osiris_')) # convert intra to cum
-df_merged_cum = df_merged_cum.join(df_dashboard_cum.add_prefix('coronawatchnl_dashboard_cumulative_'))
-#df_merged_cum = df_merged_cum.join(df_dashboard.cumsum().add_prefix('coronawatchnl_dashboard_')) # convert intra to cum
 
 #df_merged_cum.to_csv('merged_cumulative.csv')
 
@@ -296,11 +213,6 @@ df_merged = df_merged.join(df_weekly.add_prefix('municipality_'))
 df_merged = df_merged.add_prefix('rivm_')
 
 # then intra CoronaWatchNL data
-#df_merged = df_merged.join(df_osirisgeo_cum.diff().add_prefix('coronawatchnl_osirisgeo_cumulative_')) # convert cum to intra
-df_merged = df_merged.join(df_osirisgeo.add_prefix('coronawatchnl_osirisgeo_')) 
-df_merged = df_merged.join(df_osiris.add_prefix('coronawatchnl_osiris_')) 
-#df_merged = df_merged.join(df_dashboard_cum.diff().add_prefix('coronawatchnl_dashboard_cumulative_')) # convert cum to intra
-df_merged = df_merged.join(df_dashboard.add_prefix('coronawatchnl_dashboard_')) 
 
 
 #df_merged.to_csv('merged.csv')
@@ -315,9 +227,11 @@ df_merged = df_merged.join(df_dashboard.add_prefix('coronawatchnl_dashboard_'))
 
 df_infected = df_merged.loc[:,df_merged.columns.str.contains('_infected')]
 df_infected.columns = [' '.join(c.split('_')[:-1]) for c in df_infected.columns]
+df_infected = df_infected.join(df_ggd)
 df_infected.to_csv('./html/infected.csv')
 df_infected_cum = df_merged_cum.loc[:,df_merged_cum.columns.str.contains('_infected')]
 df_infected_cum.columns = [' '.join(c.split('_')[:-1]) for c in df_infected_cum.columns]
+df_infected_cum = df_infected_cum.join(df_ggd_cum)
 df_infected_cum.to_csv('./html/infected_cumulative.csv')
 
 df_deceased = df_merged.loc[:,df_merged.columns.str.contains('_deceased')]

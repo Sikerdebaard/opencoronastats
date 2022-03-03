@@ -196,38 +196,27 @@ pages:
   vaccination:
     file: vaccination.html
     datasets:
-      - daily-vaccine-rollout.csv
-      - compare-vaccine.csv
-      - vaccinated-demographics.csv
-      - vaccine-delivered-vs-administered.csv
-      - vaccinated-estimate-latest.csv
-      - latest-projection.csv
+      - ecdc_vacc.csv
       - qr-denylist.csv
     cards:
       - id: percentage-pop-card 
         icon: fa-battery-half
       - id: percentage-pop-fully-card
         icon: fa-battery-full
+      - id: percentage-pop-booster1-card
+        icon: fa-rocket
       - id: vaccine-total-doses-administered 
         icon: fa-syringe
         postfix: doses
-#      - id: vaccine-one-in-hundred-people-doses-administered
-#        icon: fa-chart-line
-#        sources:
-#          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
-      - id: avg-doses-per-week
-        icon: fa-calendar-check
-      - id: qr-codes-blocked-count 
-        icon: fa-qrcode
 
     charts:
       - name: pp-vacc
-        title: Model based estimates percentage population vaccinated
+        title: Percentage population vaccinated
         type: line
         sources:
-          Model Based Analysis: https://github.com/Sikerdebaard/opencoronastats/tree/master/data/vaccine_estimate
-        uses: vaccinated-estimate-latest
-        x: date
+          ECDC: https://vaccinetracker.ecdc.europa.eu/public/extensions/COVID-19/vaccine-tracker.html
+        uses: ecdc_vacc
+        x: YearWeek
         options:
           scales:
             yAxes:
@@ -235,87 +224,26 @@ pages:
                   labelString: "Percentage"
             xAxes:
               - scaleLabel:
-                  labelString: "Date"
+                  labelString: "Year-Week"
         datasets:
-          - label: Percentage population booster1 (estimate)
-            column: percentage_pop_booster1
+          - label: Percentage population booster1
+            column: percentage_population_dose_additional1
             backgroundColor: denmark 
             borderColor: denmark
             filter:
               - filter_zero_except_first
-          - label: "Percentage population fully vaccinated (RIVM estimate)"
-            column: percentage_pop_vaccinated_rivm
-            backgroundColor: flevoland
-            borderColor: flevoland
-            showLine: false
-            filter:
-              - filter_zero_values
-          - label: Percentage population fully vaccinated (estimate)
-            column: percentage_pop_fully_vaccinated
+          - label: Percentage population fully vaccinated
+            column: percentage_population_fully_vaccinated
             backgroundColor: fully_vaccinated
             borderColor: fully_vaccinated
             filter:
               - filter_zero_except_first
-          - label: min 
-            legend: false
-            column: percentage_pop_fully_vaccinated_min
-            fill: -1 
-            backgroundColor: fully_vaccinated_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-          - label: max 
-            legend: false
-            column: percentage_pop_fully_vaccinated_max
-            fill: 3
-            backgroundColor: fully_vaccinated_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-             
-          - label: Percentage population that started a vaccine regimen (estimate)
-            column: percentage_pop_partially_vaccinated
-            backgroundColor: single_dose
+          - label: Percentage population vaccinated with at least one dose
+            column: percentage_population_vaccinated
+            backgroundColor: single_dose 
             borderColor: single_dose
             filter:
               - filter_zero_except_first
-            
-          - label: min
-            column: percentage_pop_partially_vaccinated_min
-            fill: 5
-            backgroundColor: single_dose_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-          - label: max
-            column: percentage_pop_partially_vaccinated_max
-            fill: 6
-            backgroundColor: single_dose_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-
-          - label: Percentage population vaccinated with at least one dose (estimate)
-            column: percentage_pop_vaccinated
-            backgroundColor: derivate 
-            borderColor: derivate
-            filter:
-              - filter_zero_except_first
-          - label: min
-            column: percentage_pop_vaccinated_min
-            fill: 8
-            backgroundColor: derivate-afive
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-          - label: max
-            column: percentage_pop_vaccinated_max
-            fill: 8
-            backgroundColor: derivate-afive
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-
 
 
 
@@ -323,9 +251,9 @@ pages:
         title: Model based estimates people (fully) vaccinated
         type: line
         sources:
-          Model Based Analysis: https://github.com/Sikerdebaard/opencoronastats/tree/master/data/vaccine_estimate
-        uses: vaccinated-estimate-latest
-        x: date
+          ECDC: https://vaccinetracker.ecdc.europa.eu/public/extensions/COVID-19/vaccine-tracker.html
+        uses: ecdc_vacc 
+        x: YearWeek 
         options:
           scales:
             yAxes:
@@ -333,210 +261,57 @@ pages:
                   labelString: "Number of people / doses"
             xAxes:
               - scaleLabel:
-                  labelString: "Date"
+                  labelString: "Year-Week"
         datasets:
           - label: "Doses administered"
-            column: total_vaccinations
+            column: total_doses_administered 
             backgroundColor: flevoland
             borderColor: flevoland
             showLine: false
-          - label: People that received booster 1 (RIVM estimate)
-            column: people_booster1
+          - label: People boosted
+            column: people_dose_additional1
             backgroundColor: denmark 
             borderColor: denmark
             filter:
-              - filter_zero_values
-          - label: "People fully vaccinated (RIVM estimate)"
+              - filter_zero_except_first
+          - label: People fully vaccinated
             column: people_fully_vaccinated
-            backgroundColor: derivate
-            borderColor: derivate
-            showLine: false
-            filter:
-              - filter_zero_values
-          - label: People that started a vaccine regimen (RIVM estimate)
-            column: rivm_partially_vaccinated
-            backgroundColor: zuid-holland 
-            borderColor: zuid-holland
-            showLine: false
-            filter:
-              - filter_zero_values
-
-          - label: People fully vaccinated (prediction)
-            column: fully_vaccinated
             backgroundColor: fully_vaccinated
             borderColor: fully_vaccinated
             filter:
               - filter_zero_except_first
-          - label: min 
-            legend: false
-            column: fully_vaccinated_min
-            fill: -1
-            backgroundColor: fully_vaccinated_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-          - label: max 
-            legend: false
-            column: fully_vaccinated_max
-            fill: 5
-            backgroundColor: fully_vaccinated_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-             
-          - label: People that started a vaccine regimen (prediction)
-            column: single_dose_vaccinated
-            backgroundColor: single_dose
+          - label: People vaccinated with at least one dose
+            column: people_vaccinated
+            backgroundColor: single_dose 
             borderColor: single_dose
             filter:
               - filter_zero_except_first
-            
-          - label: min
-            column: single_dose_vaccinated_min
-            fill: -1
-            backgroundColor: single_dose_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
-          - label: max
-            column: single_dose_vaccinated_max
-            fill: 8
-            backgroundColor: single_dose_ci
-            borderColor: transparent
-            lineTension: 0
-            pointRadius: 0
 
 
-
-      - name: pct-population-min-one-dose
-        title: Doses administered divided over total population size
+      - name: doses-administered-per-week
+        title: Vaccine doses administered per week 
         type: line
         sources:
-          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
-        uses: daily-vaccine-rollout
-        x: date
+          ECDC: https://vaccinetracker.ecdc.europa.eu/public/extensions/COVID-19/vaccine-tracker.html
+        uses: ecdc_vacc 
+        x: YearWeek 
         options:
           scales:
             yAxes:
               - scaleLabel:
-                  labelString: "Doses administered over total population"
-            xAxes:
-              - scaleLabel:
-                  labelString: "Date"
-        datasets:
-          - label: Indicator
-            column: total_vaccinations_per_hundred
-            backgroundColor: patients
-            borderColor: patients
-
-      - name: doses-administered-per-day
-        title: Vaccine doses administered per day
-        type: line
-        sources:
-          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
-        uses: daily-vaccine-rollout
-        x: date
-        options:
-          scales:
-            yAxes:
-              - scaleLabel:
-                  labelString: "Doses administered per day"
+                  labelString: "Doses administered per week"
                 ticks:
                   beginAtZero: true
             xAxes:
               - scaleLabel:
-                  labelString: "Date"
+                  labelString: "Year-Week"
         datasets:
-          - label: Doses administered per day
-            column: daily_vaccinations
-            backgroundColor: derivate-atwo 
-            borderColor: derivate-atwo
-            showLine: false
-            filter:
-              - filter_zero_values 
-          - label: Rolling average doses administered per day
-            column: sma7_daily_vaccinations
-            backgroundColor: derivate
+          - label: Doses administered per week 
+            column: doses_per_week
+            backgroundColor: derivate 
             borderColor: derivate
             filter:
               - filter_zero_values 
-
-      - name: delivered-vs-administered
-        title: Cumulative doses delivered vs. administered
-        type: line
-        sources:
-          Corona Dashboard: https://coronadashboard.rijksoverheid.nl/landelijk/vaccinaties
-        uses: vaccine-delivered-vs-administered
-        x: year-week
-        options:
-          scales:
-            yAxes:
-              - scaleLabel:
-                  labelString: "Doses"
-            xAxes:
-              - scaleLabel:
-                  labelString: "Year-week"
-        datasets:
-          - label: Cumulative doses administered
-            column: total_vaccinations
-            backgroundColor: patients 
-            borderColor: patients
-            filter:
-              - filter_zero_except_first 
-          - label: Cumulative doses delivered
-            column: cumulative
-            backgroundColor: icu-beds 
-            borderColor: icu-beds
-            filter:
-              - filter_zero_except_first 
-
-
-      - name: pct-pop-min-one-dose-compare
-        title: Comparison doses administered over total population
-        type: line
-        sources:
-          Our World in Data: https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/locations.csv
-        uses: compare-vaccine
-        x: date
-        options:
-          scales:
-            yAxes:
-              - scaleLabel:
-                  labelString: "Doses per 100 in population"
-            xAxes:
-              - scaleLabel:
-                  labelString: "Date"
-        datasets:
-          - label: Netherlands
-            column: total_vaccinations_per_hundred_NLD
-            backgroundColor: national
-            borderColor: national
-            filter:
-              - filter_zero_except_first 
-          - label: Belgium 
-            column: total_vaccinations_per_hundred_BEL
-            backgroundColor: belgium 
-            borderColor: belgium
-            filter:
-              - filter_zero_except_first 
-          - label: Germany
-            column: total_vaccinations_per_hundred_DEU
-            backgroundColor: germany
-            borderColor: germany
-            filter:
-              - filter_zero_except_first 
-          - label: France
-            column: total_vaccinations_per_hundred_FRA
-            backgroundColor: france
-            borderColor: france
-            filter:
-              - filter_zero_except_first 
-          - label: Denmark
-            column: total_vaccinations_per_hundred_DNK
-            backgroundColor: denmark
-            borderColor: denmark
-            filter:
-              - filter_zero_except_first 
 
       - name: qr-codes-blocked
         title: Number of QR Codes blocked by coronacheck.nl scanner
@@ -1325,7 +1100,6 @@ pages:
         x: weeknum
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
-          CoronaWatchNL: https://github.com/J535D165/CoronaWatchNL
         options:
           scales:
             yAxes:
@@ -1352,20 +1126,8 @@ pages:
               - filter_zero_values
           - label: '%column%'
             columnbyindex: 3
-            backgroundColor: groningen
-            borderColor: groningen
-            filter:
-              - filter_zero_values
-          - label: '%column%'
-            columnbyindex: 4
-            backgroundColor: limburg
-            borderColor: limburg
-            filter:
-              - filter_zero_values
-          - label: '%column%'
-            columnbyindex: 5
-            backgroundColor: noord-brabant
-            borderColor: noord-brabant
+            backgroundColor: zeeland
+            borderColor: zeeland
             filter:
               - filter_zero_values
 
@@ -1376,7 +1138,6 @@ pages:
         x: weeknum
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
-          CoronaWatchNL: https://github.com/J535D165/CoronaWatchNL
         options:
           scales:
             yAxes:
@@ -1403,14 +1164,8 @@ pages:
               - filter_zero_values
           - label: '%column%'
             columnbyindex: 3
-            backgroundColor: groningen
-            borderColor: groningen
-            filter:
-              - filter_zero_values
-          - label: '%column%'
-            columnbyindex: 4
-            backgroundColor: limburg
-            borderColor: limburg
+            backgroundColor: zeeland
+            borderColor: zeeland
             filter:
               - filter_zero_values
 
@@ -1422,7 +1177,6 @@ pages:
         x: weeknum
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
-          CoronaWatchNL: https://github.com/J535D165/CoronaWatchNL
         options:
           scales:
             yAxes:
@@ -1445,18 +1199,6 @@ pages:
             columnbyindex: 2
             backgroundColor: gelderland
             borderColor: gelderland
-            filter:
-              - filter_zero_values
-          - label: '%column%'
-            columnbyindex: 3
-            backgroundColor: groningen
-            borderColor: groningen
-            filter:
-              - filter_zero_values
-          - label: '%column%'
-            columnbyindex: 4
-            backgroundColor: limburg
-            borderColor: limburg
             filter:
               - filter_zero_values
 
@@ -1467,7 +1209,6 @@ pages:
         x: weeknum
         sources:
           RIVM: https://www.rivm.nl/coronavirus-covid-19
-          CoronaWatchNL: https://github.com/J535D165/CoronaWatchNL
         options:
           scales:
             yAxes:
@@ -1490,12 +1231,6 @@ pages:
             columnbyindex: 2
             backgroundColor: gelderland
             borderColor: gelderland
-            filter:
-              - filter_zero_values
-          - label: '%column%'
-            columnbyindex: 3
-            backgroundColor: groningen
-            borderColor: groningen
             filter:
               - filter_zero_values
 
@@ -1515,6 +1250,7 @@ pages:
                 ticks:
                   beginAtZero: true
                   min: 0
+                  max: 150000
             xAxes:
               - scaleLabel:
                   labelString: "Date"

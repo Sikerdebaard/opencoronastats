@@ -266,58 +266,41 @@ cards['rivm-current-nursing-homes-infected-locations'] = {
 
 
 
-df_vaccinated_daily = pd.read_csv('html/daily-vaccine-rollout.csv', index_col=0)
-df_vaccinated_daily.index = pd.to_datetime(df_vaccinated_daily.index)
-
-df_model = pd.read_csv('html/vaccinated-estimate-latest.csv', index_col=0)
-
-df_vaccinated_weekly = pd.read_csv('html/weekly-vaccine-rollout.csv', index_col=0)
-
-
-latest_daily = df_vaccinated_daily.iloc[-1]
-latest_weekly = df_vaccinated_weekly.iloc[-1]
-latest_model = df_model.iloc[-1]
+df_vacc = pd.read_csv('html/ecdc_vacc.csv')
+vacc_latest = df_vacc.iloc[-1]
 
 
 
-#from datetime import date
-#weekday = date.today().weekday() + 1  # python weekday starts at 0 = Monday
-#projection = df_vaccinated_weekly.iloc[-1]['daily_vaccinations_raw'] / weekday * 7  # extremely simplified projection, this needs to be improved once more data is available
-#trend = 1 if projection >= df_vaccinated_weekly.iloc[-2]['daily_vaccinations_raw'] else -1
-
-c = 'blue' if int(latest_model['percentage_pop_fully_vaccinated']) != int(latest_model['percentage_pop_vaccinated']) else 'green'
+col = 'people_vaccinated'
+c = 'green' if vacc_latest[col] > 70 else 'blue'
 cards['percentage-pop-card'] = {
-    'value': f"{int(latest_model['percentage_pop_vaccinated'])}%",
-    'title': 'Percentage population vaccinated (partial + fully)',
-    'color': 'blue',
+    'value': f"{fnum(vacc_latest[col], 1)}%",
+    'title': 'Percentage population vaccinated with at least one dose',
+    'color': c,
 }
+
+col = 'people_fully_vaccinated'
+c = 'green' if vacc_latest[col] > 70 else 'blue'
 cards['percentage-pop-fully-card'] = {
-    'value': f"{int(latest_model['percentage_pop_fully_vaccinated'])}%",
+    'value': f"{fnum(vacc_latest[col], 1)}%",
     'title': 'Percentage population fully vaccinated',
-    'color': 'green',
+    'color': c,
 }
+
+col = 'percentage_population_dose_additional1'
+c = 'green' if vacc_latest[col] > 70 else 'blue'
+cards['percentage-pop-booster1-card'] = {
+    'value': f"{fnum(vacc_latest[col], 1)}%",
+    'title': 'Percentage population boosted',
+    'color': c,
+}
+
 
 cards['vaccine-total-doses-administered'] = {
-    'value': f"{fnum(int(latest_daily['total_vaccinations']))}",
+    'value': f"{fnum(vacc_latest['total_doses_administered'], 0)}",
     'title': 'Total doses administered',
     'color': 'blue',
 }
-cards['vaccine-one-in-hundred-people-doses-administered'] = {
-    'value': f"{round(float(latest_daily['total_vaccinations_per_hundred']), 2)}/100",
-    'title': 'People vaccinated per hundred',
-    'color': 'blue',
-}
-
-trend = 1 if df_vaccinated_daily.iloc[-1]['sma7_daily_vaccinations'] > df_vaccinated_daily.iloc[-2]['sma7_daily_vaccinations'] else -1
-cards['avg-doses-per-week'] = {
-    'value': f"{fnum(int(latest_daily['sma7_daily_vaccinations']))}",
-    'title': "Rolling average doses per day",
-    'color': 'green' if trend == 1 else 'red',
-    'trend': trend
-}
-
-
-
 
 df_denylist = pd.read_csv('html/qr-denylist.csv', index_col=0)
 latest = df_denylist.iloc[-1]
