@@ -271,7 +271,7 @@ vacc_latest = df_vacc.iloc[-1]
 
 
 
-col = 'people_vaccinated'
+col = 'percentage_population_vaccinated'
 c = 'green' if vacc_latest[col] > 70 else 'blue'
 cards['percentage-pop-card'] = {
     'value': f"{fnum(vacc_latest[col], 1)}%",
@@ -279,7 +279,7 @@ cards['percentage-pop-card'] = {
     'color': c,
 }
 
-col = 'people_fully_vaccinated'
+col = 'percentage_population_fully_vaccinated'
 c = 'green' if vacc_latest[col] > 70 else 'blue'
 cards['percentage-pop-fully-card'] = {
     'value': f"{fnum(vacc_latest[col], 1)}%",
