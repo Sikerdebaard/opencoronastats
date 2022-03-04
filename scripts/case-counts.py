@@ -191,6 +191,47 @@ df_ggd_cum = df_ggd.cumsum().rename(f'{df_ggd.name} cumulative')
 ### /> GGD
 
 
+
+
+
+### NICE registered deaths
+import requests
+
+
+req = requests.get('https://raw.githubusercontent.com/Sikerdebaard/dutchcovid19data/master/data/died-and-survivors-cumulative.json')
+req.raise_for_status()
+
+df_icu = pd.DataFrame(req.json()['data'][0])
+df_icu['date'] = pd.to_datetime(df_icu['date'])
+df_icu.set_index('date', inplace=True)
+df_icu.sort_index(inplace=True)
+
+req = requests.get('https://raw.githubusercontent.com/Sikerdebaard/dutchcovid19data/master/data/hospitalized/died-and-survivors-cumulative.json')
+req.raise_for_status()
+
+df_hosp = pd.DataFrame(req.json()['data'][0])
+df_hosp['date'] = pd.to_datetime(df_hosp['date'])
+df_hosp.set_index('date', inplace=True)
+df_hosp.sort_index(inplace=True)
+
+df_nice_merged = pd.DataFrame(index=(df_hosp.index.union(df_icu.index)))
+
+df_nice_merged = df_nice_merged.join(df_icu['value'].rename('deceased_icu'))
+df_nice_merged = df_nice_merged.join(df_hosp['value'].rename('deceased_hospital'))
+
+df_nice_merged['deceased_icu_hospital'] = df_nice_merged.sum(axis=1)
+
+df_nice_merged_weekly = df_nice_merged.resample('W-SUN').last()
+df_nice_merged_weekly.index = df_nice_merged_weekly.index.map(lambda x: x.strftime('%G-%V'))
+df_nice_merged_weekly.index.rename('YearWeek', inplace=True)
+
+df_nice_merged_weekly_diff = df_nice_merged_weekly.diff().fillna(0).astype(int)
+
+### /> NICE
+
+
+
+
 df_merged = df_infected.copy()
 df_merged = df_merged.join(df_deceased)
 
@@ -236,9 +277,11 @@ df_infected_cum.to_csv('./html/infected_cumulative.csv')
 
 df_deceased = df_merged.loc[:,df_merged.columns.str.contains('_deceased')]
 df_deceased.columns = [' '.join(c.split('_')[:-1]) for c in df_deceased.columns]
+df_deceased = df_deceased.join(df_nice_merged_weekly_diff['deceased_icu_hospital'].rename('Stichting NICE registration (hospital + ICU)'))
 df_deceased.to_csv('./html/deceased.csv')
 df_deceased_cum = df_merged_cum.loc[:,df_merged_cum.columns.str.contains('_deceased')]
 df_deceased_cum.columns = [' '.join(c.split('_')[:-1]) for c in df_deceased_cum.columns]
+df_deceased_cum = df_deceased_cum.join(df_nice_merged_weekly['deceased_icu_hospital'].rename('Stichting NICE registration cumulative (hospital + ICU)'))
 df_deceased_cum.to_csv('./html/deceased_cumulative.csv')
 
 

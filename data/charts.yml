@@ -1201,6 +1201,18 @@ pages:
             borderColor: gelderland
             filter:
               - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 2
+            backgroundColor: gelderland
+            borderColor: gelderland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: groningen
+            borderColor: groningen
+            filter:
+              - filter_zero_values
 
       - name: rivm-deceased-cumulative
         title: Weekly cumulative deceased case count
@@ -1231,6 +1243,12 @@ pages:
             columnbyindex: 2
             backgroundColor: gelderland
             borderColor: gelderland
+            filter:
+              - filter_zero_values
+          - label: '%column%'
+            columnbyindex: 3
+            backgroundColor: groningen
+            borderColor: groningen
             filter:
               - filter_zero_values
 
