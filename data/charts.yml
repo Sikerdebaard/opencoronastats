@@ -1202,12 +1202,6 @@ pages:
             filter:
               - filter_zero_values
           - label: '%column%'
-            columnbyindex: 2
-            backgroundColor: gelderland
-            borderColor: gelderland
-            filter:
-              - filter_zero_values
-          - label: '%column%'
             columnbyindex: 3
             backgroundColor: groningen
             borderColor: groningen
