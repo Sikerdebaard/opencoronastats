@@ -100,7 +100,7 @@ df_statistics['mean_sma7'].sum()
 # https://www.cbs.nl/nl-nl/maatwerk/2019/51/kernprognose-2019-2060
 prognosis = {
     2020: 153402,
-    2021: 168099,
+    2021: 155924,
     2022: 158446,
 }
 
