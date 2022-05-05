@@ -240,11 +240,11 @@ cards['rivm-r'] = {
     'color': 'blue'
 }
 
-cards['rivm-contagious'] = {
-    'value': fnum(contagious),
-    'title': 'Estimated contagious people',
-    'color': 'blue'
-}
+#cards['rivm-contagious'] = {
+#    'value': fnum(contagious),
+#    'title': 'Estimated contagious people',
+#    'color': 'blue'
+#}
 
 
 

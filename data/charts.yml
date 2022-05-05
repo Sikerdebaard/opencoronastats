@@ -1083,10 +1083,10 @@ pages:
         icon: fa-people-arrows
         sources:
           Stichting NICE: https://www.stichting-nice.nl/
-      - id: rivm-contagious
-        icon: fa-head-side-cough
-        sources:
-          RIVM: https://www.rivm.nl/coronavirus-covid-19
+      #- id: rivm-contagious
+      #  icon: fa-head-side-cough
+      #  sources:
+      #    RIVM: https://www.rivm.nl/coronavirus-covid-19
       - id: rivm-current-nursing-homes-infected-locations
         icon: fa-wheelchair
         sources:
