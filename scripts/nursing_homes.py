@@ -1,6 +1,7 @@
+from rivmproxy import rivm_url
 import pandas as pd
 
-df_nursinghomes = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_verpleeghuizen.json')
+df_nursinghomes = pd.read_json(rivm_url('https://data.rivm.nl/covid-19/COVID-19_verpleeghuizen.json'))
 
 df_national = df_nursinghomes.groupby('Date_of_statistic_reported').sum()
 df_national.index = pd.to_datetime(df_national.index)

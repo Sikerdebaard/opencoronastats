@@ -1,3 +1,4 @@
+from rivmproxy import rivm_url
 from pathlib import Path
 import pandas as pd
 
@@ -11,7 +12,7 @@ def calc_growth(df, column):
     return df
 
 
-df = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json')
+df = pd.read_json(rivm_url('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json'))
 df
 df['Date_of_publication'] = pd.to_datetime(df['Date_of_publication'])
 df = df.set_index('Date_of_publication')
@@ -51,7 +52,7 @@ df_out.to_csv(output_path / 'rivm.csv', index_label='date')
 import datetime
 import numpy as np
 
-df_sewage = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_rioolwaterdata.json')
+df_sewage = pd.read_json(rivm_url('https://data.rivm.nl/covid-19/COVID-19_rioolwaterdata.json'))
 
 df_sewage['Date_measurement'] = pd.to_datetime(df_sewage['Date_measurement'])
 df_sewage = df_sewage.set_index('Date_measurement')

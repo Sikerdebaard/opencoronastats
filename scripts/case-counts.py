@@ -1,3 +1,4 @@
+from rivmproxy import rivm_url
 import pandas as pd
 import sys
 
@@ -10,7 +11,7 @@ import sys
 # In[3]:
 
 
-df = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_cumulatief.json')
+df = pd.read_json(rivm_url('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_cumulatief.json'))
 
 df['Date_of_report'] = pd.to_datetime(df['Date_of_report']) # convert column from int to datetime
 df = df.set_index('Date_of_report') # set column as index
@@ -48,7 +49,7 @@ print(f'Total infected: {total_infected}')
 # In[4]:
 
 
-df = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json')
+df = pd.read_json(rivm_url('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json'))
 
 df['Date_of_publication'] = pd.to_datetime(df['Date_of_publication'])
 df = df.set_index('Date_of_publication')
@@ -84,7 +85,7 @@ print(f'Total infected: {total_infected}')
 # In[5]:
 
 
-df_casus = pd.read_csv('https://data.rivm.nl/covid-19/COVID-19_casus_landelijk.csv', sep=';')
+df_casus = pd.read_csv(rivm_url('https://data.rivm.nl/covid-19/COVID-19_casus_landelijk.csv'), sep=';')
 
 deceased_extra = 0
 
@@ -178,7 +179,7 @@ for k, v in vals.items():
 import pandas as pd
 
 
-df_ggd = pd.read_csv('https://data.rivm.nl/covid-19/COVID-19_uitgevoerde_testen.csv', sep=';').set_index('Date_of_statistics')
+df_ggd = pd.read_csv(rivm_url('https://data.rivm.nl/covid-19/COVID-19_uitgevoerde_testen.csv'), sep=';').set_index('Date_of_statistics')
 df_ggd.index = pd.to_datetime(df_ggd.index)
 
 df_ggd = df_ggd.groupby(df_ggd.index).sum().sort_index().drop(columns=['Version'])['Tested_positive'].rename('GGD positive tests')
@@ -288,14 +289,14 @@ df_deceased_cum.to_csv('./html/deceased_cumulative.csv')
 
 ## estimated infected and reproduction index
 
-df_repro = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_reproductiegetal.json')
+df_repro = pd.read_json(rivm_url('https://data.rivm.nl/covid-19/COVID-19_reproductiegetal.json'))
 df_repro['Date'] = pd.to_datetime(df_repro['Date'])
 
 df_repro = df_repro.rename(columns={'Date': 'datum', 'Rt_low': 'r_min', 'Rt_up': 'r_max', 'Rt_avg': 'r'})[['datum', 'r_min', 'r', 'r_max']]
 
 df_repro.set_index(['datum'], inplace=True)
 
-df_cont = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_prevalentie.json')
+df_cont = pd.read_json(rivm_url('https://data.rivm.nl/covid-19/COVID-19_prevalentie.json'))
 
 
 

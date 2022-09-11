@@ -1,3 +1,4 @@
+from rivmproxy import rivm_url
 import requests
 from pathlib import Path
 import pandas as pd
@@ -106,7 +107,7 @@ df_healthcare_workers.index = df_healthcare_workers.index.strftime('%Y-%U')
 # create weekly and cumulative, remove first row and convert to int
 df_healthcare_workers = df_healthcare_workers.join(df_healthcare_workers.diff(), lsuffix='_cum')[1:].astype(int)
 
-df_gem = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json')
+df_gem = pd.read_json(rivm_url('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json'))
 
 df_gem['Date_of_publication'] = pd.to_datetime(df_gem['Date_of_publication'])
 df_gem = df_gem.set_index('Date_of_publication')
